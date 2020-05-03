@@ -1,11 +1,9 @@
-package Post;
+package post;
 
 public interface Comment {
 
 	String getComment();
-	
-	String getType();
-	
+	String getStance();
 	boolean isPositive();
 	
 }

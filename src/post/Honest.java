@@ -1,4 +1,4 @@
-package Post;
+package post;
 
 public interface Honest extends Post {
 
