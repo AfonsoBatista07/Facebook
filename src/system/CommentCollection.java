@@ -1,6 +1,5 @@
 package system;
 
-import post.Comment;
 
 public interface CommentCollection {
 
