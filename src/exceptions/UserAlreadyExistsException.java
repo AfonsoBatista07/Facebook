@@ -1,13 +1,14 @@
 package exceptions;
 
-public class UserAlreadyResgiteredException extends Exception{
+public class UserAlreadyExistsException extends Exception{
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -3057201625646894706L;
 	private static final String ERROR = "%s already exists!";
-	public UserAlreadyResgiteredException() {
+	
+	public UserAlreadyExistsException() {
 		super(ERROR);
 	}
 }

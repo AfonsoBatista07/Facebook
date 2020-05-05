@@ -1,10 +1,18 @@
 import java.util.Scanner;
+
+import exceptions.InadequateStanceException;
+import exceptions.InvalidFanaticismListException;
+import exceptions.UnknownUserKindException;
+import exceptions.UserAlreadyExistsException;
+import exceptions.UserCanNotComentPostException;
+import exceptions.UserDoesNotExistExeption;
+import exceptions.UserHasNoPostsException;
+import exceptions.UserNoAccessToPostException;
 import system.FakeSystem;
 
 public class Main {
 
 	/* Commands Constants */
-	//private static final String ADD_USER = "ADD" ;   WHAT ????????????
 	private static final String ADD_USER = "REGISTER";
 	private static final String ADD_FRIEND = "ADDFRIEND";
 	private static final String NEW_POST = "POST";
@@ -100,11 +108,54 @@ public class Main {
 	}
 	
 	private static void addUser(Scanner in, FakeSystem fsys) {
-		
+		try {
+			String type = in.next();
+			String id = in.nextLine();
+			
+			int numberFanaticisms = 0;
+			String[] sequence = {};
+			
+			if(fsys.isFanatic(type)) {
+				numberFanaticisms = in.nextInt();
+				int counter = numberFanaticisms;
+				while(counter<0) {
+					sequence[counter--] = in.next();
+				}
+			}
+			fsys.addUser(type, id, numberFanaticisms, sequence);
+		} catch (UnknownUserKindException e) {
+			System.out.println(e.getMessage());
+		} catch (UserAlreadyExistsException e) {
+			System.out.println(e.getMessage());
+		} catch (InvalidFanaticismListException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
 	private static void newComment(Scanner in, FakeSystem fsys) {
-	
+		
+		String idUserComment = in.nextLine();
+		String idUserAuthor = in.nextLine();
+		String idPost = in.next();
+		String stance = in.next();
+		String comment = in.next();
+		in.nextLine();
+		
+		try {
+			fsys.addComment(idUserComment, idUserAuthor, idPost, stance, comment);
+		} catch (UserDoesNotExistExeption e) {
+			System.out.printf(e.getMessage(), idUserComment);           
+		//} catch (UserDoesNotExistExeption e) {                              // BETTER WAY ????????????????????????       
+			//System.out.printf(e.getMessage(), idUserAuthor);                         
+		} catch (UserNoAccessToPostException e) {
+			System.out.printf(e.getMessage(), idUserComment, idPost, idUserAuthor);
+		} catch (UserHasNoPostsException e) {
+			System.out.printf(e.getMessage(), idUserAuthor, idPost);
+		} catch (UserCanNotComentPostException e) {
+			System.out.printf(e.getMessage(), idUserComment);
+		} catch (InadequateStanceException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
 	private static void newPost(Scanner in, FakeSystem fsys) {
