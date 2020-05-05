@@ -1,13 +1,16 @@
 import java.util.Scanner;
 
 import exceptions.InadequateStanceException;
+import exceptions.InvalidCommentStanceException;
 import exceptions.InvalidFanaticismListException;
+import exceptions.InvalidHashtagsListException;
 import exceptions.UnknownUserKindException;
 import exceptions.UserAlreadyExistsException;
 import exceptions.UserCanNotComentPostException;
 import exceptions.UserDoesNotExistExeption;
 import exceptions.UserHasNoPostsException;
 import exceptions.UserNoAccessToPostException;
+import exceptions.UsersAlreadyFriendsException;
 import system.FakeSystem;
 
 public class Main {
@@ -32,7 +35,11 @@ public class Main {
 	private static final String HELP = "HELP";
 	
 	/* Success Constants */
- 	private static final String SUCCESS_EXIT = "Bye!";
+ 	private static final String SUCCESS_EXIT = "Bye!\n";
+ 	private static final String SUCCESS_ADD_FRIEND = "%s is friend of %s.\n";
+ 	private static final String SUCCESS_ADD_USER = "%s registered.\n";
+ 	private static final String SUCCESS_NEW_POST = "%s sent a %s post to %d friends. Post id = %s.\n";
+ 	private static final String SUCCESS_NEW_COMMENT = "Comment added!";
 	
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
@@ -41,7 +48,6 @@ public class Main {
 		do{
 			cm = readOption(in);
 			exeOption(in, fsys, cm);
-			System.out.println("");
 		} while(!cm.equals(EXIT));
 		in.close();
 		
@@ -108,13 +114,13 @@ public class Main {
 	}
 	
 	private static void addUser(Scanner in, FakeSystem fsys) {
+		String type = in.next();
+		String userId = in.nextLine();
+		
+		int numberFanaticisms = 0;
+		String[] sequence = {};
+		
 		try {
-			String type = in.next();
-			String id = in.nextLine();
-			
-			int numberFanaticisms = 0;
-			String[] sequence = {};
-			
 			if(fsys.isFanatic(type)) {
 				numberFanaticisms = in.nextInt();
 				int counter = numberFanaticisms;
@@ -122,16 +128,59 @@ public class Main {
 					sequence[counter--] = in.next();
 				}
 			}
-			fsys.addUser(type, id, numberFanaticisms, sequence);
+			
+			fsys.addUser(type, userId, numberFanaticisms, sequence);
 		} catch (UnknownUserKindException e) {
-			System.out.println(e.getMessage());
+			System.out.printf(e.getMessage(), type);
 		} catch (UserAlreadyExistsException e) {
-			System.out.println(e.getMessage());
+			System.out.printf(e.getMessage(), userId);
 		} catch (InvalidFanaticismListException e) {
 			System.out.println(e.getMessage());
 		}
+		System.out.printf(SUCCESS_ADD_USER, userId);
 	}
 
+	private static void addFriend(Scanner in, FakeSystem fsys) {
+		String firstUserId = in.next();
+		String secondUserId = in.next();
+		
+		try {
+			fsys.addFriend(firstUserId, secondUserId);
+		} catch (UserDoesNotExistExeption e) {
+			System.out.printf(e.getMessage(), firstUserId);
+		//} catch (UserDoesNotExistExeption e) {
+			//System.out.println(e.getMessage());                   //IF THE FIRST OR SECOND USER DOES NOT EXIST ???????
+		} catch (UsersAlreadyFriendsException e) {
+			System.out.printf(e.getMessage(), firstUserId, secondUserId);
+		}
+		
+		System.out.printf(SUCCESS_ADD_FRIEND, firstUserId, secondUserId);
+	}
+	
+	private static void newPost(Scanner in, FakeSystem fsys) {
+		String userId = in.nextLine();
+		int hashtagsNumber = in.nextInt();
+		
+		String[] hashtags = new String[hashtagsNumber]; 
+		int counter = hashtagsNumber;
+		while(counter<0) {
+			hashtags[counter--] = in.next();
+		}
+		String truthfulness = in.next();
+		String message = in.nextLine();
+		
+		try {
+			fsys.newPost(userId, hashtagsNumber, hashtags, truthfulness, message);
+		} catch (UserAlreadyExistsException e) {
+			System.out.printf(e.getMessage(), userId);
+		} catch (InvalidHashtagsListException e) {
+			System.out.println(e.getMessage());
+		} catch (InadequateStanceException e) {
+			System.out.println(e.getMessage());
+		}
+		System.out.printf(SUCCESS_NEW_POST, userId, truthfulness /*, Number of friends, Post id*/);
+	}
+	
 	private static void newComment(Scanner in, FakeSystem fsys) {
 		
 		String idUserComment = in.nextLine();
@@ -153,17 +202,10 @@ public class Main {
 			System.out.printf(e.getMessage(), idUserAuthor, idPost);
 		} catch (UserCanNotComentPostException e) {
 			System.out.printf(e.getMessage(), idUserComment);
-		} catch (InadequateStanceException e) {
+		} catch (InvalidCommentStanceException e) {
 			System.out.println(e.getMessage());
 		}
-	}
-
-	private static void newPost(Scanner in, FakeSystem fsys) {
-	
-	}
-
-	private static void addFriend(Scanner in, FakeSystem fsys) {
-	
+		System.out.println(SUCCESS_NEW_COMMENT);
 	}
 	
 	private static void shameless(FakeSystem fsys) {
