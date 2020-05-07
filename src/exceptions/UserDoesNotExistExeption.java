@@ -1,14 +1,20 @@
 package exceptions;
 
-public class UserDoesNotExistExeption extends Exception{
+public class UserDoesNotExistExeption extends RuntimeException{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -3285478462956516911L;
-	private static final String ERROR = "%s does not exist!";
 	
-	public UserDoesNotExistExeption() {
-		super(ERROR);
+	private String userId;
+	
+	public UserDoesNotExistExeption(String userId) {
+		super();
+		this.userId = userId;
+	}
+	
+	public String getUserId() {
+		return userId;
 	}
 }

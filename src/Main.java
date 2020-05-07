@@ -40,6 +40,26 @@ public class Main {
  	private static final String SUCCESS_ADD_USER = "%s registered.\n";
  	private static final String SUCCESS_NEW_POST = "%s sent a %s post to %d friends. Post id = %s.\n";
  	private static final String SUCCESS_NEW_COMMENT = "Comment added!";
+ 	
+ 	/* Error Constants */
+ 	private static final String ERROR_INADEQUATE_COMMMENT_STANCE = "Inadequate stance!";
+ 	private static final String ERROR_INVALID_HASHTANGS = "Invalid hashtags list!";
+ 	private static final String ERROR_INVALID_COMMMENT_STANCE = "Invalid comment stance!";
+ 	private static final String ERROR_INVALID_FANATICISM = "Invalid fanaticism list!";
+ 	private static final String ERROR_NO_KING_OF_LIARS = "Social distancing has reached fakebook. Post a lie and become the king of liars.";
+ 	private static final String ERROR_NO_KING_OF_RESPONSIVENESS = "Social distancing has reached fakebook. Post something and then comment your own post to become the king of responsiveness.";;
+ 	private static final String ERROR_NO_KING_POSTERS = "Social distancing has reached fakebook. Post something the king of posters.";
+ 	private static final String ERROR_NO_POST = "Social distancing has reached fakebook. Please post something.";
+ 	private static final String ERROR_NO_COMMENTS = "No comments!";
+ 	private static final String ERROR_UNKNOWN_FANATICISM = "Oh please, who would be a fanatic of %s?";
+ 	private static final String ERROR_UNKNOWN_TOPIC = "Oh please, whp would write about %s?";
+ 	private static final String ERROR_UNKNOWN_USER_KIND = "%s is an invalid user kind!\n";
+ 	private static final String ERROR_USER_ALREADY_EXISTS= "%s already exists!\n";
+ 	private static final String ERROR_USER_DOES_NOT_EXISTS = "%s does not exist!";
+ 	private static final String ERROR_USER_NO_POSTS =  "%s has no post %s!\n";  
+ 	private static final String ERROR_USER_NO_ACCESS_TO_POST = "%s has no access to post %s by %s!\n";
+ 	private static final String ERROR_USERS_FRIENDS_ALREADY = "%s must really admire %s!\n";
+ 	private static final String ERROR_USER_CAN_NOT_COMMENT = "%s cannot comment on this post!\n";
 	
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
@@ -131,11 +151,11 @@ public class Main {
 			
 			fsys.addUser(type, userId, numberFanaticisms, sequence);
 		} catch (UnknownUserKindException e) {
-			System.out.printf(e.getMessage(), type);
+			System.out.printf(ERROR_UNKNOWN_USER_KIND, e.getKind());
 		} catch (UserAlreadyExistsException e) {
-			System.out.printf(e.getMessage(), userId);
+			System.out.printf(ERROR_USER_ALREADY_EXISTS, e.getUserId());
 		} catch (InvalidFanaticismListException e) {
-			System.out.println(e.getMessage());
+			System.out.println(ERROR_INVALID_FANATICISM);
 		}
 		System.out.printf(SUCCESS_ADD_USER, userId);
 	}
@@ -147,13 +167,10 @@ public class Main {
 		try {
 			fsys.addFriend(firstUserId, secondUserId);
 		} catch (UserDoesNotExistExeption e) {
-			System.out.printf(e.getMessage(), firstUserId);
-		//} catch (UserDoesNotExistExeption e) {
-			//System.out.println(e.getMessage());                   //IF THE FIRST OR SECOND USER DOES NOT EXIST ???????
+			System.out.printf(ERROR_USER_DOES_NOT_EXISTS, e.getUserId());
 		} catch (UsersAlreadyFriendsException e) {
-			System.out.printf(e.getMessage(), firstUserId, secondUserId);
+			System.out.printf(ERROR_USERS_FRIENDS_ALREADY, e.getFirsUserId(), e.getSecondUserId());
 		}
-		
 		System.out.printf(SUCCESS_ADD_FRIEND, firstUserId, secondUserId);
 	}
 	
@@ -172,13 +189,13 @@ public class Main {
 		try {
 			fsys.newPost(userId, hashtagsNumber, hashtags, truthfulness, message);
 		} catch (UserAlreadyExistsException e) {
-			System.out.printf(e.getMessage(), userId);
+			System.out.printf(ERROR_USER_ALREADY_EXISTS, e.getUserId());
 		} catch (InvalidHashtagsListException e) {
-			System.out.println(e.getMessage());
+			System.out.println(ERROR_INVALID_HASHTANGS);
 		} catch (InadequateStanceException e) {
-			System.out.println(e.getMessage());
+			System.out.println(ERROR_INADEQUATE_COMMMENT_STANCE);
 		}
-		System.out.printf(SUCCESS_NEW_POST, userId, truthfulness /*, Number of friends, Post id*/);
+		System.out.printf(SUCCESS_NEW_POST, userId, truthfulness, fsys.getNumberFriends(userId), fsys.getPostId(userId));
 	}
 	
 	private static void newComment(Scanner in, FakeSystem fsys) {
@@ -193,17 +210,15 @@ public class Main {
 		try {
 			fsys.addComment(idUserComment, idUserAuthor, idPost, stance, comment);
 		} catch (UserDoesNotExistExeption e) {
-			System.out.printf(e.getMessage(), idUserComment);           
-		//} catch (UserDoesNotExistExeption e) {                              // BETTER WAY ????????????????????????       
-			//System.out.printf(e.getMessage(), idUserAuthor);                         
+			System.out.printf(ERROR_USER_DOES_NOT_EXISTS, e.getUserId());                                    
 		} catch (UserNoAccessToPostException e) {
-			System.out.printf(e.getMessage(), idUserComment, idPost, idUserAuthor);
+			System.out.printf(ERROR_USER_NO_ACCESS_TO_POST, e.getIdUserComment(), e.getIdPost(), e.getIdUserAuthor());
 		} catch (UserHasNoPostsException e) {
-			System.out.printf(e.getMessage(), idUserAuthor, idPost);
+			System.out.printf(ERROR_USER_NO_POSTS, e.getIdUserAuthor(), e.getIdPost());
 		} catch (UserCanNotComentPostException e) {
-			System.out.printf(e.getMessage(), idUserComment);
+			System.out.printf(ERROR_USER_CAN_NOT_COMMENT, e.getIdUserComment());
 		} catch (InvalidCommentStanceException e) {
-			System.out.println(e.getMessage());
+			System.out.println(ERROR_INVALID_COMMMENT_STANCE);
 		}
 		System.out.println(SUCCESS_NEW_COMMENT);
 	}
