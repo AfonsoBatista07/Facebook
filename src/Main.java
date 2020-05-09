@@ -134,14 +134,14 @@ public class Main {
 	}
 	
 	private static void addUser(Scanner in, FakeSystem fsys) {
-		String type = in.next();
+		String kind = in.next();
 		String userId = in.nextLine();
 		
 		int numberFanaticisms = 0;
 		String[] sequence = {};
 		
 		try {
-			if(fsys.isFanatic(type)) {
+			if(fsys.isFanatic(kind)) {
 				numberFanaticisms = in.nextInt();
 				int counter = numberFanaticisms;
 				while(counter<0) {
@@ -149,9 +149,9 @@ public class Main {
 				}
 			}
 			
-			fsys.addUser(type, userId, numberFanaticisms, sequence);
+			fsys.addUser(kind, userId, numberFanaticisms, sequence);
 		} catch (UnknownUserKindException e) {
-			System.out.printf(ERROR_UNKNOWN_USER_KIND, e.getKind());
+			System.out.printf(ERROR_UNKNOWN_USER_KIND, kind);
 		} catch (UserAlreadyExistsException e) {
 			System.out.printf(ERROR_USER_ALREADY_EXISTS, e.getUserId());
 		} catch (InvalidFanaticismListException e) {
@@ -169,7 +169,7 @@ public class Main {
 		} catch (UserDoesNotExistException e) {
 			System.out.printf(ERROR_USER_DOES_NOT_EXISTS, e.getUserId());
 		} catch (UsersAlreadyFriendsException e) {
-			System.out.printf(ERROR_USERS_FRIENDS_ALREADY, e.getFirsUserId(), e.getSecondUserId());
+			System.out.printf(ERROR_USERS_FRIENDS_ALREADY, firstUserId, secondUserId);
 		}
 		System.out.printf(SUCCESS_ADD_FRIEND, firstUserId, secondUserId);
 	}
@@ -212,11 +212,11 @@ public class Main {
 		} catch (UserDoesNotExistException e) {
 			System.out.printf(ERROR_USER_DOES_NOT_EXISTS, e.getUserId());                                    
 		} catch (UserNoAccessToPostException e) {
-			System.out.printf(ERROR_USER_NO_ACCESS_TO_POST, e.getIdUserComment(), e.getIdPost(), e.getIdUserAuthor());
+			System.out.printf(ERROR_USER_NO_ACCESS_TO_POST, idUserComment, idPost, idUserAuthor);
 		} catch (UserHasNoPostsException e) {
-			System.out.printf(ERROR_USER_NO_POSTS, e.getIdUserAuthor(), e.getIdPost());
+			System.out.printf(ERROR_USER_NO_POSTS, idUserAuthor, idPost);
 		} catch (UserCanNotComentPostException e) {
-			System.out.printf(ERROR_USER_CAN_NOT_COMMENT, e.getIdUserComment());
+			System.out.printf(ERROR_USER_CAN_NOT_COMMENT, idUserComment);
 		} catch (InvalidCommentStanceException e) {
 			System.out.println(ERROR_INVALID_COMMMENT_STANCE);
 		}
