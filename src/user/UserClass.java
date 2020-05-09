@@ -1,13 +1,10 @@
 package user;
-import java.util.AbstractList;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.ListIterator;
 
 import exceptions.UsersAlreadyFriendsException;
 import post.Comment;
 import post.Post;
-import post.PostClass;
 
 public abstract class UserClass implements User{
 	private String id, type;

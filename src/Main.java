@@ -7,7 +7,7 @@ import exceptions.InvalidHashtagsListException;
 import exceptions.UnknownUserKindException;
 import exceptions.UserAlreadyExistsException;
 import exceptions.UserCanNotComentPostException;
-import exceptions.UserDoesNotExistExeption;
+import exceptions.UserDoesNotExistException;
 import exceptions.UserHasNoPostsException;
 import exceptions.UserNoAccessToPostException;
 import exceptions.UsersAlreadyFriendsException;
@@ -166,7 +166,7 @@ public class Main {
 		
 		try {
 			fsys.addFriend(firstUserId, secondUserId);
-		} catch (UserDoesNotExistExeption e) {
+		} catch (UserDoesNotExistException e) {
 			System.out.printf(ERROR_USER_DOES_NOT_EXISTS, e.getUserId());
 		} catch (UsersAlreadyFriendsException e) {
 			System.out.printf(ERROR_USERS_FRIENDS_ALREADY, e.getFirsUserId(), e.getSecondUserId());
@@ -209,7 +209,7 @@ public class Main {
 		
 		try {
 			fsys.addComment(idUserComment, idUserAuthor, idPost, stance, comment);
-		} catch (UserDoesNotExistExeption e) {
+		} catch (UserDoesNotExistException e) {
 			System.out.printf(ERROR_USER_DOES_NOT_EXISTS, e.getUserId());                                    
 		} catch (UserNoAccessToPostException e) {
 			System.out.printf(ERROR_USER_NO_ACCESS_TO_POST, e.getIdUserComment(), e.getIdPost(), e.getIdUserAuthor());

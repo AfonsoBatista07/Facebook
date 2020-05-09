@@ -1,25 +1,20 @@
 package exceptions;
 
 public class UserDoesNotExistException extends RuntimeException{
-	private static final long serialVersionUID = 2398705410217513356L;
+
 	/**
 	 * 
 	 */
+	private static final long serialVersionUID = -3285478462956516911L;
 	
-	private String firstUserId, secondUserId;
+	private String userId;
 	
-	public UserDoesNotExistException(String firstUserId, String secondUserId) {
+	public UserDoesNotExistException(String userId) {
 		super();
-		this.firstUserId = firstUserId;
-		this.secondUserId = secondUserId;
+		this.userId = userId;
 	}
 	
-	public String getFirsUserId() {
-		return firstUserId;
-	}
-	
-	public String getSecondUserId() {
-		return secondUserId;
+	public String getUserId() {
+		return userId;
 	}
 }
-
