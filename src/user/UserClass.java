@@ -1,12 +1,19 @@
 package user;
+import java.util.AbstractList;
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.ListIterator;
 
+import exceptions.UsersAlreadyFriendsException;
+import post.Comment;
 import post.Post;
+import post.PostClass;
 
 public abstract class UserClass implements User{
 	private String id, type;
 	private LinkedList<User> friends;
-	private LinkedList<Post> myPosts, myFeed;
+	protected LinkedList<Post> myPosts, myFeed;
+	private LinkedList<Comment> comments;
 	
 	public UserClass(String id, String type) {
 		this.id = id;
@@ -14,29 +21,72 @@ public abstract class UserClass implements User{
 		friends = new LinkedList<User>();
 		myPosts =  new LinkedList<Post>();
 		myFeed =  new LinkedList<Post>();
+		comments = new LinkedList<Comment>();
 	}
 	
-	@Override
 	public String getId() {
 		return id;
 	}
 
-	@Override
 	public String getType() {
 		return type;
 	}
 
-	public abstract void newPost(String[] hashtags, String type, String message);
+	public void newPost(Post post) {
+		myPosts.addLast(post);
+	}
 
-	public abstract void newComment(String idComment, String idPost, String stance, String comment);
-	
-	public void addFriend(User user) {
-		// TODO Auto-generated method stub
-		
+	public void newComment(Comment comment) {
+		comments.addLast(comment);
 	}
 	
-	private boolean hasFriend(User user) {
-		return false;
+	public void addFeed(Post post) {
+		myFeed.addLast(post);
+	}
+	
+	public void addFriend(User user) {
+		if(hasFriend(user)) throw new UsersAlreadyFriendsException();
+		friends.addLast(user);
+	}
+	
+	public int getNumberFriends() {
+		return friends.size();
+	}
+	
+	public int getNumberPosts() {
+		return myPosts.size();
+	}
+	public int getNumberComments() {
+		return comments.size();
+	}
+	
+	public boolean hasFriend(User user) {
+		return getFriend(user)!=null;
+	}
+	
+	private User getFriend(User user) {
+		Iterator<User> it = friends.iterator();
+		while(it.hasNext()) {
+			User us = it.next();
+			if(us.getId().equals(user.getId())) return user;
+		}
+		return null;
+	}
+	
+	public Iterator<User> getFriendIterator() {
+		return friends.iterator();
+	}
+	
+	public Iterator<Post> getMyPostsIterator() {
+		return myPosts.iterator();
+	}
+	
+	public Iterator<Post> getMyFeedIterator() {
+		return myFeed.iterator();
+	}
+	
+	public Iterator<Comment> getCommentsIterator() {
+		return comments.iterator();
 	}
 
 }
