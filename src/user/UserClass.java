@@ -62,11 +62,9 @@ public abstract class UserClass implements User{
 	}
 	
 	private User getFriend(User user) {
-		Iterator<User> it = friends.iterator();
-		while(it.hasNext()) {
-			User us = it.next();
-			if(us.getId().equals(user.getId())) return user;
-		}
+		for( User acc: friends)
+			if (acc.getId().equals(user.getId()))
+				return acc;
 		return null;
 	}
 	
