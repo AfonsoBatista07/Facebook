@@ -6,7 +6,8 @@ import exceptions.UsersAlreadyFriendsException;
 import post.Comment;
 import post.Post;
 
-public abstract class UserClass implements User{
+public abstract class UserClass implements User {
+	
 	private String id, type;
 	private LinkedList<User> friends;
 	protected LinkedList<Post> myPosts, myFeed;

@@ -1,3 +1,4 @@
+import java.util.LinkedList;
 import java.util.Scanner;
 
 import exceptions.InadequateStanceException;
@@ -12,6 +13,7 @@ import exceptions.UserHasNoPostsException;
 import exceptions.UserNoAccessToPostException;
 import exceptions.UsersAlreadyFriendsException;
 import system.FakeSystem;
+import system.FakeSystemClass;
 
 public class Main {
 
@@ -63,7 +65,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
-		FakeSystem fsys = new SystemClass();
+		FakeSystem fsys = new FakeSystemClass();
 		String cm;
 		do{
 			cm = readOption(in);
@@ -138,18 +140,17 @@ public class Main {
 		String userId = in.nextLine();
 		
 		int numberFanaticisms = 0;
-		String[] sequence = {};
+		LinkedList<String> sequence;
 		
 		try {
 			if(fsys.isFanatic(kind)) {
 				numberFanaticisms = in.nextInt();
-				int counter = numberFanaticisms;
-				while(counter<0) {
-					sequence[counter--] = in.next();
+				for(int i=numberFanaticisms; i<0; i--) {
+					sequence[counter--] = in.next();      // How to do that ?????
 				}
 			}
-			
 			fsys.addUser(kind, userId, numberFanaticisms, sequence);
+			
 		} catch (UnknownUserKindException e) {
 			System.out.printf(ERROR_UNKNOWN_USER_KIND, kind);
 		} catch (UserAlreadyExistsException e) {
@@ -222,22 +223,6 @@ public class Main {
 		}
 		System.out.println(SUCCESS_NEW_COMMENT);
 	}
-	
-	private static void shameless(FakeSystem fsys) {
-		
-	}
-
-	private static void responsive(FakeSystem fsys) {
-		
-	}
-
-	private static void topPoster(FakeSystem fsys) {
-		
-	}
-
-	private static void popularPosts(FakeSystem fsys) {
-		
-	}
 
 	private static void listTopicPosts(Scanner in, FakeSystem fsys) {
 		
@@ -264,6 +249,22 @@ public class Main {
 	}
 
 	private static void listPosts(Scanner in, FakeSystem fsys) {
+		
+	}
+
+	private static void shameless(FakeSystem fsys) {
+		
+	}
+
+	private static void responsive(FakeSystem fsys) {
+		
+	}
+
+	private static void topPoster(FakeSystem fsys) {
+		
+	}
+
+	private static void popularPosts(FakeSystem fsys) {
 		
 	}
 

@@ -1,5 +1,7 @@
 package system;
 
+import java.util.LinkedList;
+
 import exceptions.InadequateStanceException;
 import exceptions.InvalidCommentStanceException;
 import exceptions.InvalidFanaticismListException;
@@ -14,9 +16,15 @@ import exceptions.UsersAlreadyFriendsException;
 
 public interface FakeSystem {
 
-	boolean isFanatic(String type);
+	boolean isFanatic(String kind);
 	
-	void addUser(String type, String userId, int numberFanaticisms, String[] sequence) throws UnknownUserKindException, UserAlreadyExistsException, InvalidFanaticismListException;
+	boolean unknownUserKind(String kind);
+	
+	boolean userExists(String user);
+	
+	boolean repeatedFanaticism(LinkedList<String> sequence);
+	
+	void addUser(String type, String userId, int numberFanaticisms, LinkedList<String> sequence) throws UnknownUserKindException, UserAlreadyExistsException, InvalidFanaticismListException;
 	
 	void addComment(String idUserComment, String idUserAuthor, String idPost, String stance, String comment) throws UserDoesNotExistException, UserHasNoPostsException, UserCanNotComentPostException, UserNoAccessToPostException, InvalidCommentStanceException;
 	

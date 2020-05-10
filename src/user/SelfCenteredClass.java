@@ -1,11 +1,12 @@
 package user;
 
-public class SelfCenteredClass extends UserClass{
-	public SelfCenteredClass(String id, String type) {
-		super(id,type);
+public class SelfCenteredClass extends UserClass implements SelfCentered {
+	
+	public SelfCenteredClass(String id) {
+		super(id, SELF_CENTERED);
 	}
 	
 	public void comment() {
-		super.
+		
 	}
 }

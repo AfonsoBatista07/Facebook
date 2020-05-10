@@ -3,12 +3,13 @@ package user;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-public class FanaticClass extends UserClass{
+public class FanaticClass extends UserClass implements Fanatic {
+	
 	private LinkedList<String>loves, hates;
 	private int numFanaticisms;
 	
-	public FanaticClass(String id, String type, int numFanaticisms, LinkedList<String> loves, LinkedList<String> hates) {
-		super(id, type);
+	public FanaticClass(String id, int numFanaticisms, LinkedList<String> loves, LinkedList<String> hates) {
+		super(id, FANATIC);
 		this.numFanaticisms = numFanaticisms;
 		this.loves = loves;
 		this.hates = hates;
