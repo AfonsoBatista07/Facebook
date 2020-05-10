@@ -7,13 +7,13 @@ import post.Post;
 
 public interface User {
 
-	public static final String FANATIC = "FANATIC";
-	public static final String LIAR = "LIAR";                 // PUBLIC !?
-	public static final String NAIVE = "NAIVE";                       
-	public static final String	SELF_CENTERED = "SELFCENTERED";
+	public static final String FANATIC = "fanatic";
+	public static final String LIAR = "liar";                 // PUBLIC !?
+	public static final String NAIVE = "naive";                       
+	public static final String	SELF_CENTERED = "selfcentered";
 	
 	String getId();
-	String getType();
+	String getKind();
 	void newPost(Post post);
 	void newComment(Comment comment);
 	void addFeed(Post post);

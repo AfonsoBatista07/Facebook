@@ -8,14 +8,14 @@ import post.Post;
 
 public abstract class UserClass implements User {
 	
-	private String id, type;
+	private String id, kind;
 	private LinkedList<User> friends;
 	protected LinkedList<Post> myPosts, myFeed;
 	private LinkedList<Comment> comments;
 	
-	public UserClass(String id, String type) {
+	public UserClass(String id, String kind) {
 		this.id = id;
-		this.type = type;
+		this.kind = kind;
 		friends = new LinkedList<User>();
 		myPosts =  new LinkedList<Post>();
 		myFeed =  new LinkedList<Post>();
@@ -26,8 +26,8 @@ public abstract class UserClass implements User {
 		return id;
 	}
 
-	public String getType() {
-		return type;
+	public String getKind() {
+		return kind;
 	}
 
 	public void newPost(Post post) {

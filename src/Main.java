@@ -1,19 +1,11 @@
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Scanner;
 
-import exceptions.InadequateStanceException;
-import exceptions.InvalidCommentStanceException;
-import exceptions.InvalidFanaticismListException;
-import exceptions.InvalidHashtagsListException;
-import exceptions.UnknownUserKindException;
-import exceptions.UserAlreadyExistsException;
-import exceptions.UserCanNotComentPostException;
-import exceptions.UserDoesNotExistException;
-import exceptions.UserHasNoPostsException;
-import exceptions.UserNoAccessToPostException;
-import exceptions.UsersAlreadyFriendsException;
+import exceptions.*;
 import system.FakeSystem;
 import system.FakeSystemClass;
+import user.User;
 
 public class Main {
 
@@ -49,15 +41,17 @@ public class Main {
  	private static final String ERROR_INVALID_COMMMENT_STANCE = "Invalid comment stance!";
  	private static final String ERROR_INVALID_FANATICISM = "Invalid fanaticism list!";
  	private static final String ERROR_NO_KING_OF_LIARS = "Social distancing has reached fakebook. Post a lie and become the king of liars.";
- 	private static final String ERROR_NO_KING_OF_RESPONSIVENESS = "Social distancing has reached fakebook. Post something and then comment your own post to become the king of responsiveness.";;
+ 	private static final String ERROR_NO_KING_OF_RESPONSIVENESS = "Social distancing has reached fakebook. Post something and then comment your own post to become the king of responsiveness.";
  	private static final String ERROR_NO_KING_POSTERS = "Social distancing has reached fakebook. Post something the king of posters.";
  	private static final String ERROR_NO_POST = "Social distancing has reached fakebook. Please post something.";
+ 	private static final String ERROR_NO_USERS = "There are no users!";
  	private static final String ERROR_NO_COMMENTS = "No comments!";
- 	private static final String ERROR_UNKNOWN_FANATICISM = "Oh please, who would be a fanatic of %s?";
- 	private static final String ERROR_UNKNOWN_TOPIC = "Oh please, whp would write about %s?";
+ 	private static final String ERROR_NO_FRIENDS = "%s has no friends!\n";
+ 	private static final String ERROR_UNKNOWN_FANATICISM = "Oh please, who would be a fanatic of %s?\n";
+ 	private static final String ERROR_UNKNOWN_TOPIC = "Oh please, whp would write about %s?\n";
  	private static final String ERROR_UNKNOWN_USER_KIND = "%s is an invalid user kind!\n";
  	private static final String ERROR_USER_ALREADY_EXISTS= "%s already exists!\n";
- 	private static final String ERROR_USER_DOES_NOT_EXISTS = "%s does not exist!";
+ 	private static final String ERROR_USER_DOES_NOT_EXISTS = "%s does not exist!\n";
  	private static final String ERROR_USER_NO_POSTS =  "%s has no post %s!\n";  
  	private static final String ERROR_USER_NO_ACCESS_TO_POST = "%s has no access to post %s by %s!\n";
  	private static final String ERROR_USERS_FRIENDS_ALREADY = "%s must really admire %s!\n";
@@ -137,19 +131,20 @@ public class Main {
 	
 	private static void addUser(Scanner in, FakeSystem fsys) {
 		String kind = in.next();
-		String userId = in.nextLine();
+		String userId = in.next() + in.nextLine();
 		
 		int numberFanaticisms = 0;
-		LinkedList<String> sequence;
+		LinkedList<String> sequence = new LinkedList<String>() ;
 		
 		try {
 			if(fsys.isFanatic(kind)) {
 				numberFanaticisms = in.nextInt();
 				for(int i=numberFanaticisms; i<0; i--) {
-					sequence[counter--] = in.next();      // How to do that ?????
+					sequence.add(in.next());           // How to do that ?????
 				}
 			}
 			fsys.addUser(kind, userId, numberFanaticisms, sequence);
+			System.out.printf(SUCCESS_ADD_USER, userId);
 			
 		} catch (UnknownUserKindException e) {
 			System.out.printf(ERROR_UNKNOWN_USER_KIND, kind);
@@ -158,21 +153,20 @@ public class Main {
 		} catch (InvalidFanaticismListException e) {
 			System.out.println(ERROR_INVALID_FANATICISM);
 		}
-		System.out.printf(SUCCESS_ADD_USER, userId);
 	}
 
 	private static void addFriend(Scanner in, FakeSystem fsys) {
-		String firstUserId = in.next();
-		String secondUserId = in.next();
+		String firstUserId = in.next() + in.nextLine();
+		String secondUserId = in.next() + in.nextLine();
 		
 		try {
 			fsys.addFriend(firstUserId, secondUserId);
+			System.out.printf(SUCCESS_ADD_FRIEND, firstUserId, secondUserId);
 		} catch (UserDoesNotExistException e) {
 			System.out.printf(ERROR_USER_DOES_NOT_EXISTS, e.getUserId());
 		} catch (UsersAlreadyFriendsException e) {
 			System.out.printf(ERROR_USERS_FRIENDS_ALREADY, firstUserId, secondUserId);
 		}
-		System.out.printf(SUCCESS_ADD_FRIEND, firstUserId, secondUserId);
 	}
 	
 	private static void newPost(Scanner in, FakeSystem fsys) {
@@ -189,6 +183,7 @@ public class Main {
 		
 		try {
 			fsys.newPost(userId, hashtagsNumber, hashtags, truthfulness, message);
+			System.out.printf(SUCCESS_NEW_POST, userId, truthfulness, fsys.getNumberFriends(userId), fsys.getPostId(userId));
 		} catch (UserAlreadyExistsException e) {
 			System.out.printf(ERROR_USER_ALREADY_EXISTS, e.getUserId());
 		} catch (InvalidHashtagsListException e) {
@@ -196,7 +191,6 @@ public class Main {
 		} catch (InadequateStanceException e) {
 			System.out.println(ERROR_INADEQUATE_COMMMENT_STANCE);
 		}
-		System.out.printf(SUCCESS_NEW_POST, userId, truthfulness, fsys.getNumberFriends(userId), fsys.getPostId(userId));
 	}
 	
 	private static void newComment(Scanner in, FakeSystem fsys) {
@@ -210,6 +204,7 @@ public class Main {
 		
 		try {
 			fsys.addComment(idUserComment, idUserAuthor, idPost, stance, comment);
+			System.out.println(SUCCESS_NEW_COMMENT);
 		} catch (UserDoesNotExistException e) {
 			System.out.printf(ERROR_USER_DOES_NOT_EXISTS, e.getUserId());                                    
 		} catch (UserNoAccessToPostException e) {
@@ -221,7 +216,37 @@ public class Main {
 		} catch (InvalidCommentStanceException e) {
 			System.out.println(ERROR_INVALID_COMMMENT_STANCE);
 		}
-		System.out.println(SUCCESS_NEW_COMMENT);
+	}
+	
+	private static void listUsers(Scanner in, FakeSystem fsys) {
+		try {
+			Iterator<User> it = fsys.listUsers();
+			while(it.hasNext()) {
+				User user = it.next();
+				System.out.printf("%s [%s] %d %d %d\n", user.getId(), user.getKind(),
+						user.getNumberFriends(), user.getNumberPosts(), user.getNumberComments());
+			}
+		} catch (NoUsersException e) {
+			System.out.println(ERROR_NO_USERS);
+		}
+	}
+	
+	private static void listFriends(Scanner in, FakeSystem fsys) {
+		String userId = in.next() + in.nextLine();
+		
+		try {
+			Iterator<User> it = fsys.listFriends(userId);
+			while(it.hasNext()) {
+				System.out.print(it.next().getId());
+				if(it.hasNext())
+					System.out.print(", ");
+			}
+			System.out.print(".\n");
+		} catch (UserDoesNotExistException e) {
+			System.out.printf(ERROR_USER_DOES_NOT_EXISTS, e.getUserId());
+		} catch (NoFriendsException e) {
+			System.out.printf(ERROR_NO_FRIENDS, userId);
+		}
 	}
 
 	private static void listTopicPosts(Scanner in, FakeSystem fsys) {
@@ -236,16 +261,8 @@ public class Main {
 		
 	}
 
-	private static void listUsers(Scanner in, FakeSystem fsys) {
-		
-	}
-
 	private static void readPost(Scanner in, FakeSystem fsys) {
 
-	}
-
-	private static void listFriends(Scanner in, FakeSystem fsys) {
-		
 	}
 
 	private static void listPosts(Scanner in, FakeSystem fsys) {

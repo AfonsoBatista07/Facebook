@@ -1,26 +1,22 @@
 package system;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 
-import exceptions.InadequateStanceException;
-import exceptions.InvalidCommentStanceException;
-import exceptions.InvalidFanaticismListException;
-import exceptions.InvalidHashtagsListException;
-import exceptions.UnknownUserKindException;
-import exceptions.UserAlreadyExistsException;
-import exceptions.UserCanNotComentPostException;
-import exceptions.UserDoesNotExistException;
-import exceptions.UserHasNoPostsException;
-import exceptions.UserNoAccessToPostException;
-import exceptions.UsersAlreadyFriendsException;
+import exceptions.*;
+import user.User;
 
 public interface FakeSystem {
 
 	boolean isFanatic(String kind);
 	
-	boolean unknownUserKind(String kind);
+	boolean isLiar(String kind);
 	
-	boolean userExists(String user);
+	boolean isNaive(String kind);
+	
+	boolean isSelfCentered(String kind);
+	
+	boolean userExists(User user);
 	
 	boolean repeatedFanaticism(LinkedList<String> sequence);
 	
@@ -34,5 +30,9 @@ public interface FakeSystem {
 	
 	int getNumberFriends(String userId);
 	
-	String getPostId(String userId);
+	int getPostId(String userId);
+	
+	Iterator<User> listUsers() throws NoUsersException;
+	
+	Iterator<User> listFriends(String userId) throws UserDoesNotExistException, NoFriendsException;
 }
