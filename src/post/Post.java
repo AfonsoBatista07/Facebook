@@ -9,6 +9,7 @@ public interface Post {
 	String getType();
 	int getIdPost();
 	int getNumHashTags();
+	int getNumComments();
 	boolean isHonest();
 	Iterator<String> getHashTags();
 	

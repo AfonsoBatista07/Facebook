@@ -10,16 +10,10 @@ import post.PostClass;
 
 public class FakeSystemClass implements FakeSystem {
 	
-	private static final int DEFAULT_QUANTITY = 500;
-	
 	private SortedMap<String, User> users;
-	
-	private Map<String, Post> posts;
 	
 	public FakeSystemClass() {
 		users = new TreeMap<String, User>();
-		
-		posts = new HashMap<String, Post>(DEFAULT_QUANTITY);
 	}
 
 	public boolean isFanatic(String kind) {
@@ -47,7 +41,7 @@ public class FakeSystemClass implements FakeSystem {
 		else if(isLiar(kind)) user = new LiarClass(userId); 
 		else if(isNaive(kind)) user = new NaiveClass(userId); 
 		else {
-			if(repeatedFanaticism(sequence)) throw new InvalidFanaticismListException();     //NAO FUNCIONA
+			if(repeatedTags(numFanaticisms, sequence)) throw new InvalidFanaticismListException();     //NAO FUNCIONA
 			user = new FanaticClass(userId, numFanaticisms, sequence);
 		}
 		users.put(userId, user);
@@ -63,20 +57,20 @@ public class FakeSystemClass implements FakeSystem {
 		
 		firstUser.addFriend(secondUser); secondUser.addFriend(firstUser);
 	}
+	
+	public void newPost(String userId, int hashtagsNumber, LinkedList<String> hashtags, String truthfulness, String message) {
+		User user = getUser(userId);
+		if(!userExists(user)) throw new UserDoesNotExistException(userId);
+		if(hashtagsNumber <= 0 || repeatedTags(hashtagsNumber, hashtags)) throw new InvalidHashtagsListException();
+		Post post = new PostClass(userId, getPostId(userId)+1, hashtagsNumber, hashtags, truthfulness, message);
+		user.newPost(post);
+		sharePost(post, user);
+	}
 
 	public void addComment(String idUserComment, String idUserAuthor, String idPost, String stance, String comment)
 			throws UserDoesNotExistException, UserHasNoPostsException, UserCanNotComentPostException,
 			UserNoAccessToPostException, InvalidCommentStanceException {
 
-	}
-
-	public void newPost(String userId, int hashtagsNumber, LinkedList<String> hashtags, String truthfulness, String message) {
-		User user = getUser(userId);
-		if(!userExists(user)) throw new UserDoesNotExistException(userId);
-		if(hashtagsNumber <= 0 || repeatedTags(hashtagsNumber, hashtags)) throw new InvalidHashtagsListException();
-		Post post = new PostClass(userId, getPostId(userId), hashtagsNumber, hashtags, truthfulness, message);
-		user.newPost(post);
-		sharePost(post, user);
 	}
 	
 	private boolean repeatedTags(int numTags, LinkedList<String> tags) {
@@ -95,7 +89,7 @@ public class FakeSystemClass implements FakeSystem {
 		}
 	}
 	
-	public User getUser(String userId) {
+	private User getUser(String userId) {
 		return users.get(userId);
 	}
 
@@ -112,14 +106,10 @@ public class FakeSystemClass implements FakeSystem {
 	}
 	
 	public boolean unknownUserKind(String kind) {
-		return kind.equalsIgnoreCase(User.FANATIC) ||
-			   kind.equalsIgnoreCase(User.LIAR) ||          
-			   kind.equalsIgnoreCase(User.NAIVE) ||
-			   kind.equalsIgnoreCase(User.SELF_CENTERED);
-	}
-	
-	public boolean repeatedFanaticism(LinkedList<String> sequence) {          //FAZERRRRR !
-		return true;
+		return isFanatic(kind) ||
+			   isLiar(kind) ||          
+			   isNaive(kind) ||
+			   isSelfCentered(kind);
 	}
 
 	public Iterator<User> listUsers() throws NoUsersException{
@@ -130,11 +120,19 @@ public class FakeSystemClass implements FakeSystem {
 		return it;
 	}
 	
-	public Iterator<User> listFriends(String userId) throws UserDoesNotExistException, NoFriendsException {
+	public Iterator<User> listFriends(String userId) {
 		User user = getUser(userId);
 		if(!userExists(user)) throw new UserDoesNotExistException(userId);
-		Iterator<User> it = getUser(userId).getFriendIterator();
+		Iterator<User> it = user.getFriendIterator();
 		if(!it.hasNext()) throw new NoFriendsException();
+		return it;
+	}
+	
+	public Iterator<Post> listUserPosts(String userId) {
+		User user = getUser(userId);
+		if(!userExists(user)) throw new UserDoesNotExistException(userId);
+		Iterator<Post> it = user.getMyPostsIterator();
+		if(!it.hasNext()) throw new NoPostsException();
 		return it;
 	}
 

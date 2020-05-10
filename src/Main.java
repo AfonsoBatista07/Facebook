@@ -44,7 +44,8 @@ public class Main {
  	private static final String ERROR_NO_KING_OF_LIARS = "Social distancing has reached fakebook. Post a lie and become the king of liars.";
  	private static final String ERROR_NO_KING_OF_RESPONSIVENESS = "Social distancing has reached fakebook. Post something and then comment your own post to become the king of responsiveness.";
  	private static final String ERROR_NO_KING_POSTERS = "Social distancing has reached fakebook. Post something the king of posters.";
- 	private static final String ERROR_NO_POST = "Social distancing has reached fakebook. Please post something.";
+ 	private static final String ERROR_NO_KING_POPULAR_POST = "Social distancing has reached fakebook. Please post something.";
+ 	private static final String ERROR_NO_POSTS = "%s has no posts!\n";
  	private static final String ERROR_NO_USERS = "There are no users!";
  	private static final String ERROR_NO_COMMENTS = "No comments!";
  	private static final String ERROR_NO_FRIENDS = "%s has no friends!\n";
@@ -132,7 +133,7 @@ public class Main {
 	
 	private static void addUser(Scanner in, FakeSystem fsys) {
 		String kind = in.next();
-		String userId = in.next() + in.nextLine();
+		String userId = in.nextLine().trim();
 		
 		int numberFanaticisms = 0;
 		LinkedList<String> sequence = new LinkedList<String>() ;
@@ -157,8 +158,8 @@ public class Main {
 	}
 
 	private static void addFriend(Scanner in, FakeSystem fsys) {
-		String firstUserId = in.next() + in.nextLine();
-		String secondUserId = in.next() + in.nextLine();
+		String firstUserId = in.nextLine().trim();
+		String secondUserId = in.nextLine().trim();
 		
 		try {
 			fsys.addFriend(firstUserId, secondUserId);
@@ -195,8 +196,8 @@ public class Main {
 	
 	private static void newComment(Scanner in, FakeSystem fsys) {
 		
-		String idUserComment = in.nextLine();
-		String idUserAuthor = in.nextLine();
+		String idUserComment = in.nextLine().trim();
+		String idUserAuthor = in.nextLine().trim();
 		String idPost = in.next();
 		String stance = in.next();
 		String comment = in.next();
@@ -232,7 +233,7 @@ public class Main {
 	}
 	
 	private static void listFriends(Scanner in, FakeSystem fsys) {
-		String userId = in.next() + in.nextLine();
+		String userId = in.nextLine().trim();
 		
 		try {
 			Iterator<User> it = fsys.listFriends(userId);
@@ -246,6 +247,22 @@ public class Main {
 			System.out.printf(ERROR_USER_DOES_NOT_EXISTS, e.getUserId());
 		} catch (NoFriendsException e) {
 			System.out.printf(ERROR_NO_FRIENDS, userId);
+		}
+	}
+	
+    private static void listPosts(Scanner in, FakeSystem fsys) {
+		String userId = in.nextLine().trim();
+		try {
+			Iterator<Post> it = fsys.listUserPosts(userId); 
+			while(it.hasNext()) {
+				Post post = it.next();
+				System.out.printf("%d. [%s] %s [%s comments]\n", post.getIdPost(),
+						post.getType(), post.getMessage(), post.getNumComments());
+			}
+		} catch (UserDoesNotExistException e) {
+			System.out.printf(ERROR_USER_DOES_NOT_EXISTS, e.getUserId());
+		} catch (NoPostsException e) {
+			System.out.printf(ERROR_NO_POSTS, userId);
 		}
 	}
 
@@ -263,10 +280,6 @@ public class Main {
 
 	private static void readPost(Scanner in, FakeSystem fsys) {
 
-	}
-
-	private static void listPosts(Scanner in, FakeSystem fsys) {
-		
 	}
 
 	private static void shameless(FakeSystem fsys) {

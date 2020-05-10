@@ -11,10 +11,13 @@ public class PostClass implements Post{
 	
 	public PostClass(String idUser, int idPost, int numHashTags, LinkedList<String> hashTags, String type, String message) {
 		this.idUser = idUser;
+		this.idPost = idPost;
 		this.numHashTags = numHashTags;
 		this.hashTags = hashTags;
 		this.type = type;
 		this.message = message;
+		
+		comments = new LinkedList<Comment>();
 	}
 	
 	public void newComment(String userId, String stance, String comment) {
@@ -32,8 +35,13 @@ public class PostClass implements Post{
 	public String getType() {
 		return type;
 	}
+	
 	public int getNumHashTags() {
 		return numHashTags;
+	}
+	
+	public int getNumComments() {
+		return comments.size();
 	}
 	
 	public int getIdPost() {
@@ -45,7 +53,7 @@ public class PostClass implements Post{
 	}
 	
 	public boolean isHonest() {
-		return type.equalsIgnoreCase("honest");
+		return type.equalsIgnoreCase("honest");          //MUDAR ISTO
 	}
 
 }

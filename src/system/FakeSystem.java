@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import exceptions.*;
+import post.Post;
 import user.User;
 
 public interface FakeSystem {
@@ -17,8 +18,6 @@ public interface FakeSystem {
 	boolean isSelfCentered(String kind);
 	
 	boolean userExists(User user);
-	
-	boolean repeatedFanaticism(LinkedList<String> sequence);
 	
 	void addUser(String type, String userId, int numberFanaticisms, LinkedList<String> sequence) throws UnknownUserKindException, UserAlreadyExistsException, InvalidFanaticismListException;
 	
@@ -35,4 +34,6 @@ public interface FakeSystem {
 	Iterator<User> listUsers() throws NoUsersException;
 	
 	Iterator<User> listFriends(String userId) throws UserDoesNotExistException, NoFriendsException;
+	
+	Iterator<Post> listUserPosts(String userId) throws UserDoesNotExistException, NoPostsException; 
 }
