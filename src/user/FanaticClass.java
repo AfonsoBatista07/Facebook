@@ -51,7 +51,7 @@ public class FanaticClass extends UserClass implements Fanatic {
 		return find(hate, hates);
 	}
 	
-	public String getFanaticism(Post post) {
+	private String getFanaticism(Post post) {
 		Iterator<String> it = post.getHashTags();
 		while (it.hasNext()) {
 			int i = 0;
