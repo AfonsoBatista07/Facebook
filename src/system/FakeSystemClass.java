@@ -90,17 +90,17 @@ public class FakeSystemClass implements FakeSystem {
 		return user!=null;
 	}
 	
+	public boolean unknownUserKind(String kind) {
+		return kind.equalsIgnoreCase(User.FANATIC) ||
+			   kind.equalsIgnoreCase(User.LIAR) ||          
+			   kind.equalsIgnoreCase(User.NAIVE) ||
+			   kind.equalsIgnoreCase(User.SELF_CENTERED);
+	}
+	
 	public boolean repeatedFanaticism(LinkedList<String> sequence) {          //FAZERRRRR !
 		return true;
 	}
-	
-	public boolean unknownUserKind(String kind) { 
-		return isFanatic(kind) || 
-			   isLiar(kind) ||                //BETTER WAY 
-			   isNaive(kind) || 
-			   isSelfCentered(kind); 
-	} 
-	
+
 	public Iterator<User> listUsers() throws NoUsersException{
 		Iterator<User> it = users.values().iterator();
 		

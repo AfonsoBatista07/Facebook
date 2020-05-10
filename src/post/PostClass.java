@@ -1,14 +1,15 @@
 package post;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 
 public class PostClass implements Post{
 	private String message, type, idUser;
 	private int numHashTags, idPost;
-	private String[] hashTags;
+	private LinkedList<String> hashTags;
 	private LinkedList<Comment> comments;
 	
-	public PostClass(String idUser, int idPost, int numHashTags, String[] hashTags, String type, String message) {
+	public PostClass(String idUser, int idPost, int numHashTags, LinkedList<String> hashTags, String type, String message) {
 		this.idUser = idUser;
 		this.numHashTags = numHashTags;
 		this.hashTags = hashTags;
@@ -30,6 +31,17 @@ public class PostClass implements Post{
 
 	public String getType() {
 		return type;
+	}
+	public int getNumHashTags() {
+		return numHashTags;
+	}
+	
+	public int getIdPost() {
+		return idPost;
+	}
+	
+	public Iterator<String> getHashTags() {
+		return hashTags.iterator();
 	}
 	
 	public boolean isHonest() {
