@@ -6,6 +6,7 @@ import java.util.*;
 
 import user.*;
 import post.Post;
+import post.PostClass;
 
 public class FakeSystemClass implements FakeSystem {
 	
@@ -47,7 +48,7 @@ public class FakeSystemClass implements FakeSystem {
 		else if(isNaive(kind)) user = new NaiveClass(userId); 
 		else {
 			if(repeatedFanaticism(sequence)) throw new InvalidFanaticismListException();     //NAO FUNCIONA
-			user = new FanaticClass(userId, numFanaticisms, sequence, sequence);
+			user = new FanaticClass(userId, numFanaticisms, sequence);
 		}
 		users.put(userId, user);
 	}
@@ -69,9 +70,29 @@ public class FakeSystemClass implements FakeSystem {
 
 	}
 
-	public void newPost(String userId, int hashtagsNumber, String[] hashtags, String truthfulness, String message)
-			throws UserAlreadyExistsException, InvalidHashtagsListException, InadequateStanceException {
-
+	public void newPost(String userId, int hashtagsNumber, LinkedList<String> hashtags, String truthfulness, String message) {
+		User user = getUser(userId);
+		if(!userExists(user)) throw new UserDoesNotExistException(userId);
+		if(hashtagsNumber <= 0 || repeatedTags(hashtagsNumber, hashtags)) throw new InvalidHashtagsListException();
+		Post post = new PostClass(userId, getPostId(userId), hashtagsNumber, hashtags, truthfulness, message);
+		user.newPost(post);
+		sharePost(post, user);
+	}
+	
+	private boolean repeatedTags(int numTags, LinkedList<String> tags) {
+		for (int i = 0; i < numTags-1; i++) {
+			for(int j = i+1; j < numTags; j++) {
+				if(tags.get(i).equals(tags.get(j))) return true;
+			}
+		}
+		return false;
+	}
+	
+	private void sharePost(Post post, User user) {
+		Iterator<User> it = user.getFriendIterator();
+		while(it.hasNext()) {
+			it.next().addFeed(post);
+		}
 	}
 	
 	public User getUser(String userId) {
@@ -83,7 +104,7 @@ public class FakeSystemClass implements FakeSystem {
 	}
 
 	public int getPostId(String userId) {
-		return getUser(userId).getNumberPosts()+1;
+		return getUser(userId).getNumberPosts();
 	}
 	
 	public boolean userExists(User user) {

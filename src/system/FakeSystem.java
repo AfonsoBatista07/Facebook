@@ -26,7 +26,7 @@ public interface FakeSystem {
 	
 	void addFriend(String firstUserId, String secondUserId) throws UserDoesNotExistException, UsersAlreadyFriendsException;
 	
-	void newPost(String userId, int hashtagsNumber, String[] hashtags, String truthfulness, String message) throws UserAlreadyExistsException, InvalidHashtagsListException, InadequateStanceException;
+	void newPost(String userId, int hashtagsNumber, LinkedList<String> hashtags, String truthfulness, String message);
 	
 	int getNumberFriends(String userId);
 	

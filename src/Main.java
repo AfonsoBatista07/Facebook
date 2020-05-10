@@ -3,6 +3,7 @@ import java.util.LinkedList;
 import java.util.Scanner;
 
 import exceptions.*;
+import post.Post;
 import system.FakeSystem;
 import system.FakeSystemClass;
 import user.User;
@@ -135,14 +136,14 @@ public class Main {
 		
 		int numberFanaticisms = 0;
 		LinkedList<String> sequence = new LinkedList<String>() ;
+		if(fsys.isFanatic(kind)) {
+			numberFanaticisms = in.nextInt();
+			for(int i=numberFanaticisms; i<0; i--) {
+				sequence.add(in.next());           // How to do that ?????
+			}
+		}
 		
 		try {
-			if(fsys.isFanatic(kind)) {
-				numberFanaticisms = in.nextInt();
-				for(int i=numberFanaticisms; i<0; i--) {
-					sequence.add(in.next());           // How to do that ?????
-				}
-			}
 			fsys.addUser(kind, userId, numberFanaticisms, sequence);
 			System.out.printf(SUCCESS_ADD_USER, userId);
 			
@@ -170,13 +171,12 @@ public class Main {
 	}
 	
 	private static void newPost(Scanner in, FakeSystem fsys) {
-		String userId = in.nextLine();
+		String userId = in.nextLine().trim();
 		int hashtagsNumber = in.nextInt();
 		
-		String[] hashtags = new String[hashtagsNumber]; 
-		int counter = hashtagsNumber;
-		while(counter<0) {
-			hashtags[counter--] = in.next();
+		LinkedList<String> hashtags = new LinkedList<String>();; 
+		for(int i = 0; i < hashtagsNumber; i++) {
+			hashtags.add(in.next());
 		}
 		String truthfulness = in.next();
 		String message = in.nextLine();
@@ -184,8 +184,8 @@ public class Main {
 		try {
 			fsys.newPost(userId, hashtagsNumber, hashtags, truthfulness, message);
 			System.out.printf(SUCCESS_NEW_POST, userId, truthfulness, fsys.getNumberFriends(userId), fsys.getPostId(userId));
-		} catch (UserAlreadyExistsException e) {
-			System.out.printf(ERROR_USER_ALREADY_EXISTS, e.getUserId());
+		} catch (UserDoesNotExistException e) {
+			System.out.printf(ERROR_USER_DOES_NOT_EXISTS, e.getUserId());
 		} catch (InvalidHashtagsListException e) {
 			System.out.println(ERROR_INVALID_HASHTANGS);
 		} catch (InadequateStanceException e) {
