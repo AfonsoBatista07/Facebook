@@ -1,8 +1,8 @@
 package user;
 
-import exceptions.UserCanNotComentPostException;
+import exceptions.UserCanNotCommentPostException;
+import exceptions.InvalidCommentStanceException;
 import post.Comment;
-import post.Post;
 
 public class SelfCenteredClass extends UserClass {
 	
@@ -10,8 +10,9 @@ public class SelfCenteredClass extends UserClass {
 		super(id, SELF_CENTERED);
 	}
 	
-	public void newComment(Post post, Comment comment) {
-		if(post.getAuthorId().equals(super.getId()) && comment.isPositive()) super.newComment(comment);
-		else throw new UserCanNotComentPostException();
+	public void newComment(int postId, Comment comment) {
+		if(getPost(postId).getAuthorId().equals(getId())) super.newComment(postId, comment);
+		else if(comment.isPositive()) throw new InvalidCommentStanceException();
+		else throw new UserCanNotCommentPostException();
 	}
 }

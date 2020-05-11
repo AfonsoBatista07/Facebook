@@ -1,6 +1,7 @@
 package user;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.ArrayList;
 
 import exceptions.UsersAlreadyFriendsException;
 import post.Comment;
@@ -10,15 +11,15 @@ public abstract class UserClass implements User {
 	
 	private String id, kind;
 	private LinkedList<User> friends;
-	protected LinkedList<Post> myPosts, myFeed;
+	protected ArrayList<Post> myPosts, myFeed;
 	private LinkedList<Comment> comments;
 	
 	public UserClass(String id, String kind) {
 		this.id = id;
 		this.kind = kind;
 		friends = new LinkedList<User>();
-		myPosts =  new LinkedList<Post>();
-		myFeed =  new LinkedList<Post>();
+		myPosts =  new ArrayList<Post>();
+		myFeed =  new ArrayList<Post>();
 		comments = new LinkedList<Comment>();
 	}
 	
@@ -31,15 +32,16 @@ public abstract class UserClass implements User {
 	}
 
 	public void newPost(Post post) {
-		myPosts.addLast(post);
+		myPosts.add(post);
 	}
 
-	public void newComment(Comment comment) {
-		comments.addLast(comment);
+	public void newComment(int postId, Comment comment) {
+		comments.add(comment);
+		getPost(postId).newComment(comment);
 	}
 	
 	public void addFeed(Post post) {
-		myFeed.addLast(post);
+		myFeed.add(post);
 	}
 	
 	public void addFriend(User user) {
@@ -62,11 +64,27 @@ public abstract class UserClass implements User {
 		return getFriend(user)!=null;
 	}
 	
-	private User getFriend(User user) {
+	public boolean hasPost(int postId) {
+		return getPost(postId)!=null;
+	}
+	
+	public Post getPost(int postId) {
+		for( Post post: myPosts)
+			if (post.getIdPost() == (postId))            //MAKE IT BETTER ...           
+				return post;
+		return null;
+	}
+	
+	public User getFriend(User user) {
 		for( User acc: friends)
 			if (acc.getId().equals(user.getId()))
 				return acc;
 		return null;
+	}
+	
+	public void sharePost(Post post) {
+		for(User user: friends)
+			user.addFeed(post);	
 	}
 	
 	public Iterator<User> getFriendIterator() {
@@ -83,6 +101,10 @@ public abstract class UserClass implements User {
 	
 	public Iterator<Comment> getCommentsIterator() {
 		return comments.iterator();
+	}
+	
+	public Iterator<Comment> readPost(int postId) {
+		return getPost(postId).readPost();
 	}
 
 }

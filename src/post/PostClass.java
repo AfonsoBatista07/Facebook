@@ -20,8 +20,8 @@ public class PostClass implements Post{
 		comments = new LinkedList<Comment>();
 	}
 	
-	public void newComment(String userId, String stance, String comment) {
-		comments.addLast(new CommentClass(userId, stance, comment));
+	public void newComment(Comment comment) {
+		comments.add(comment);
 	}
 	
 	public String getMessage() {
@@ -50,6 +50,10 @@ public class PostClass implements Post{
 	
 	public Iterator<String> getHashTags() {
 		return hashTags.iterator();
+	}
+	
+	public Iterator<Comment> readPost() {
+		return comments.iterator();
 	}
 	
 	public boolean isHonest() {

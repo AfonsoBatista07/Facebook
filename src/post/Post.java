@@ -11,6 +11,8 @@ public interface Post {
 	int getNumHashTags();
 	int getNumComments();
 	boolean isHonest();
+	void newComment(Comment comment);
 	Iterator<String> getHashTags();
+	Iterator<Comment> readPost();
 	
 }

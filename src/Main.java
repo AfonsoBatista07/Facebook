@@ -3,9 +3,8 @@ import java.util.LinkedList;
 import java.util.Scanner;
 
 import exceptions.*;
-import post.Post;
-import system.FakeSystem;
-import system.FakeSystemClass;
+import post.*;
+import system.*;
 import user.User;
 
 public class Main {
@@ -54,7 +53,7 @@ public class Main {
  	private static final String ERROR_UNKNOWN_USER_KIND = "%s is an invalid user kind!\n";
  	private static final String ERROR_USER_ALREADY_EXISTS= "%s already exists!\n";
  	private static final String ERROR_USER_DOES_NOT_EXISTS = "%s does not exist!\n";
- 	private static final String ERROR_USER_NO_POSTS =  "%s has no post %s!\n";  
+ 	private static final String ERROR_USER_NO_POSTS =  "%s has no post %d!\n";  
  	private static final String ERROR_USER_NO_ACCESS_TO_POST = "%s has no access to post %s by %s!\n";
  	private static final String ERROR_USERS_FRIENDS_ALREADY = "%s must really admire %s!\n";
  	private static final String ERROR_USER_CAN_NOT_COMMENT = "%s cannot comment on this post!\n";
@@ -140,7 +139,7 @@ public class Main {
 		if(fsys.isFanatic(kind)) {
 			numberFanaticisms = in.nextInt();
 			for(int i=numberFanaticisms; i<0; i--) {
-				sequence.add(in.next());           // How to do that ?????
+				sequence.add(in.next());          
 			}
 		}
 		
@@ -180,7 +179,7 @@ public class Main {
 			hashtags.add(in.next());
 		}
 		String truthfulness = in.next();
-		String message = in.nextLine();
+		String message = in.nextLine().trim();
 		
 		try {
 			fsys.newPost(userId, hashtagsNumber, hashtags, truthfulness, message);
@@ -198,10 +197,9 @@ public class Main {
 		
 		String idUserComment = in.nextLine().trim();
 		String idUserAuthor = in.nextLine().trim();
-		String idPost = in.next();
+		int idPost = in.nextInt();
 		String stance = in.next();
-		String comment = in.next();
-		in.nextLine();
+		String comment = in.nextLine().trim();
 		
 		try {
 			fsys.addComment(idUserComment, idUserAuthor, idPost, stance, comment);
@@ -212,7 +210,7 @@ public class Main {
 			System.out.printf(ERROR_USER_NO_ACCESS_TO_POST, idUserComment, idPost, idUserAuthor);
 		} catch (UserHasNoPostsException e) {
 			System.out.printf(ERROR_USER_NO_POSTS, idUserAuthor, idPost);
-		} catch (UserCanNotComentPostException e) {
+		} catch (UserCanNotCommentPostException e) {
 			System.out.printf(ERROR_USER_CAN_NOT_COMMENT, idUserComment);
 		} catch (InvalidCommentStanceException e) {
 			System.out.println(ERROR_INVALID_COMMMENT_STANCE);
@@ -265,6 +263,27 @@ public class Main {
 			System.out.printf(ERROR_NO_POSTS, userId);
 		}
 	}
+    
+    private static void readPost(Scanner in, FakeSystem fsys) {
+    	String userId = in.nextLine().trim();
+    	int postId = in.nextInt();
+    	try {
+    		Post post = fsys.getPost(userId, postId);
+        	System.out.printf("[%s %s] %s\n", post.getAuthorId(), post.getType(), post.getMessage());    //NAO FUNCIONAAA
+        	
+        	Iterator<Comment> it = fsys.readPost(userId, postId);
+    		while(it.hasNext()) {
+    			Comment cmt = it.next();
+    			System.out.printf("[%s %s] %s\n", cmt.getUserId(), cmt.getStance(), cmt.getComment());
+    		}
+    	} catch (UserDoesNotExistException e) {
+    		System.out.printf(ERROR_USER_DOES_NOT_EXISTS, e.getUserId());
+    	} catch (UserHasNoPostsException e) {
+    		System.out.printf(ERROR_USER_NO_POSTS, userId, postId);
+    	} catch (NoCommentsException e) {
+    		System.out.println(ERROR_NO_COMMENTS);
+    	}
+	}
 
 	private static void listTopicPosts(Scanner in, FakeSystem fsys) {
 		
@@ -276,10 +295,6 @@ public class Main {
 
 	private static void listComments(Scanner in, FakeSystem fsys) {
 		
-	}
-
-	private static void readPost(Scanner in, FakeSystem fsys) {
-
 	}
 
 	private static void shameless(FakeSystem fsys) {

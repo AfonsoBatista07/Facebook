@@ -1,12 +1,9 @@
 package system;
 
 import exceptions.*;
-
-import java.util.*;
-
 import user.*;
-import post.Post;
-import post.PostClass;
+import post.*;
+import java.util.*;
 
 public class FakeSystemClass implements FakeSystem {
 	
@@ -37,7 +34,7 @@ public class FakeSystemClass implements FakeSystem {
 		if(!unknownUserKind(kind)) throw new UnknownUserKindException(); 
 		if(userExists(user)) throw new UserAlreadyExistsException(userId); 
 		
-		if(isFanatic(kind)) user = new SelfCenteredClass(userId);
+		if(isSelfCentered(kind)) user = new SelfCenteredClass(userId);
 		else if(isLiar(kind)) user = new LiarClass(userId); 
 		else if(isNaive(kind)) user = new NaiveClass(userId); 
 		else {
@@ -53,7 +50,6 @@ public class FakeSystemClass implements FakeSystem {
 		
 		if(!userExists(firstUser)) throw new UserDoesNotExistException(firstUserId);
 		if(!userExists(secondUser)) throw new UserDoesNotExistException(secondUserId);
-		if(firstUser.hasFriend(secondUser)) throw new UsersAlreadyFriendsException();
 		
 		firstUser.addFriend(secondUser); secondUser.addFriend(firstUser);
 	}
@@ -67,10 +63,23 @@ public class FakeSystemClass implements FakeSystem {
 		sharePost(post, user);
 	}
 
-	public void addComment(String idUserComment, String idUserAuthor, String idPost, String stance, String comment)
-			throws UserDoesNotExistException, UserHasNoPostsException, UserCanNotComentPostException,
-			UserNoAccessToPostException, InvalidCommentStanceException {
+	public void addComment(String idUserComment, String idUserAuthor, int idPost, String stance, String comment) {
+		User userComment = getUser(idUserComment), userAuthor = getUser(idUserAuthor);
+		if(!userExists(userComment)) throw new UserDoesNotExistException(idUserComment);
+		if(!userExists(userAuthor)) throw new UserDoesNotExistException(idUserAuthor);
+		if(!(hasFriend(userComment, userAuthor) || userComment.equals(userComment))) throw new UserNoAccessToPostException();
+		if(hasPost(userAuthor, idPost)) throw new UserHasNoPostsException();
+		Comment cmt = new CommentClass(idUserComment, stance, comment);
+		userAuthor.newComment(idPost, cmt);
 
+	}
+	
+	private boolean hasPost(User user, int idPost) {
+		return user.hasPost(idPost-1);
+	}
+	
+	private boolean hasFriend(User firstUser, User secondUser) {
+		return firstUser.hasFriend(secondUser);
 	}
 	
 	private boolean repeatedTags(int numTags, LinkedList<String> tags) {
@@ -83,10 +92,7 @@ public class FakeSystemClass implements FakeSystem {
 	}
 	
 	private void sharePost(Post post, User user) {
-		Iterator<User> it = user.getFriendIterator();
-		while(it.hasNext()) {
-			it.next().addFeed(post);
-		}
+		user.sharePost(post);
 	}
 	
 	private User getUser(String userId) {
@@ -111,6 +117,10 @@ public class FakeSystemClass implements FakeSystem {
 			   isNaive(kind) ||
 			   isSelfCentered(kind);
 	}
+	
+	public Post getPost(String userId, int postId) {
+		return getUser(userId).getPost(postId);
+	}
 
 	public Iterator<User> listUsers() throws NoUsersException{
 		Iterator<User> it = users.values().iterator();
@@ -123,16 +133,34 @@ public class FakeSystemClass implements FakeSystem {
 	public Iterator<User> listFriends(String userId) {
 		User user = getUser(userId);
 		if(!userExists(user)) throw new UserDoesNotExistException(userId);
+		
 		Iterator<User> it = user.getFriendIterator();
+		
 		if(!it.hasNext()) throw new NoFriendsException();
+		
 		return it;
 	}
 	
 	public Iterator<Post> listUserPosts(String userId) {
 		User user = getUser(userId);
 		if(!userExists(user)) throw new UserDoesNotExistException(userId);
+		
 		Iterator<Post> it = user.getMyPostsIterator();
+		
 		if(!it.hasNext()) throw new NoPostsException();
+		
+		return it;
+	}
+
+	public Iterator<Comment> readPost(String userId, int postId) {
+		User user = getUser(userId);
+		if(!userExists(user)) throw new UserDoesNotExistException(userId);
+		if(hasPost(user, postId)) throw new UserHasNoPostsException();
+		
+		Iterator<Comment> it = user.readPost(postId);
+		
+		if(!it.hasNext()) throw new NoCommentsException();
+		
 		return it;
 	}
 

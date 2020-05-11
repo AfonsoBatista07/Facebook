@@ -15,16 +15,20 @@ public interface User {
 	String getId();
 	String getKind();
 	void newPost(Post post);
-	void newComment(Comment comment);
+	void newComment(int postId, Comment comment);
 	void addFeed(Post post);
+	void sharePost(Post post);
 	void addFriend(User user);
 	int getNumberFriends();
 	int getNumberPosts();
 	int getNumberComments();
+	boolean hasPost(int postId);
 	boolean hasFriend(User user);
+	Post getPost(int postId);
 	Iterator<User> getFriendIterator();
 	Iterator<Post> getMyPostsIterator();
 	Iterator<Post> getMyFeedIterator();
 	Iterator<Comment> getCommentsIterator();
+	Iterator<Comment> readPost(int postId);
 	
 }

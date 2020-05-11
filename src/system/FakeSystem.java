@@ -5,6 +5,7 @@ import java.util.LinkedList;
 
 import exceptions.*;
 import post.Post;
+import post.Comment;
 import user.User;
 
 public interface FakeSystem {
@@ -21,7 +22,7 @@ public interface FakeSystem {
 	
 	void addUser(String type, String userId, int numberFanaticisms, LinkedList<String> sequence) throws UnknownUserKindException, UserAlreadyExistsException, InvalidFanaticismListException;
 	
-	void addComment(String idUserComment, String idUserAuthor, String idPost, String stance, String comment) throws UserDoesNotExistException, UserHasNoPostsException, UserCanNotComentPostException, UserNoAccessToPostException, InvalidCommentStanceException;
+	void addComment(String idUserComment, String idUserAuthor, int idPost, String stance, String comment) throws UserDoesNotExistException, UserHasNoPostsException, UserCanNotCommentPostException, UserNoAccessToPostException, InvalidCommentStanceException;
 	
 	void addFriend(String firstUserId, String secondUserId) throws UserDoesNotExistException, UsersAlreadyFriendsException;
 	
@@ -30,6 +31,10 @@ public interface FakeSystem {
 	int getNumberFriends(String userId);
 	
 	int getPostId(String userId);
+	
+	Post getPost(String userId, int postId);   // FAZER MELHOR 
+	
+	Iterator<Comment> readPost(String userId, int postId) throws UserDoesNotExistException, UserHasNoPostsException, NoCommentsException;
 	
 	Iterator<User> listUsers() throws NoUsersException;
 	

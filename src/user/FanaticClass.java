@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import exceptions.InadequateStanceException;
+import exceptions.InvalidCommentStanceException;
 import post.Comment;
 import post.Post;
 
@@ -29,14 +30,15 @@ public class FanaticClass extends UserClass implements Fanatic {
 		super.newPost(post);
 	}
 	
-	public void newComment(Post post, Comment comment) {
+	public void newComment(int postId, Comment comment) {
+		Post post = getPost(postId);
 		if(loves(getFanaticism(post))) {
-			if((post.isHonest() && !comment.isPositive()) || (!post.isHonest() && comment.isPositive())) throw new InadequateStanceException();
+			if((post.isHonest() && !comment.isPositive()) || (!post.isHonest() && comment.isPositive())) throw new InvalidCommentStanceException();
 		}
 		if(hates(getFanaticism(post))) {
-			if((post.isHonest() && comment.isPositive()) || (!post.isHonest() && !comment.isPositive())) throw new InadequateStanceException();
+			if((post.isHonest() && comment.isPositive()) || (!post.isHonest() && !comment.isPositive())) throw new InvalidCommentStanceException();
 		}
-		super.newComment(comment);
+		super.newComment(postId, comment);
 	}
 	
 	public int getNumFanaticisms() {
@@ -54,8 +56,7 @@ public class FanaticClass extends UserClass implements Fanatic {
 	private String getFanaticism(Post post) {
 		Iterator<String> it = post.getHashTags();
 		while (it.hasNext()) {
-			int i = 0;
-			for(i = 0; i < numFanaticisms; i++) {
+			for(int i = 0; i < numFanaticisms; i++) {
 				if(hashTags.get(i).equals(it.next())) return hashTags.get(i);
 			}
 		}
