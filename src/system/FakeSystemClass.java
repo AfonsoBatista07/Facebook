@@ -30,9 +30,9 @@ public class FakeSystemClass implements FakeSystem {
 	}
 	
 	public void addUser(String kind, String userId, int numFanaticisms, LinkedList<String> sequence) {
-		User user = getUser(userId);
+		User user;
 		if(!unknownUserKind(kind)) throw new UnknownUserKindException(); 
-		if(userExists(user)) throw new UserAlreadyExistsException(userId); 
+		if(userExists(userId)) throw new UserAlreadyExistsException(userId); 
 		
 		if(isSelfCentered(kind)) user = new SelfCenteredClass(userId);
 		else if(isLiar(kind)) user = new LiarClass(userId); 
@@ -48,15 +48,15 @@ public class FakeSystemClass implements FakeSystem {
 		User firstUser = getUser(firstUserId), secondUser = getUser(secondUserId);
 		
 		
-		if(!userExists(firstUser)) throw new UserDoesNotExistException(firstUserId);
-		if(!userExists(secondUser)) throw new UserDoesNotExistException(secondUserId);
+		//if(!userExists(firstUser)) throw new UserDoesNotExistException(firstUserId);
+		//if(!userExists(secondUser)) throw new UserDoesNotExistException(secondUserId);
 		
 		firstUser.addFriend(secondUser); secondUser.addFriend(firstUser);
 	}
 	
 	public void newPost(String userId, int hashtagsNumber, LinkedList<String> hashtags, String truthfulness, String message) {
 		User user = getUser(userId);
-		if(!userExists(user)) throw new UserDoesNotExistException(userId);
+		//if(!userExists(user)) throw new UserDoesNotExistException(userId);
 		if(hashtagsNumber <= 0 || repeatedTags(hashtagsNumber, hashtags)) throw new InvalidHashtagsListException();
 		Post post = new PostClass(userId, getPostId(userId)+1, hashtagsNumber, hashtags, truthfulness, message);
 		user.newPost(post);
@@ -65,8 +65,8 @@ public class FakeSystemClass implements FakeSystem {
 
 	public void addComment(String idUserComment, String idUserAuthor, int idPost, String stance, String comment) {
 		User userComment = getUser(idUserComment), userAuthor = getUser(idUserAuthor);
-		if(!userExists(userComment)) throw new UserDoesNotExistException(idUserComment);
-		if(!userExists(userAuthor)) throw new UserDoesNotExistException(idUserAuthor);
+		//if(!userExists(userComment)) throw new UserDoesNotExistException(idUserComment);
+		//if(!userExists(userAuthor)) throw new UserDoesNotExistException(idUserAuthor);
 		if(!(hasFriend(userComment, userAuthor) || userComment.equals(userComment))) throw new UserNoAccessToPostException();
 		if(!hasPost(userAuthor, idPost)) throw new UserHasNoPostsException();
 		Comment cmt = new CommentClass(idUserComment, stance, comment);
@@ -96,7 +96,9 @@ public class FakeSystemClass implements FakeSystem {
 	}
 	
 	private User getUser(String userId) {
-		return users.get(userId);
+		User user = users.get(userId);
+		if(user==null) throw new UserDoesNotExistException(userId);
+		return user;
 	}
 
 	public int getNumberFriends(String userId) {
@@ -107,8 +109,8 @@ public class FakeSystemClass implements FakeSystem {
 		return getUser(userId).getNumberPosts();
 	}
 	
-	public boolean userExists(User user) {
-		return user!=null;
+	public boolean userExists(String userId) {
+		return users.get(userId)!=null;
 	}
 	
 	public boolean unknownUserKind(String kind) {
@@ -128,7 +130,7 @@ public class FakeSystemClass implements FakeSystem {
 	
 	public Iterator<User> listFriends(String userId) {
 		User user = getUser(userId);
-		if(!userExists(user)) throw new UserDoesNotExistException(userId);
+		//if(!userExists(user)) throw new UserDoesNotExistException(userId);
 		
 		Iterator<User> it = user.getFriendIterator();
 		
@@ -139,7 +141,7 @@ public class FakeSystemClass implements FakeSystem {
 	
 	public Iterator<Post> listUserPosts(String userId) {
 		User user = getUser(userId);
-		if(!userExists(user)) throw new UserDoesNotExistException(userId);
+		//if(!userExists(user)) throw new UserDoesNotExistException(userId);
 		
 		Iterator<Post> it = user.getMyPostsIterator();
 		
@@ -151,7 +153,7 @@ public class FakeSystemClass implements FakeSystem {
 	public Post getPost(String userId, int postId) {
 		User user = getUser(userId);
 		
-		if(!userExists(user)) throw new UserDoesNotExistException(userId);
+		//if(!userExists(user)) throw new UserDoesNotExistException(userId);
 		if(!hasPost(user, postId)) throw new UserHasNoPostsException();
 		
 		return getUser(userId).getPost(postId);
@@ -162,6 +164,14 @@ public class FakeSystemClass implements FakeSystem {
 		
 		Iterator<Comment> it = user.readPost(post);
 		
+		if(!it.hasNext()) throw new NoCommentsException();
+		
+		return it;
+	}
+	
+	public Iterator<Comment> listCommentByUser(String userId, String hashtag) {
+		User user = getUser(userId);
+		Iterator<Comment> it = user.getListCommentByUser(hashtag);
 		if(!it.hasNext()) throw new NoCommentsException();
 		
 		return it;

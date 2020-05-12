@@ -18,7 +18,7 @@ public interface FakeSystem {
 	
 	boolean isSelfCentered(String kind);
 	
-	boolean userExists(User user);
+	boolean userExists(String userId);
 	
 	void addUser(String type, String userId, int numberFanaticisms, LinkedList<String> sequence) throws UnknownUserKindException, UserAlreadyExistsException, InvalidFanaticismListException;
 	
@@ -40,5 +40,7 @@ public interface FakeSystem {
 	
 	Iterator<User> listFriends(String userId) throws UserDoesNotExistException, NoFriendsException;
 	
-	Iterator<Post> listUserPosts(String userId) throws UserDoesNotExistException, NoPostsException; 
+	Iterator<Post> listUserPosts(String userId) throws UserDoesNotExistException, NoPostsException;
+	
+	Iterator<Comment> listCommentByUser(String userId, String hashtag) throws UserDoesNotExistException, NoCommentsException;
 }
