@@ -103,8 +103,8 @@ public abstract class UserClass implements User {
 		return comments.iterator();
 	}
 	
-	public Iterator<Comment> readPost(int postId) {
-		return getPost(postId).readPost();
+	public Iterator<Comment> readPost(Post post) {
+		return post.readPost();
 	}
 
 }

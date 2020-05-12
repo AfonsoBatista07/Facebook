@@ -117,10 +117,6 @@ public class FakeSystemClass implements FakeSystem {
 			   isNaive(kind) ||
 			   isSelfCentered(kind);
 	}
-	
-	public Post getPost(String userId, int postId) {
-		return getUser(userId).getPost(postId);
-	}
 
 	public Iterator<User> listUsers() throws NoUsersException{
 		Iterator<User> it = users.values().iterator();
@@ -151,13 +147,20 @@ public class FakeSystemClass implements FakeSystem {
 		
 		return it;
 	}
-
-	public Iterator<Comment> readPost(String userId, int postId) {
+	
+	public Post getPost(String userId, int postId) {
 		User user = getUser(userId);
+		
 		if(!userExists(user)) throw new UserDoesNotExistException(userId);
 		if(hasPost(user, postId)) throw new UserHasNoPostsException();
 		
-		Iterator<Comment> it = user.readPost(postId);
+		return getUser(userId).getPost(postId);
+	}
+
+	public Iterator<Comment> readPost(Post post) {
+		User user = getUser(post.getAuthorId());
+		
+		Iterator<Comment> it = user.readPost(post);
 		
 		if(!it.hasNext()) throw new NoCommentsException();
 		

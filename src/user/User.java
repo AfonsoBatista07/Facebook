@@ -29,6 +29,6 @@ public interface User {
 	Iterator<Post> getMyPostsIterator();
 	Iterator<Post> getMyFeedIterator();
 	Iterator<Comment> getCommentsIterator();
-	Iterator<Comment> readPost(int postId);
+	Iterator<Comment> readPost(Post post);
 	
 }

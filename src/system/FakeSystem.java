@@ -34,7 +34,7 @@ public interface FakeSystem {
 	
 	Post getPost(String userId, int postId);   // FAZER MELHOR 
 	
-	Iterator<Comment> readPost(String userId, int postId) throws UserDoesNotExistException, UserHasNoPostsException, NoCommentsException;
+	Iterator<Comment> readPost(Post post) throws UserDoesNotExistException, UserHasNoPostsException, NoCommentsException;
 	
 	Iterator<User> listUsers() throws NoUsersException;
 	

@@ -138,7 +138,7 @@ public class Main {
 		LinkedList<String> sequence = new LinkedList<String>() ;
 		if(fsys.isFanatic(kind)) {
 			numberFanaticisms = in.nextInt();
-			for(int i=numberFanaticisms; i<0; i--) {
+			for(int i=0; i<numberFanaticisms; i++) {
 				sequence.add(in.next());          
 			}
 		}
@@ -269,20 +269,21 @@ public class Main {
     	int postId = in.nextInt();
     	try {
     		Post post = fsys.getPost(userId, postId);
-        	System.out.printf("[%s %s] %s\n", post.getAuthorId(), post.getType(), post.getMessage());    //NAO FUNCIONAAA
-        	
-        	Iterator<Comment> it = fsys.readPost(userId, postId);
-    		while(it.hasNext()) {
-    			Comment cmt = it.next();
-    			System.out.printf("[%s %s] %s\n", cmt.getUserId(), cmt.getStance(), cmt.getComment());
+        	System.out.printf("[%s %s] %s\n", post.getAuthorId(), post.getType(), post.getMessage());   
+        	try {
+        		Iterator<Comment> it = fsys.readPost(post);
+        		while(it.hasNext()) {
+        			Comment cmt = it.next();
+        			System.out.printf("[%s %s] %s\n", cmt.getUserId(), cmt.getStance(), cmt.getComment());
+        		}
+    		} catch (NoCommentsException e) {
+    			System.out.println(ERROR_NO_COMMENTS);
     		}
     	} catch (UserDoesNotExistException e) {
-    		System.out.printf(ERROR_USER_DOES_NOT_EXISTS, e.getUserId());
-    	} catch (UserHasNoPostsException e) {
-    		System.out.printf(ERROR_USER_NO_POSTS, userId, postId);
-    	} catch (NoCommentsException e) {
-    		System.out.println(ERROR_NO_COMMENTS);
-    	}
+        	System.out.printf(ERROR_USER_DOES_NOT_EXISTS, e.getUserId());
+        } catch (UserHasNoPostsException e) {
+        	System.out.printf(ERROR_USER_NO_POSTS, userId, postId);
+        }
 	}
 
 	private static void listTopicPosts(Scanner in, FakeSystem fsys) {
