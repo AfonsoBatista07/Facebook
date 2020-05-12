@@ -69,10 +69,7 @@ public abstract class UserClass implements User {
 	}
 	
 	public Post getPost(int postId) {
-		for( Post post: myPosts)
-			if (post.getIdPost() == (postId))            //MAKE IT BETTER ...           
-				return post;
-		return null;
+		return myPosts.get(postId-1);
 	}
 	
 	public User getFriend(User user) {

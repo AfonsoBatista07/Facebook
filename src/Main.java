@@ -270,19 +270,17 @@ public class Main {
     	try {
     		Post post = fsys.getPost(userId, postId);
         	System.out.printf("[%s %s] %s\n", post.getAuthorId(), post.getType(), post.getMessage());   
-        	try {
-        		Iterator<Comment> it = fsys.readPost(post);
-        		while(it.hasNext()) {
-        			Comment cmt = it.next();
-        			System.out.printf("[%s %s] %s\n", cmt.getUserId(), cmt.getStance(), cmt.getComment());
-        		}
-    		} catch (NoCommentsException e) {
-    			System.out.println(ERROR_NO_COMMENTS);
-    		}
+        	Iterator<Comment> it = fsys.readPost(post);
+        	while(it.hasNext()) {
+        		Comment cmt = it.next();
+        		System.out.printf("[%s %s] %s\n", cmt.getUserId(), cmt.getStance(), cmt.getComment());
+        	}
     	} catch (UserDoesNotExistException e) {
         	System.out.printf(ERROR_USER_DOES_NOT_EXISTS, e.getUserId());
         } catch (UserHasNoPostsException e) {
         	System.out.printf(ERROR_USER_NO_POSTS, userId, postId);
+        } catch (NoCommentsException e) {
+			System.out.println(ERROR_NO_COMMENTS);
         }
 	}
 

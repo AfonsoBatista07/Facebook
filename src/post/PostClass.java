@@ -9,6 +9,8 @@ public class PostClass implements Post{
 	private LinkedList<String> hashTags;
 	private LinkedList<Comment> comments;
 	
+	private static final String HONEST = "honest";
+	
 	public PostClass(String idUser, int idPost, int numHashTags, LinkedList<String> hashTags, String type, String message) {
 		this.idUser = idUser;
 		this.idPost = idPost;
@@ -57,7 +59,7 @@ public class PostClass implements Post{
 	}
 	
 	public boolean isHonest() {
-		return type.equalsIgnoreCase("honest");          //MUDAR ISTO
+		return type.equalsIgnoreCase(HONEST);          
 	}
 
 }

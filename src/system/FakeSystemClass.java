@@ -68,14 +68,14 @@ public class FakeSystemClass implements FakeSystem {
 		if(!userExists(userComment)) throw new UserDoesNotExistException(idUserComment);
 		if(!userExists(userAuthor)) throw new UserDoesNotExistException(idUserAuthor);
 		if(!(hasFriend(userComment, userAuthor) || userComment.equals(userComment))) throw new UserNoAccessToPostException();
-		if(hasPost(userAuthor, idPost)) throw new UserHasNoPostsException();
+		if(!hasPost(userAuthor, idPost)) throw new UserHasNoPostsException();
 		Comment cmt = new CommentClass(idUserComment, stance, comment);
 		userAuthor.newComment(idPost, cmt);
 
 	}
 	
 	private boolean hasPost(User user, int idPost) {
-		return user.hasPost(idPost-1);
+		return user.hasPost(idPost);
 	}
 	
 	private boolean hasFriend(User firstUser, User secondUser) {
@@ -152,7 +152,7 @@ public class FakeSystemClass implements FakeSystem {
 		User user = getUser(userId);
 		
 		if(!userExists(user)) throw new UserDoesNotExistException(userId);
-		if(hasPost(user, postId)) throw new UserHasNoPostsException();
+		if(!hasPost(user, postId)) throw new UserHasNoPostsException();
 		
 		return getUser(userId).getPost(postId);
 	}
