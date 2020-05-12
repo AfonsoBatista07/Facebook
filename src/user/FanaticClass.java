@@ -18,6 +18,7 @@ public class FanaticClass extends UserClass implements Fanatic {
 		this.numFanaticisms = numFanaticisms;
 		this.loves = loves;
 		this.hates = hates;		// dividir a lista dos hashtags
+		separateTags();
 		this.hashTags = hashTags;
 	}
 	
@@ -39,6 +40,15 @@ public class FanaticClass extends UserClass implements Fanatic {
 			if((post.isHonest() && comment.isPositive()) || (!post.isHonest() && !comment.isPositive())) throw new InvalidCommentStanceException();
 		}
 		super.newComment(postId, comment);
+	}
+	
+	private void separateTags() {
+		Iterator<String> it = hashTags.iterator();
+		for(int i = 0; i < numFanaticisms; i++) {
+			if(it.next().equals("loves")) loves.addLast(it.next());
+			else hates.addLast(it.next());
+		}
+		
 	}
 	
 	public int getNumFanaticisms() {
