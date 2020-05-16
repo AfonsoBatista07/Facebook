@@ -96,9 +96,9 @@ public abstract class UserClass implements User {
 		return myFeed.iterator();
 	}
 	
-	public Iterator<Comment> getCommentsIterator() {
+	/*public Iterator<Comment> getCommentsIterator() {
 		return comments.iterator();
-	}
+	}*/
 	
 	public Iterator<Comment> readPost(Post post) {
 		return post.readPost();

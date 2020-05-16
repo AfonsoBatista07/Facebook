@@ -34,6 +34,22 @@ public class Main {
  	private static final String SUCCESS_ADD_USER = "%s registered.\n";
  	private static final String SUCCESS_NEW_POST = "%s sent a %s post to %d friends. Post id = %s.\n";
  	private static final String SUCCESS_NEW_COMMENT = "Comment added!";
+ 	private static final String SUCCESS_HELP = "register - registers a new user\n" + 
+ 			"users - lists all rusers\n" + 
+ 			"addfriend - adds a new friend\n" + 
+ 			"friends - list the user friends\n" + 
+ 			"post - posts a new message\n" + 
+ 			"userposts - lists all posts by a user\n" + 
+ 			"comment - user comments on a post\n" + 
+ 			"readpost - prints detailed info on a post\n" + 
+ 			"commentsbyuser - shows all tge comments by a user on a given post\n" + 
+ 			"topicfanatic - shows a list of posts on a given topic\n" + 
+ 			"topicposts - shows the most commented post\n" + 
+ 			"topposter - shows the user with more posts\n" + 
+ 			"responsive - shows the user with a higher percentage of commented posts\n" + 
+ 			"shameless - shows the top liars\n" + 
+ 			"help - shows the available commands\n" + 
+ 			"exit - terminates the execution of the program\n";
  	
  	/* Error Constants */
  	private static final String ERROR_INADEQUATE_COMMMENT_STANCE = "Inadequate stance!";
@@ -332,22 +348,7 @@ public class Main {
 	}
 	
 	private static void help() {
-		System.out.print("register - registers a new user\n"
-				+ "users - lists all rusers\n"
-				+ "addfriend - adds a new friend\n"
-				+ "friends - list the user friends\n"
-				+ "post - posts a new message\n"
-				+ "userposts - lists all posts by a user\n"
-				+ "comment - user comments on a post\n"
-				+ "readpost - prints detailed info on a post\n"
-				+ "commentsbyuser - shows all tge comments by a user on a given post\n"
-				+ "topicfanatic - shows a list of posts on a given topic\n"
-				+ "topicposts - shows the most commented post\n"
-				+ "topposter - shows the user with more posts\n"
-				+ "responsive - shows the user with a higher percentage of commented posts\n"
-				+ "shameless - shows the top liars\n"
-				+ "help - shows the available commands\n"
-				+ "exit - terminates the execution of the program\n");
+		System.out.print(SUCCESS_HELP);
 	}
 	
 }
