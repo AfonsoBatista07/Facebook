@@ -6,5 +6,6 @@ public interface Comment {
 	String getStance();
 	String getUserId();
 	boolean isPositive();
+	Post getPost();
 	
 }

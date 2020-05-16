@@ -143,6 +143,8 @@ public class Main {
 			case EXIT:
 				exit();
 				break;
+			default:
+				System.out.println("ERRO");
 		}
 	}
 	
@@ -301,21 +303,6 @@ public class Main {
 	}
 
 	private static void listTopicPosts(Scanner in, FakeSystem fsys) {
-		String userId = in.nextLine().trim();
-		String hashtag = in.next();
-		
-		try {
-			Iterator<Comment> it = fsys.listCommentByUser(userId, hashtag);
-			while(it.hasNext()) {
-				Comment cmt = it.next();
-				System.out.printf("[%s %s %d %s] %s\n");
-			}
-		} catch (UserDoesNotExistException e) {
-			System.out.printf(ERROR_USER_DOES_NOT_EXISTS, e.getUserId());
-		} catch (NoCommentsException e) {
-			System.out.println(ERROR_NO_COMMENTS);
-        }
-		
 		
 	}
 
@@ -324,7 +311,21 @@ public class Main {
 	}
 
 	private static void listComments(Scanner in, FakeSystem fsys) {
+		String userId = in.nextLine().trim();
+		String hashtag = in.next();
 		
+		try {
+			Iterator<Comment> it = fsys.listCommentByUser(userId, hashtag);
+			while(it.hasNext()) {
+				Comment cmt = it.next();
+				Post post = cmt.getPost();
+				System.out.printf("[%s %s %d %s] %s\n", post.getAuthorId(), post.getType(), post.getIdPost(), cmt.getStance(), cmt.getComment());
+			}
+		} catch (UserDoesNotExistException e) {
+			System.out.printf(ERROR_USER_DOES_NOT_EXISTS, e.getUserId());
+		} catch (NoCommentsException e) {
+			System.out.println(ERROR_NO_COMMENTS);
+        }
 	}
 
 	private static void shameless(FakeSystem fsys) {

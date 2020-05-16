@@ -69,8 +69,8 @@ public class FakeSystemClass implements FakeSystem {
 		//if(!userExists(userAuthor)) throw new UserDoesNotExistException(idUserAuthor);
 		if(!(hasFriend(userComment, userAuthor) || userComment.equals(userComment))) throw new UserNoAccessToPostException();
 		if(!hasPost(userAuthor, idPost)) throw new UserHasNoPostsException();
-		Comment cmt = new CommentClass(idUserComment, stance, comment);
-		userAuthor.newComment(idPost, cmt);
+		Comment cmt = new CommentClass(idUserComment, stance, comment, userAuthor.getPost(idPost));
+		userAuthor.newComment(idPost,cmt);
 
 	}
 	
@@ -173,7 +173,6 @@ public class FakeSystemClass implements FakeSystem {
 		User user = getUser(userId);
 		Iterator<Comment> it = user.getListCommentByUser(hashtag);
 		if(!it.hasNext()) throw new NoCommentsException();
-		
 		return it;
 	}
 

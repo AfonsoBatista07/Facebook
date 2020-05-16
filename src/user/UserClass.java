@@ -1,7 +1,10 @@
 package user;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Map;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import exceptions.UsersAlreadyFriendsException;
 import post.Comment;
@@ -12,7 +15,8 @@ public abstract class UserClass implements User {
 	private String id, kind;
 	private LinkedList<User> friends;
 	protected ArrayList<Post> myPosts, myFeed;
-	private LinkedList<Comment> comments;
+	private Map<String,LinkedList<Comment>> commentsByTag;
+	private int numComments;
 	
 	public UserClass(String id, String kind) {
 		this.id = id;
@@ -20,7 +24,8 @@ public abstract class UserClass implements User {
 		friends = new LinkedList<User>();
 		myPosts =  new ArrayList<Post>();
 		myFeed =  new ArrayList<Post>();
-		comments = new LinkedList<Comment>();
+		commentsByTag = new HashMap<String, LinkedList<Comment>>();
+		numComments = 0;
 	}
 	
 	public String getId() {
@@ -36,8 +41,19 @@ public abstract class UserClass implements User {
 	}
 
 	public void newComment(int postId, Comment comment) {
-		comments.add(comment);
-		getPost(postId).newComment(comment);
+		Post post = getPost(postId);
+		Iterator<String> it = post.getHashTags();
+		while(it.hasNext()) {
+			String tag = it.next();
+			LinkedList<Comment> list = commentsByTag.get(tag);
+			if (list == null) {
+				list = new LinkedList<Comment>();
+				commentsByTag.put(tag,list);
+			}
+			list.add(comment);
+		}
+		post.newComment(comment);
+		numComments++;
 	}
 	
 	public void addFeed(Post post) {
@@ -57,7 +73,7 @@ public abstract class UserClass implements User {
 		return myPosts.size();
 	}
 	public int getNumberComments() {
-		return comments.size();
+		return numComments;
 	}
 	
 	public boolean hasFriend(User user) {
@@ -96,16 +112,12 @@ public abstract class UserClass implements User {
 		return myFeed.iterator();
 	}
 	
-	/*public Iterator<Comment> getCommentsIterator() {
-		return comments.iterator();
-	}*/
-	
 	public Iterator<Comment> readPost(Post post) {
 		return post.readPost();
 	}
 	
 	public Iterator<Comment> getListCommentByUser(String hashtag) {               // ??????????????????????????????????
-		return null; 
+		return commentsByTag.get(hashtag).iterator();
 	}
 
 }
