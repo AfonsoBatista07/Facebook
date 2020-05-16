@@ -38,7 +38,7 @@ public class FakeSystemClass implements FakeSystem {
 		else if(isLiar(kind)) user = new LiarClass(userId); 
 		else if(isNaive(kind)) user = new NaiveClass(userId); 
 		else {
-			if(repeatedTags(numFanaticisms, sequence)) throw new InvalidFanaticismListException();     //NAO FUNCIONA
+			if(repeatedTags(numFanaticisms, sequence)) throw new InvalidFanaticismListException();   
 			user = new FanaticClass(userId, numFanaticisms, sequence);
 		}
 		users.put(userId, user);
@@ -97,7 +97,7 @@ public class FakeSystemClass implements FakeSystem {
 	
 	private User getUser(String userId) {
 		User user = users.get(userId);
-		if(user==null) throw new UserDoesNotExistException(userId);
+		if(user==null) throw new UserDoesNotExistException(user);
 		return user;
 	}
 

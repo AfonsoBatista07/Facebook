@@ -1,5 +1,7 @@
 package exceptions;
 
+import user.User;
+
 public class UserDoesNotExistException extends RuntimeException{
 
 	/**
@@ -7,14 +9,14 @@ public class UserDoesNotExistException extends RuntimeException{
 	 */
 	private static final long serialVersionUID = -3285478462956516911L;
 	
-	private String userId;
+	private User user;
 	
-	public UserDoesNotExistException(String userId) {
+	public UserDoesNotExistException(User user) {
 		super();
-		this.userId = userId;
+		this.user = user;
 	}
 	
 	public String getUserId() {
-		return userId;
+		return user.getId();
 	}
 }
