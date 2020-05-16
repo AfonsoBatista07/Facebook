@@ -12,12 +12,13 @@ public class FanaticClass extends UserClass implements Fanatic {
 	
 	private LinkedList<String>loves, hates, hashTags;
 	private int numFanaticisms;
+	private static final String LOVES = "loves";
 	
 	public FanaticClass(String id, int numFanaticisms, LinkedList<String> hashTags) {
 		super(id, FANATIC);
 		this.numFanaticisms = numFanaticisms;
-		this.loves = loves;
-		this.hates = hates;		// dividir a lista dos hashtags
+		loves = new	LinkedList<String>();	// dividir a lista dos hashtags
+		hates = new	LinkedList<String>();
 		separateTags();
 		this.hashTags = hashTags;
 	}
@@ -45,7 +46,7 @@ public class FanaticClass extends UserClass implements Fanatic {
 	private void separateTags() {
 		Iterator<String> it = hashTags.iterator();
 		for(int i = 0; i < numFanaticisms; i++) {
-			if(it.next().equals("loves")) loves.addLast(it.next());
+			if(it.next().equals(LOVES)) loves.addLast(it.next());
 			else hates.addLast(it.next());
 		}
 		
