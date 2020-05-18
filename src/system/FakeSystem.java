@@ -6,19 +6,14 @@ import java.util.LinkedList;
 import exceptions.*;
 import post.Post;
 import post.Comment;
+import user.Liar;
 import user.User;
 
 public interface FakeSystem {
-
-	boolean isFanatic(String kind);
-	
-	boolean isLiar(String kind);
-	
-	boolean isNaive(String kind);
-	
-	boolean isSelfCentered(String kind);
 	
 	boolean userExists(String userId);
+	
+	boolean isFanatic(String kind);
 	
 	void addUser(String type, String userId, int numberFanaticisms, LinkedList<String> sequence) throws UnknownUserKindException, UserAlreadyExistsException, InvalidFanaticismListException;
 	
@@ -32,7 +27,15 @@ public interface FakeSystem {
 	
 	int getPostId(String userId);
 	
-	Post getPost(String userId, int postId);   // FAZER MELHOR 
+	Post getPopularPost() throws NoKingPopularPostException;
+	
+	User getTopPoster() throws NoKingPostersException;
+	
+	User getResponsive() throws NoKingOfResponsivenessException;
+	
+	Liar getShameless() throws NoKingOfLiarsException;
+	
+	Post getPost(String userId, int postId);
 	
 	Iterator<Comment> readPost(Post post) throws UserDoesNotExistException, UserHasNoPostsException, NoCommentsException;
 	
@@ -43,4 +46,8 @@ public interface FakeSystem {
 	Iterator<Post> listUserPosts(String userId) throws UserDoesNotExistException, NoPostsException;
 	
 	Iterator<Comment> listCommentByUser(String userId, String hashtag) throws UserDoesNotExistException, NoCommentsException;
+	
+	Iterator<User> listFanaticsByTopic(String hashtag) throws UnknownFanaticismException; 
+	
+	Iterator<Post> listTopicPosts(String hashtag) throws UnKnownTopicException; 
 }

@@ -17,7 +17,7 @@ public class FanaticClass extends UserClass implements Fanatic {
 	public FanaticClass(String id, int numFanaticisms, LinkedList<String> hashTags) {
 		super(id, FANATIC);
 		this.numFanaticisms = numFanaticisms;
-		loves = new	LinkedList<String>();	// dividir a lista dos hashtags
+		loves = new	LinkedList<String>();	
 		hates = new	LinkedList<String>();
 		separateTags();
 		this.hashTags = hashTags;
@@ -49,7 +49,6 @@ public class FanaticClass extends UserClass implements Fanatic {
 			if(it.next().equals(LOVES)) loves.addLast(it.next());
 			else hates.addLast(it.next());
 		}
-		
 	}
 	
 	public int getNumFanaticisms() {

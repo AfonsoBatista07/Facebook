@@ -5,6 +5,7 @@ import java.util.Scanner;
 import exceptions.*;
 import post.*;
 import system.*;
+import user.Liar;
 import user.User;
 
 public class Main {
@@ -34,6 +35,13 @@ public class Main {
  	private static final String SUCCESS_ADD_USER = "%s registered.\n";
  	private static final String SUCCESS_NEW_POST = "%s sent a %s post to %d friends. Post id = %s.\n";
  	private static final String SUCCESS_NEW_COMMENT = "Comment added!";
+ 	private static final String SUCCESS_LIST_USERS = "%s [%s] %d %d %d\n";
+ 	private static final String SUCCESS_LIST_POSTS = "%d. [%s] %s [%s comments]\n";
+ 	private static final String SUCCESS_LIST_COMMENTS = "[%s %s %d %s] %s\n";
+ 	private static final String SUCCESS_READ_POST = "[%s %s] %s\n";
+ 	private static final String SUCCESS_LIST_TOPIC_POSTS = "%s %d: %s\n";
+ 	private static final String SUCCESS_SHAMELESS = "%s %d.\n";
+ 	private static final String SUCCESS_TOP_POSTER = "%s %d %d.\n";
  	private static final String SUCCESS_HELP = "register - registers a new user\n" + 
  			"users - lists all rusers\n" + 
  			"addfriend - adds a new friend\n" + 
@@ -65,7 +73,7 @@ public class Main {
  	private static final String ERROR_NO_COMMENTS = "No comments!";
  	private static final String ERROR_NO_FRIENDS = "%s has no friends!\n";
  	private static final String ERROR_UNKNOWN_FANATICISM = "Oh please, who would be a fanatic of %s?\n";
- 	private static final String ERROR_UNKNOWN_TOPIC = "Oh please, whp would write about %s?\n";
+ 	private static final String ERROR_UNKNOWN_TOPIC = "Oh please, who would write about %s?\n";
  	private static final String ERROR_UNKNOWN_USER_KIND = "%s is an invalid user kind!\n";
  	private static final String ERROR_USER_ALREADY_EXISTS= "%s already exists!\n";
  	private static final String ERROR_USER_DOES_NOT_EXISTS = "%s does not exist!\n";
@@ -240,7 +248,7 @@ public class Main {
 			Iterator<User> it = fsys.listUsers();
 			while(it.hasNext()) {
 				User user = it.next();
-				System.out.printf("%s [%s] %d %d %d\n", user.getId(), user.getKind(),
+				System.out.printf(SUCCESS_LIST_USERS, user.getId(), user.getKind(),
 						user.getNumberFriends(), user.getNumberPosts(), user.getNumberComments());
 			}
 		} catch (NoUsersException e) {
@@ -272,7 +280,7 @@ public class Main {
 			Iterator<Post> it = fsys.listUserPosts(userId); 
 			while(it.hasNext()) {
 				Post post = it.next();
-				System.out.printf("%d. [%s] %s [%s comments]\n", post.getIdPost(),
+				System.out.printf(SUCCESS_LIST_POSTS, post.getIdPost(),
 						post.getType(), post.getMessage(), post.getNumComments());
 			}
 		} catch (UserDoesNotExistException e) {
@@ -287,11 +295,11 @@ public class Main {
     	int postId = in.nextInt();
     	try {
     		Post post = fsys.getPost(userId, postId);
-        	System.out.printf("[%s %s] %s\n", post.getAuthorId(), post.getType(), post.getMessage());   
+        	System.out.printf(SUCCESS_READ_POST, post.getAuthorId(), post.getType(), post.getMessage());   
         	Iterator<Comment> it = fsys.readPost(post);
         	while(it.hasNext()) {
         		Comment cmt = it.next();
-        		System.out.printf("[%s %s] %s\n", cmt.getUserId(), cmt.getStance(), cmt.getComment());
+        		System.out.printf(SUCCESS_READ_POST, cmt.getUserId(), cmt.getStance(), cmt.getComment());
         	}
     	} catch (UserDoesNotExistException e) {
         	System.out.printf(ERROR_USER_DOES_NOT_EXISTS, e.getUserId());
@@ -301,16 +309,8 @@ public class Main {
 			System.out.println(ERROR_NO_COMMENTS);
         }
 	}
-
-	private static void listTopicPosts(Scanner in, FakeSystem fsys) {
-		
-	}
-
-	private static void listTopicFanatics(Scanner in, FakeSystem fsys) {
-		
-	}
-
-	private static void listComments(Scanner in, FakeSystem fsys) {
+    
+    private static void listComments(Scanner in, FakeSystem fsys) {
 		String userId = in.nextLine().trim();
 		String hashtag = in.next();
 		
@@ -319,7 +319,7 @@ public class Main {
 			while(it.hasNext()) {
 				Comment cmt = it.next();
 				Post post = cmt.getPost();
-				System.out.printf("[%s %s %d %s] %s\n", post.getAuthorId(), post.getType(), post.getIdPost(), cmt.getStance(), cmt.getComment());
+				System.out.printf(SUCCESS_LIST_COMMENTS, post.getAuthorId(), post.getType(), post.getIdPost(), cmt.getStance(), cmt.getComment());
 			}
 		} catch (UserDoesNotExistException e) {
 			System.out.printf(ERROR_USER_DOES_NOT_EXISTS, e.getUserId());
@@ -327,21 +327,71 @@ public class Main {
 			System.out.println(ERROR_NO_COMMENTS);
         }
 	}
+    
+    private static void listTopicFanatics(Scanner in, FakeSystem fsys) {
+		String hashtag = in.next();
+		
+		try {
+			Iterator<User> it = fsys.listFanaticsByTopic(hashtag);
+			while(it.hasNext()) {
+				System.out.printf(it.next().getId());
+				if(it.hasNext()) System.out.println(", ");
+			}
+			System.out.println();
+		} catch(UnknownFanaticismException e) {
+			System.out.printf(ERROR_UNKNOWN_FANATICISM, hashtag);
+		}
+	}
+
+	private static void listTopicPosts(Scanner in, FakeSystem fsys) {
+		String hashtag = in.next();
+		int numberOfPosts = in.nextInt();
+		
+		try {
+			Iterator<Post> it = fsys.listTopicPosts(hashtag);
+			for(int i=numberOfPosts ;i>0 ;i--) {
+				Post post = it.next();
+				System.out.printf(SUCCESS_LIST_TOPIC_POSTS ,post.getAuthorId(), post.getIdPost(), post.getMessage());
+			}
+		} catch ( UnKnownTopicException e ) {
+			System.out.printf(ERROR_UNKNOWN_TOPIC, hashtag);
+		}
+	}
 
 	private static void shameless(FakeSystem fsys) {
-		
+		try {
+			Liar user = fsys.getShameless();
+			System.out.printf(SUCCESS_SHAMELESS, user.getId(), user.getNumberOfLies());
+		} catch(NoKingOfLiarsException e) {
+			System.out.println(ERROR_NO_KING_OF_LIARS);
+		}
 	}
 
 	private static void responsive(FakeSystem fsys) {
-		
+		try {
+			User user = fsys.getResponsive();
+			System.out.printf(SUCCESS_TOP_POSTER, user.getId(), user.getNumberComments(), user.getNumberPosts());
+		} catch (NoKingOfResponsivenessException e) {
+			System.out.println(ERROR_NO_KING_OF_RESPONSIVENESS);
+		}
 	}
 
 	private static void topPoster(FakeSystem fsys) {
-		
+		try {
+			User user = fsys.getTopPoster();
+			System.out.printf(SUCCESS_TOP_POSTER, user.getId(), user.getNumberPosts(), user.getNumberComments());
+		} catch(NoKingPostersException e) {
+			System.out.println(ERROR_NO_KING_POSTERS);
+		}
 	}
 
 	private static void popularPosts(FakeSystem fsys) {
-		
+		try {
+			Post post = fsys.getPopularPost();
+			System.out.printf(SUCCESS_LIST_TOPIC_POSTS, post.getAuthorId(), post.getIdPost(), post.getMessage());
+		} catch(NoKingPopularPostException e) {
+			System.out.println(ERROR_NO_KING_POPULAR_POST);
+		}
 	}
 
 	private static void exit() {

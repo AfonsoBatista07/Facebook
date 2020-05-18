@@ -7,6 +7,8 @@ import post.Post;
 
 public class LiarClass extends UserClass implements Liar {
 
+	private int numberOfLies;
+	
 	public LiarClass(String id) {
 		super(id, LIAR);
 	}
@@ -19,6 +21,10 @@ public class LiarClass extends UserClass implements Liar {
 	public void newComment(int postId,Comment comment) {
 		if((getPost(postId).isHonest() && !comment.isPositive()) || (!getPost(postId).isHonest() && comment.isPositive())) super.newComment(postId, comment);
 		else throw new InvalidCommentStanceException();
+	}
+	
+	public int getNumberOfLies() {
+		return numberOfLies;
 	}
 	
 }
