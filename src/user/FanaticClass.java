@@ -19,8 +19,8 @@ public class FanaticClass extends UserClass implements Fanatic {
 		this.numFanaticisms = numFanaticisms;
 		loves = new	LinkedList<String>();	
 		hates = new	LinkedList<String>();
-		separateTags();
 		this.hashTags = hashTags;
+		separateTags();
 	}
 	
 	public void newPost(Post post) {
@@ -34,10 +34,11 @@ public class FanaticClass extends UserClass implements Fanatic {
 	
 	public void newComment(int postId, Comment comment) {
 		Post post = getPost(postId);
-		if(loves(getFanaticism(post))) {
+		String fanaticism = getFanaticism(post);
+		if(loves(fanaticism)) {
 			if((post.isHonest() && !comment.isPositive()) || (!post.isHonest() && comment.isPositive())) throw new InvalidCommentStanceException();
 		}
-		if(hates(getFanaticism(post))) {
+		if(hates(fanaticism)) {
 			if((post.isHonest() && comment.isPositive()) || (!post.isHonest() && !comment.isPositive())) throw new InvalidCommentStanceException();
 		}
 		super.newComment(postId, comment);

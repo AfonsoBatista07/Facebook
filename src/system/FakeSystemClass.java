@@ -47,12 +47,13 @@ public class FakeSystemClass implements FakeSystem {
 	
 	public void addFriend(String firstUserId, String secondUserId) {
 		User firstUser = getUser(firstUserId), secondUser = getUser(secondUserId);
+		if(firstUser.equals(secondUser)) throw new UserCanNotBeTheSameException();
 		firstUser.addFriend(secondUser); secondUser.addFriend(firstUser);
 	}
 	
 	public void newPost(String userId, int hashtagsNumber, LinkedList<String> hashtags, String truthfulness, String message) {
 		User user = getUser(userId);
-		if(hashtagsNumber <= 0 || repeatedTags(hashtagsNumber, hashtags)) throw new InvalidHashtagsListException();
+		if(hashtagsNumber < 0 || repeatedTags(hashtagsNumber, hashtags)) throw new InvalidHashtagsListException();
 		Post post = new PostClass(userId, getPostId(userId)+1, hashtagsNumber, hashtags, truthfulness, message);
 		user.newPost(post);
 		sharePost(post, user);
@@ -90,7 +91,7 @@ public class FakeSystemClass implements FakeSystem {
 	
 	private User getUser(String userId) {
 		User user = users.get(userId);
-		if(user==null) throw new UserDoesNotExistException(user);
+		if(user==null) throw new UserDoesNotExistException(userId);
 		return user;
 	}
 

@@ -37,22 +37,24 @@ public class Main {
  	private static final String SUCCESS_NEW_COMMENT = "Comment added!";
  	private static final String SUCCESS_LIST_USERS = "%s [%s] %d %d %d\n";
  	private static final String SUCCESS_LIST_POSTS = "%d. [%s] %s [%s comments]\n";
+ 	private static final String SUCCESS_USER_POSTS = "%s posts:\n";
  	private static final String SUCCESS_LIST_COMMENTS = "[%s %s %d %s] %s\n";
  	private static final String SUCCESS_READ_POST = "[%s %s] %s\n";
  	private static final String SUCCESS_LIST_TOPIC_POSTS = "%s %d: %s\n";
  	private static final String SUCCESS_SHAMELESS = "%s %d.\n";
  	private static final String SUCCESS_TOP_POSTER = "%s %d %d.\n";
  	private static final String SUCCESS_HELP = "register - registers a new user\n" + 
- 			"users - lists all rusers\n" + 
+ 			"users - lists all users\n" + 
  			"addfriend - adds a new friend\n" + 
- 			"friends - list the user friends\n" + 
+ 			"friends - lists the user friends\n" + 
  			"post - posts a new message\n" + 
  			"userposts - lists all posts by a user\n" + 
  			"comment - user comments on a post\n" + 
  			"readpost - prints detailed info on a post\n" + 
- 			"commentsbyuser - shows all tge comments by a user on a given post\n" + 
- 			"topicfanatic - shows a list of posts on a given topic\n" + 
- 			"topicposts - shows the most commented post\n" + 
+ 			"commentsbyuser - shows all the comments by a user on a given post\n" + 
+ 			"topicfanatics - shows a list of fanatic users on a topic\n" + 
+ 			"topicposts - shows a list of posts on a given topic\n" + 
+ 			"popularpost - shows the most commented post\n"+
  			"topposter - shows the user with more posts\n" + 
  			"responsive - shows the user with a higher percentage of commented posts\n" + 
  			"shameless - shows the top liars\n" + 
@@ -60,6 +62,7 @@ public class Main {
  			"exit - terminates the execution of the program\n";
  	
  	/* Error Constants */
+	private static final String UNKNNOWN_COMMAND = "Unknown command. Type help to see available commands.\n";
  	private static final String ERROR_INADEQUATE_COMMMENT_STANCE = "Inadequate stance!";
  	private static final String ERROR_INVALID_HASHTANGS = "Invalid hashtags list!";
  	private static final String ERROR_INVALID_COMMMENT_STANCE = "Invalid comment stance!";
@@ -81,6 +84,7 @@ public class Main {
  	private static final String ERROR_USER_NO_ACCESS_TO_POST = "%s has no access to post %s by %s!\n";
  	private static final String ERROR_USERS_FRIENDS_ALREADY = "%s must really admire %s!\n";
  	private static final String ERROR_USER_CAN_NOT_COMMENT = "%s cannot comment on this post!\n";
+ 	private static final String ERROR_SAME_USER = "%s cannot be the same as %s!\n";
 	
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
@@ -152,8 +156,13 @@ public class Main {
 				exit();
 				break;
 			default:
-				System.out.println("ERRO");
+				wrongCommand(in);
 		}
+	}
+	
+	private static void wrongCommand(Scanner in) {
+		in.nextLine();
+		System.out.printf(UNKNNOWN_COMMAND);
 	}
 	
 	private static void addUser(Scanner in, FakeSystem fsys) {
@@ -164,8 +173,8 @@ public class Main {
 		LinkedList<String> sequence = new LinkedList<String>() ;
 		if(fsys.isFanatic(kind)) {
 			numberFanaticisms = in.nextInt();
-			for(int i=0; i<numberFanaticisms; i++) {
-				sequence.add(in.next());          
+			for(int i=0; i<numberFanaticisms*2; i++) {
+				sequence.add(in.next().trim());          
 			}
 		}
 		
@@ -191,6 +200,8 @@ public class Main {
 			System.out.printf(SUCCESS_ADD_FRIEND, firstUserId, secondUserId);
 		} catch (UserDoesNotExistException e) {
 			System.out.printf(ERROR_USER_DOES_NOT_EXISTS, e.getUserId());
+		} catch (UserCanNotBeTheSameException e) {
+			System.out.printf(ERROR_SAME_USER, firstUserId, secondUserId);
 		} catch (UsersAlreadyFriendsException e) {
 			System.out.printf(ERROR_USERS_FRIENDS_ALREADY, firstUserId, secondUserId);
 		}
@@ -278,6 +289,7 @@ public class Main {
 		String userId = in.nextLine().trim();
 		try {
 			Iterator<Post> it = fsys.listUserPosts(userId); 
+			System.out.printf(SUCCESS_USER_POSTS, userId);
 			while(it.hasNext()) {
 				Post post = it.next();
 				System.out.printf(SUCCESS_LIST_POSTS, post.getIdPost(),

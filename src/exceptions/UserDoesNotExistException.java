@@ -9,14 +9,14 @@ public class UserDoesNotExistException extends RuntimeException{
 	 */
 	private static final long serialVersionUID = -3285478462956516911L;
 	
-	private User user;
+	private String userId;
 	
-	public UserDoesNotExistException(User user) {
+	public UserDoesNotExistException(String userId) {
 		super();
-		this.user = user;
+		this.userId = userId;
 	}
 	
 	public String getUserId() {
-		return user.getId();
+		return userId;
 	}
 }

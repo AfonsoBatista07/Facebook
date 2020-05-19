@@ -1,0 +1,10 @@
+HELP
+help
+hELP
+HeLP
+HElP
+HELp
+heLP
+HelP
+HElp
+exit
