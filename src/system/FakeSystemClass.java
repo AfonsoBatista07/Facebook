@@ -168,9 +168,9 @@ public class FakeSystemClass implements FakeSystem {
 	
 	public Iterator<Comment> listCommentByUser(String userId, String hashtag) {
 		User user = getUser(userId);
-		Iterator<Comment> it = user.getListCommentByUser(hashtag);
-		if(!it.hasNext()) throw new NoCommentsException();
-		return it;
+		//Iterator<Comment> it = user.getListCommentByUser(hashtag);
+		//if(!it.hasNext()) throw new NoCommentsException();
+		return user.getListCommentByUser(hashtag);
 	}
 	
 	public Iterator<User> listFanaticsByTopic(String hashtag) {

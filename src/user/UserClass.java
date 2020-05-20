@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import exceptions.NoCommentsException;
 import exceptions.UsersAlreadyFriendsException;
 import post.Comment;
 import post.Post;
@@ -85,7 +86,7 @@ public abstract class UserClass implements User {
 	}
 	
 	public Post getPost(int postId) {
-		if(postId-1 > myPosts.size()) return null;
+		if(postId-1 >= myPosts.size() || postId<=0) return null;
 		return myPosts.get(postId-1);
 	}
 	
@@ -117,7 +118,9 @@ public abstract class UserClass implements User {
 		return post.readPost();
 	}
 	
-	public Iterator<Comment> getListCommentByUser(String hashtag) {               // ??????????????????????????????????
+	public Iterator<Comment> getListCommentByUser(String hashtag) {
+		LinkedList<Comment> comment = commentsByTag.get(hashtag);
+		if(comment==null) throw new NoCommentsException();
 		return commentsByTag.get(hashtag).iterator();
 	}
 
