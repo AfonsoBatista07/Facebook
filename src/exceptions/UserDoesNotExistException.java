@@ -1,7 +1,5 @@
 package exceptions;
 
-import user.User;
-
 public class UserDoesNotExistException extends RuntimeException{
 
 	/**
