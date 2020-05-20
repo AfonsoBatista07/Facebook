@@ -32,16 +32,25 @@ public class FanaticClass extends UserClass implements Fanatic {
 		super.newPost(post);
 	}
 	
-	public void newComment(int postId, Comment comment) {
-		Post post = getPost(postId);
-		String fanaticism = getFanaticism(post);
-		if(loves(fanaticism)) {
-			if((post.isHonest() && !comment.isPositive()) || (!post.isHonest() && comment.isPositive())) throw new InvalidCommentStanceException();
+	public void newComment(Comment comment) {
+		Post post = comment.getPost();
+		Iterator<String> it = post.getHashTags();
+		boolean found = false;
+		while (it.hasNext() && found == false) {
+			String fanaticism = it.next();
+			for(int i = 0; i < numFanaticisms; i++) {
+				if(hashTags.get(i).equals(fanaticism)) {
+					found = true;
+					if(loves(hashTags.get(i))) {
+						if((!post.isHonest() && comment.isPositive()) || (post.isHonest() && !comment.isPositive())) throw new InvalidCommentStanceException();;
+					}
+					if(hates(hashTags.get(i))) {
+						if((!post.isHonest() && !comment.isPositive()) || (post.isHonest() && comment.isPositive())) throw new InvalidCommentStanceException();;
+					}
+				}
+			}
 		}
-		if(hates(fanaticism)) {
-			if((post.isHonest() && comment.isPositive()) || (!post.isHonest() && !comment.isPositive())) throw new InvalidCommentStanceException();
-		}
-		super.newComment(postId, comment);
+		super.newComment(comment);
 	}
 	
 	private void separateTags() {
@@ -65,12 +74,7 @@ public class FanaticClass extends UserClass implements Fanatic {
 	}
 	
 	private String getFanaticism(Post post) {
-		Iterator<String> it = post.getHashTags();
-		while (it.hasNext()) {
-			for(int i = 0; i < numFanaticisms; i++) {
-				if(hashTags.get(i).equals(it.next())) return hashTags.get(i);
-			}
-		}
+		
 		return null;
 	}
 	

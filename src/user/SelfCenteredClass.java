@@ -10,9 +10,11 @@ public class SelfCenteredClass extends UserClass {
 		super(id, SELF_CENTERED);
 	}
 	
-	public void newComment(int postId, Comment comment) {
-		if(getPost(postId).getAuthorId().equals(getId())) super.newComment(postId, comment);
-		else if(comment.isPositive()) throw new InvalidCommentStanceException();
-		else throw new UserCanNotCommentPostException();
+	public void newComment( Comment comment) {
+		if(comment.getPost().getAuthorId().equals(getId())) {
+			if(comment.isPositive()) {
+				super.newComment( comment);
+			}else throw new InvalidCommentStanceException();
+		}else throw new UserCanNotCommentPostException();
 	}
 }

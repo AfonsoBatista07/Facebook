@@ -9,8 +9,8 @@ public class NaiveClass extends UserClass implements Naive {
 		super(id, NAIVE);
 	}
 	
-	public void newComment(int postId, Comment comment) {
-		if(comment.isPositive()) super.newComment(postId, comment);
+	public void newComment(Comment comment) {
+		if(comment.isPositive()) super.newComment(comment);
 		else throw new InvalidCommentStanceException();
 	}
 }

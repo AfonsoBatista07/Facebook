@@ -40,8 +40,8 @@ public abstract class UserClass implements User {
 		myPosts.add(post);
 	}
 
-	public void newComment(int postId, Comment comment) {
-		Post post = getPost(postId);
+	public void newComment(Comment comment) {
+		Post post = comment.getPost();
 		Iterator<String> it = post.getHashTags();
 		while(it.hasNext()) {
 			String tag = it.next();
