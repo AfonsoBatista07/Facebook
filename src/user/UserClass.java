@@ -85,6 +85,7 @@ public abstract class UserClass implements User {
 	}
 	
 	public Post getPost(int postId) {
+		if(postId-1 > myPosts.size()) return null;
 		return myPosts.get(postId-1);
 	}
 	

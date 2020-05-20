@@ -19,7 +19,7 @@ public class LiarClass extends UserClass implements Liar {
 	}
 	
 	public void newComment(Comment comment) {
-		if((comment.getPost().isHonest() && !comment.isPositive()) || (comment.getPost().isHonest() && comment.isPositive())) super.newComment(comment);
+		if((comment.getPost().isHonest() && !comment.isPositive()) || (!comment.getPost().isHonest() && comment.isPositive())) super.newComment(comment);
 		else throw new InvalidCommentStanceException();
 	}
 	
