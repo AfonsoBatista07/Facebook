@@ -61,10 +61,10 @@ public class FakeSystemClass implements FakeSystem {
 
 	public void addComment(String idUserComment, String idUserAuthor, int idPost, String stance, String comment) {
 		User userComment = getUser(idUserComment), userAuthor = getUser(idUserAuthor);
-		if(!(hasFriend(userComment, userAuthor) || userComment.equals(userComment))) throw new UserNoAccessToPostException();
+		if(!hasFriend(userComment, userAuthor) && !idUserComment.equals(idUserAuthor)) throw new UserNoAccessToPostException();
 		if(!hasPost(userAuthor, idPost)) throw new UserHasNoPostsException();
 		Comment cmt = new CommentClass(idUserComment, stance, comment, userAuthor.getPost(idPost));
-		userAuthor.newComment(idPost,cmt);
+		userComment.newComment(cmt);
 
 	}
 	

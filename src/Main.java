@@ -242,11 +242,11 @@ public class Main {
 			fsys.addComment(idUserComment, idUserAuthor, idPost, stance, comment);
 			System.out.println(SUCCESS_NEW_COMMENT);
 		} catch (UserDoesNotExistException e) {
-			System.out.printf(ERROR_USER_DOES_NOT_EXISTS, e.getUserId());                                    
-		} catch (UserNoAccessToPostException e) {
-			System.out.printf(ERROR_USER_NO_ACCESS_TO_POST, idUserComment, idPost, idUserAuthor);
+			System.out.printf(ERROR_USER_DOES_NOT_EXISTS, e.getUserId());   
 		} catch (UserHasNoPostsException e) {
 			System.out.printf(ERROR_USER_NO_POSTS, idUserAuthor, idPost);
+		} catch (UserNoAccessToPostException e) {
+			System.out.printf(ERROR_USER_NO_ACCESS_TO_POST, idUserComment, idPost, idUserAuthor);
 		} catch (UserCanNotCommentPostException e) {
 			System.out.printf(ERROR_USER_CAN_NOT_COMMENT, idUserComment);
 		} catch (InvalidCommentStanceException e) {

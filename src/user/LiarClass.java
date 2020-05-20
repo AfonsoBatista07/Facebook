@@ -18,8 +18,8 @@ public class LiarClass extends UserClass implements Liar {
 		else throw new InadequateStanceException();
 	}
 	
-	public void newComment(int postId,Comment comment) {
-		if((getPost(postId).isHonest() && !comment.isPositive()) || (!getPost(postId).isHonest() && comment.isPositive())) super.newComment(postId, comment);
+	public void newComment(Comment comment) {
+		if((comment.getPost().isHonest() && !comment.isPositive()) || (comment.getPost().isHonest() && comment.isPositive())) super.newComment(comment);
 		else throw new InvalidCommentStanceException();
 	}
 	

@@ -4,5 +4,5 @@ import post.Comment;
 
 public interface Naive extends User {
 	
-	void newComment(int postId, Comment comment);
+	void newComment(Comment comment);
 }
