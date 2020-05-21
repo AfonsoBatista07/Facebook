@@ -10,6 +10,7 @@ public class FakeSystemClass implements FakeSystem {
 	private SortedMap<String, User> users;
 	private Map<String, SortedMap<String,User>> fanaticsBytopic;
 	private Map<String, SortedSet<Post>> posts;
+	private Post popularPost;
 	
 	
 	public FakeSystemClass() {
@@ -93,7 +94,20 @@ public class FakeSystemClass implements FakeSystem {
 		if(!hasPost(userAuthor, idPost)) throw new UserHasNoPostsException();
 		Comment cmt = new CommentClass(idUserComment, stance, comment, userAuthor.getPost(idPost));
 		userComment.newComment(cmt);
-
+		updatePopularPost(userAuthor.getPost(idPost));
+	}
+	
+	private void updatePopularPost (Post post) {
+		if(popularPost == null) popularPost = post;
+		if(post.getNumComments() > popularPost.getNumComments()) popularPost = post;
+		if(post.getNumComments() == popularPost.getNumComments()) {
+			if(post.getAuthorId().compareTo(popularPost.getAuthorId()) < 0) {
+				popularPost = post;
+			}
+			if(post.getAuthorId().compareTo(popularPost.getAuthorId()) == 0) {
+				if(post.getIdPost() > popularPost.getIdPost()) popularPost = post;
+			}
+		}
 	}
 	
 	private boolean hasPost(User user, int idPost) {
@@ -136,7 +150,8 @@ public class FakeSystemClass implements FakeSystem {
 	}
 	
 	public Post getPopularPost() {
-		return null;                    // TODO
+		if (popularPost == null) throw new NoKingPopularPostException();
+		return popularPost;
 	}
 	
 	public User getTopPoster() {

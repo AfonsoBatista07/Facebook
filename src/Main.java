@@ -405,7 +405,7 @@ public class Main {
 	private static void popularPosts(FakeSystem fsys) {
 		try {
 			Post post = fsys.getPopularPost();
-			System.out.printf(SUCCESS_LIST_TOPIC_POSTS, post.getAuthorId(), post.getIdPost(), post.getMessage());
+			System.out.printf(SUCCESS_LIST_TOPIC_POSTS, post.getAuthorId(), post.getIdPost(), post.getNumComments(), post.getMessage());
 		} catch(NoKingPopularPostException e) {
 			System.out.println(ERROR_NO_KING_POPULAR_POST);
 		}
