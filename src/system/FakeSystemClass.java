@@ -15,13 +15,14 @@ public class FakeSystemClass implements FakeSystem {
 	public FakeSystemClass() {
 		users = new TreeMap<String, User>();
 		posts = new HashMap<String, SortedSet<Post>>();
+		fanaticsBytopic = new HashMap<String, SortedMap<String, User>>();
 	}
 	
 	public boolean isFanatic(String kind) {
 		return kind.equals(User.FANATIC);
 	}
 	
-	public void addUser(String kind, String userId, int numFanaticisms, LinkedList<String> sequence) {
+	public void addUser(String kind, String userId, int numFanaticisms, LinkedList<String> sequence) { //Mudar possivelments a linkedlist to arrayList
 		User user=null;      // NULL ??
 		
 		switch(kind) {
@@ -37,12 +38,25 @@ public class FakeSystemClass implements FakeSystem {
 			case User.FANATIC:
 				if(repeatedTags(numFanaticisms, sequence)) throw new InvalidFanaticismListException();   
 				user = new FanaticClass(userId, numFanaticisms, sequence);
+				addFanaticsByTopic(numFanaticisms, sequence, user);
 				break;
 			default:
 				throw new UnknownUserKindException();
 		}
 		if(userExists(userId)) throw new UserAlreadyExistsException(userId);    //OBJECTOS CRIADOS A TOA ?
 		users.put(userId, user);
+	}
+	
+	private void addFanaticsByTopic (int numFanaticisms, LinkedList<String> sequence, User user) {
+		for(int i = 0; i < numFanaticisms; i++) {
+			String topic = sequence.get(1 + 2*i);							//Maybe change the whole cicle
+			SortedMap<String, User> map = fanaticsBytopic.get(topic);
+			if (map == null) {
+				map = new TreeMap<String, User>();
+				fanaticsBytopic.put(topic, map);
+			}
+			map.put(user.getId(), user);
+		}
 	}
 	
 	public void addFriend(String firstUserId, String secondUserId) {
@@ -56,7 +70,21 @@ public class FakeSystemClass implements FakeSystem {
 		if(hashtagsNumber < 0 || repeatedTags(hashtagsNumber, hashtags)) throw new InvalidHashtagsListException();
 		Post post = new PostClass(userId, getPostId(userId)+1, hashtagsNumber, hashtags, truthfulness, message);
 		user.newPost(post);
+		addPostsByTopic(hashtagsNumber, hashtags, post);
 		sharePost(post, user);
+	}
+	
+	private void addPostsByTopic(int hashtagsNumber, LinkedList<String> hashtags, Post post) {
+		Iterator<String> it = hashtags.iterator();
+		while(it.hasNext()) {
+			String tag = it.next();
+			SortedSet<Post> set = posts.get(tag);
+			if (set == null) {
+				set = new TreeSet<Post>(new SortPosts());
+				posts.put(tag, set);
+			}
+			set.add(post);
+		}
 	}
 
 	public void addComment(String idUserComment, String idUserAuthor, int idPost, String stance, String comment) {
@@ -174,10 +202,15 @@ public class FakeSystemClass implements FakeSystem {
 	}
 	
 	public Iterator<User> listFanaticsByTopic(String hashtag) {
+		SortedMap<String, User> map = fanaticsBytopic.get(hashtag);
+		if( map == null) throw new UnknownFanaticismException();
 		return fanaticsBytopic.get(hashtag).values().iterator();
 	}
 	
-	public Iterator<Post> listTopicPosts(String hashtag) {
-		return null;                                       // TODO       
+	public Iterator<Post> listTopicPosts(int numberOfPosts, String hashtag) {
+		if(numberOfPosts < 1) throw new InvalidNumberOfPostsException();
+		SortedSet<Post> set = posts.get(hashtag);
+		if( set == null) throw new UnKnownTopicException();
+		return set.iterator();   
 	}
 }

@@ -40,7 +40,7 @@ public class Main {
  	private static final String SUCCESS_USER_POSTS = "%s posts:\n";
  	private static final String SUCCESS_LIST_COMMENTS = "[%s %s %d %s] %s\n";
  	private static final String SUCCESS_READ_POST = "[%s %s] %s\n";
- 	private static final String SUCCESS_LIST_TOPIC_POSTS = "%s %d: %s\n";
+ 	private static final String SUCCESS_LIST_TOPIC_POSTS = "%s %d %d: %s\n";
  	private static final String SUCCESS_SHAMELESS = "%s %d.\n";
  	private static final String SUCCESS_TOP_POSTER = "%s %d %d.\n";
  	private static final String SUCCESS_HELP = "register - registers a new user\n" + 
@@ -67,6 +67,7 @@ public class Main {
  	private static final String ERROR_INVALID_HASHTANGS = "Invalid hashtags list!";
  	private static final String ERROR_INVALID_COMMMENT_STANCE = "Invalid comment stance!";
  	private static final String ERROR_INVALID_FANATICISM = "Invalid fanaticism list!";
+ 	private static final String ERROR_INVALID_NUMBER_POSTS = "Invalid number of posts to present!\n";
  	private static final String ERROR_NO_KING_OF_LIARS = "Social distancing has reached fakebook. Post a lie and become the king of liars.";
  	private static final String ERROR_NO_KING_OF_RESPONSIVENESS = "Social distancing has reached fakebook. Post something and then comment your own post to become the king of responsiveness.";
  	private static final String ERROR_NO_KING_POSTERS = "Social distancing has reached fakebook. Post something the king of posters.";
@@ -347,7 +348,8 @@ public class Main {
 			Iterator<User> it = fsys.listFanaticsByTopic(hashtag);
 			while(it.hasNext()) {
 				System.out.printf(it.next().getId());
-				if(it.hasNext()) System.out.println(", ");
+				if(it.hasNext()) System.out.printf(", ");
+				else System.out.printf(".");						//Fazer Constantes
 			}
 			System.out.println();
 		} catch(UnknownFanaticismException e) {
@@ -360,11 +362,14 @@ public class Main {
 		int numberOfPosts = in.nextInt();
 		
 		try {
-			Iterator<Post> it = fsys.listTopicPosts(hashtag);
-			for(int i=numberOfPosts ;i>0 ;i--) {
+			Iterator<Post> it = fsys.listTopicPosts(numberOfPosts, hashtag);
+			while(it.hasNext() && numberOfPosts > 0) {										//É bad code usar a variavel?
 				Post post = it.next();
-				System.out.printf(SUCCESS_LIST_TOPIC_POSTS ,post.getAuthorId(), post.getIdPost(), post.getMessage());
+				System.out.printf(SUCCESS_LIST_TOPIC_POSTS ,post.getAuthorId(), post.getIdPost(),post.getNumComments(), post.getMessage());
+				numberOfPosts--;
 			}
+		} catch ( InvalidNumberOfPostsException e) {
+			System.out.printf(ERROR_INVALID_NUMBER_POSTS);
 		} catch ( UnKnownTopicException e ) {
 			System.out.printf(ERROR_UNKNOWN_TOPIC, hashtag);
 		}

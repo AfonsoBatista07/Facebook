@@ -49,5 +49,5 @@ public interface FakeSystem {
 	
 	Iterator<User> listFanaticsByTopic(String hashtag) throws UnknownFanaticismException; 
 	
-	Iterator<Post> listTopicPosts(String hashtag) throws UnKnownTopicException; 
+	Iterator<Post> listTopicPosts(int numberOfPosts, String hashtag) throws UnKnownTopicException, InvalidNumberOfPostsException; 
 }
