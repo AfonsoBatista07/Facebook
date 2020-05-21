@@ -101,9 +101,7 @@ public class FakeSystemClass implements FakeSystem {
 		if(popularPost == null) popularPost = post;
 		if(post.getNumComments() > popularPost.getNumComments()) popularPost = post;
 		if(post.getNumComments() == popularPost.getNumComments()) {
-			if(post.getAuthorId().compareTo(popularPost.getAuthorId()) < 0) {
-				popularPost = post;
-			}
+			if(post.getAuthorId().compareTo(popularPost.getAuthorId()) < 0) popularPost = post;
 			if(post.getAuthorId().compareTo(popularPost.getAuthorId()) == 0) {
 				if(post.getIdPost() > popularPost.getIdPost()) popularPost = post;
 			}
