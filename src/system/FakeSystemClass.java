@@ -11,6 +11,7 @@ public class FakeSystemClass implements FakeSystem {
 	private Map<String, SortedMap<String,User>> fanaticsBytopic;
 	private Map<String, SortedSet<Post>> posts;
 	private Post popularPost;
+	private User topPoster;
 	
 	
 	public FakeSystemClass() {
@@ -73,6 +74,8 @@ public class FakeSystemClass implements FakeSystem {
 		user.newPost(post);
 		addPostsByTopic(hashtagsNumber, hashtags, post);
 		sharePost(post, user);
+		
+		if(TopPoster(user)) topPoster = user;
 	}
 	
 	private void addPostsByTopic(int hashtagsNumber, LinkedList<String> hashtags, Post post) {
@@ -94,18 +97,29 @@ public class FakeSystemClass implements FakeSystem {
 		if(!hasPost(userAuthor, idPost)) throw new UserHasNoPostsException();
 		Comment cmt = new CommentClass(idUserComment, stance, comment, userAuthor.getPost(idPost));
 		userComment.newComment(cmt);
-		updatePopularPost(userAuthor.getPost(idPost));
+		
+		Post post = userAuthor.getPost(idPost);
+		if(MorePopular(post)) popularPost = post;
 	}
 	
-	private void updatePopularPost (Post post) {
-		if(popularPost == null) popularPost = post;
-		if(post.getNumComments() > popularPost.getNumComments()) popularPost = post;
-		if(post.getNumComments() == popularPost.getNumComments()) {
-			if(post.getAuthorId().compareTo(popularPost.getAuthorId()) < 0) popularPost = post;
-			if(post.getAuthorId().compareTo(popularPost.getAuthorId()) == 0) {
-				if(post.getIdPost() > popularPost.getIdPost()) popularPost = post;
-			}
+	private boolean MorePopular(Post post) {
+		if(popularPost == null || post.getNumComments() > popularPost.getNumComments()) return true;
+		else if(post.getNumComments() == popularPost.getNumComments()) { 
+			if(post.getAuthorId().compareTo(popularPost.getAuthorId()) < 0) return true;
+			else if(post.getAuthorId().compareTo(popularPost.getAuthorId()) == 0)
+				if(post.getIdPost() > popularPost.getIdPost()) return true;	
 		}
+		return false;
+	}
+	
+	private boolean TopPoster(User user) {
+		if(topPoster == null || user.getNumberPosts() > topPoster.getNumberPosts()) return true;
+		else if(user.getNumberPosts() == topPoster.getNumberPosts()) {
+			if(user.getNumberComments() > topPoster.getNumberComments()) return true;
+			else if(user.getNumberComments() == topPoster.getNumberComments())
+				if(user.getId().compareTo(topPoster.getId()) > 0) return true;
+		}
+		return false;	
 	}
 	
 	private boolean hasPost(User user, int idPost) {
@@ -148,12 +162,13 @@ public class FakeSystemClass implements FakeSystem {
 	}
 	
 	public Post getPopularPost() {
-		if (popularPost == null) throw new NoKingPopularPostException();
+		if(popularPost == null) throw new NoKingPopularPostException();
 		return popularPost;
 	}
 	
 	public User getTopPoster() {
-		return null;                    // TODO
+		if(topPoster == null) throw new NoKingPostersException();
+		return topPoster;                    
 	}
 	
 	public User getResponsive() {
@@ -209,21 +224,19 @@ public class FakeSystemClass implements FakeSystem {
 	
 	public Iterator<Comment> listCommentByUser(String userId, String hashtag) {
 		User user = getUser(userId);
-		//Iterator<Comment> it = user.getListCommentByUser(hashtag);
-		//if(!it.hasNext()) throw new NoCommentsException();
 		return user.getListCommentByUser(hashtag);
 	}
 	
 	public Iterator<User> listFanaticsByTopic(String hashtag) {
 		SortedMap<String, User> map = fanaticsBytopic.get(hashtag);
-		if( map == null) throw new UnknownFanaticismException();
+		if(map == null) throw new UnknownFanaticismException();
 		return fanaticsBytopic.get(hashtag).values().iterator();
 	}
 	
 	public Iterator<Post> listTopicPosts(int numberOfPosts, String hashtag) {
 		if(numberOfPosts < 1) throw new InvalidNumberOfPostsException();
 		SortedSet<Post> set = posts.get(hashtag);
-		if( set == null) throw new UnKnownTopicException();
+		if(set == null) throw new UnKnownTopicException();
 		return set.iterator();   
 	}
 }

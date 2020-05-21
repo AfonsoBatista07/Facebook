@@ -2,7 +2,8 @@ package user;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
-
+import java.util.SortedMap;
+import java.util.TreeMap;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -14,7 +15,7 @@ import post.Post;
 public abstract class UserClass implements User {
 	
 	private String id, kind;
-	private LinkedList<User> friends;
+	private SortedMap<String, User> friends;
 	protected ArrayList<Post> myPosts, myFeed;
 	private Map<String,LinkedList<Comment>> commentsByTag;
 	private int numComments;
@@ -22,7 +23,7 @@ public abstract class UserClass implements User {
 	public UserClass(String id, String kind) {
 		this.id = id;
 		this.kind = kind;
-		friends = new LinkedList<User>();
+		friends = new TreeMap<String, User>();
 		myPosts =  new ArrayList<Post>();
 		myFeed =  new ArrayList<Post>();
 		commentsByTag = new HashMap<String, LinkedList<Comment>>();
@@ -57,13 +58,17 @@ public abstract class UserClass implements User {
 		numComments++;
 	}
 	
+	public float getPercentageCommentedPosts() {          //TODO
+		return 0;
+	}
+	
 	public void addFeed(Post post) {
 		myFeed.add(post);
 	}
 	
 	public void addFriend(User user) {
 		if(hasFriend(user)) throw new UsersAlreadyFriendsException();
-		friends.addLast(user);
+		friends.put(user.getId(), user);
 	}
 	
 	public int getNumberFriends() {
@@ -91,19 +96,16 @@ public abstract class UserClass implements User {
 	}
 	
 	public User getFriend(User user) {
-		for( User acc: friends)
-			if (acc.getId().equals(user.getId()))
-				return acc;
-		return null;
+		return friends.get(user.getId());        // Null ???
 	}
 	
 	public void sharePost(Post post) {
-		for(User user: friends)
+		for(User user: friends.values())
 			user.addFeed(post);	
 	}
 	
 	public Iterator<User> getFriendIterator() {
-		return friends.iterator();
+		return friends.values().iterator();
 	}
 	
 	public Iterator<Post> getMyPostsIterator() {
