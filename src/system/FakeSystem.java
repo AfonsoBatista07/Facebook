@@ -47,7 +47,7 @@ public interface FakeSystem {
 	
 	Iterator<Comment> listCommentByUser(String userId, String hashtag) throws UserDoesNotExistException, NoCommentsException;
 	
-	Iterator<User> listFanaticsByTopic(String hashtag) throws UnknownFanaticismException; 
+	Iterator<String> listFanaticsByTopic(String hashtag) throws UnknownFanaticismException; 
 	
 	Iterator<Post> listTopicPosts(int numberOfPosts, String hashtag) throws UnKnownTopicException, InvalidNumberOfPostsException; 
 }

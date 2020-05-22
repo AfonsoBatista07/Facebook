@@ -73,11 +73,6 @@ public class FanaticClass extends UserClass implements Fanatic {
 		return find(hate, hates);
 	}
 	
-	private String getFanaticism(Post post) {
-		
-		return null;
-	}
-	
 	private boolean hasFanaticism(String fanaticism) {
 		Iterator<String> itLove = loves.iterator();
 		Iterator<String> itHate = hates.iterator();

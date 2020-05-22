@@ -8,16 +8,15 @@ import java.util.*;
 public class FakeSystemClass implements FakeSystem {
 	
 	private SortedMap<String, User> users;
-	private Map<String, SortedMap<String,User>> fanaticsBytopic;
+	private Map<String, SortedSet<String>> fanaticsBytopic;   
 	private Map<String, SortedSet<Post>> posts;
 	private Post popularPost;
 	private User topPoster;
 	
-	
 	public FakeSystemClass() {
 		users = new TreeMap<String, User>();
 		posts = new HashMap<String, SortedSet<Post>>();
-		fanaticsBytopic = new HashMap<String, SortedMap<String, User>>();
+		fanaticsBytopic = new HashMap<String, SortedSet<String>>();
 	}
 	
 	public boolean isFanatic(String kind) {
@@ -25,7 +24,7 @@ public class FakeSystemClass implements FakeSystem {
 	}
 	
 	public void addUser(String kind, String userId, int numFanaticisms, LinkedList<String> sequence) { //Mudar possivelments a linkedlist to arrayList
-		User user=null;      // NULL ??
+		User user=null;    
 		
 		switch(kind) {
 			case User.LIAR:
@@ -45,19 +44,19 @@ public class FakeSystemClass implements FakeSystem {
 			default:
 				throw new UnknownUserKindException();
 		}
-		if(userExists(userId)) throw new UserAlreadyExistsException(userId);    //OBJECTOS CRIADOS A TOA ?
+		if(userExists(userId)) throw new UserAlreadyExistsException(userId);  
 		users.put(userId, user);
 	}
 	
 	private void addFanaticsByTopic (int numFanaticisms, LinkedList<String> sequence, User user) {
 		for(int i = 0; i < numFanaticisms; i++) {
-			String topic = sequence.get(1 + 2*i);							//Maybe change the whole cicle
-			SortedMap<String, User> map = fanaticsBytopic.get(topic);
-			if (map == null) {
-				map = new TreeMap<String, User>();
-				fanaticsBytopic.put(topic, map);
-			}
-			map.put(user.getId(), user);
+			String topic = sequence.get(1 + 2*i); //Maybe change the whole cicle
+			SortedSet<String> map = fanaticsBytopic.get(topic); 
+			if (map == null) { 
+				map = new TreeSet<String>(); 
+				fanaticsBytopic.put(topic, map); 
+			} 
+			map.add(user.getId());
 		}
 	}
 	
@@ -111,7 +110,7 @@ public class FakeSystemClass implements FakeSystem {
 		}
 		return false;
 	}
-	
+	                                                                                                        // TODO Class Comparable.
 	private boolean TopPoster(User user) {
 		if(topPoster == null || user.getNumberPosts() > topPoster.getNumberPosts()) return true;
 		else if(user.getNumberPosts() == topPoster.getNumberPosts()) {
@@ -227,15 +226,15 @@ public class FakeSystemClass implements FakeSystem {
 		return user.getListCommentByUser(hashtag);
 	}
 	
-	public Iterator<User> listFanaticsByTopic(String hashtag) {
-		SortedMap<String, User> map = fanaticsBytopic.get(hashtag);
-		if(map == null) throw new UnknownFanaticismException();
-		return fanaticsBytopic.get(hashtag).values().iterator();
+	public Iterator<String> listFanaticsByTopic(String hashtag) {
+		SortedSet<String> map = fanaticsBytopic.get(hashtag);
+		if(fanaticsBytopic == null) throw new UnknownFanaticismException();
+		return map.iterator();
 	}
 	
 	public Iterator<Post> listTopicPosts(int numberOfPosts, String hashtag) {
 		if(numberOfPosts < 1) throw new InvalidNumberOfPostsException();
-		SortedSet<Post> set = posts.get(hashtag);
+		SortedSet<Post> set = posts.get(hashtag);                                      // TODO Professora : Nao da assim tem que possivelmente fazer uma lista... bla bla bla... Collection Sort
 		if(set == null) throw new UnKnownTopicException();
 		return set.iterator();   
 	}
