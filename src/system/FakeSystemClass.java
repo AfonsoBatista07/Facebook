@@ -11,7 +11,7 @@ public class FakeSystemClass implements FakeSystem {
 	private Map<String, LinkedList<Post>> posts;
 	private Map<String, SortedSet<String>> fanaticsBytopic;   
 	private Post popularPost;
-	private User topPoster;
+	private User topPoster, responsive;
 	private Liar shameless;
 	
 	public FakeSystemClass() {
@@ -75,8 +75,9 @@ public class FakeSystemClass implements FakeSystem {
 		addPostsByTopic(hashtagsNumber, hashtags, post);
 		sharePost(post, user);
 		
-		if(TopPoster(user)) topPoster = user;
-		if(user.getKind().equals(User.LIAR) && Shameless(user)) shameless = (Liar) user;
+		if(topPoster(user)) topPoster = user;
+		if(responsive(user)) responsive = user;
+		if(user.getKind().equals(User.LIAR) && shameless((Liar) user)) shameless = (Liar) user;
 	}
 	
 	private void addPostsByTopic(int hashtagsNumber, LinkedList<String> hashtags, Post post) {
@@ -91,17 +92,6 @@ public class FakeSystemClass implements FakeSystem {
 			list.add(post);
 		}
 	}
-	
-	private boolean Shameless(User user) {
-		if(shameless == null || ((Liar) user).getNumberOfLies() > shameless.getNumberOfLies()) return true;
-		int userSum = user.getNumberComments() + user.getNumberPosts();
-		int shamelessSum = shameless.getNumberComments() + shameless.getNumberPosts();							/// Atencao aos casts e verificar o number posts
-		if (((Liar) user).getNumberOfLies() == shameless.getNumberOfLies()) {
-			if(userSum < shamelessSum) return true;
-			if(userSum == shamelessSum && user.getId().compareTo(shameless.getId()) > 0) return true;
-		}
-		return false;
-	}
 
 	public void addComment(String idUserComment, String idUserAuthor, int idPost, String stance, String comment) {
 		User userComment = getUser(idUserComment), userAuthor = getUser(idUserAuthor);
@@ -111,11 +101,30 @@ public class FakeSystemClass implements FakeSystem {
 		userComment.newComment(cmt);
 		
 		Post post = userAuthor.getPost(idPost);
-		if(MorePopular(post)) popularPost = post;
-		if(userComment.getKind().equals(User.LIAR) && Shameless(userComment)) shameless = (Liar) userComment;
+		if(morePopular(post)) popularPost = post;
+		if(responsive(userComment)) responsive = userComment;
+		if(userComment.getKind().equals(User.LIAR) && shameless((Liar) userComment)) shameless = (Liar) userComment;
 	}
 	
-	private boolean MorePopular(Post post) {
+	private boolean responsive(User user) {
+		if(responsive == null || user.getPercentageCommentedPosts() < responsive.getPercentageCommentedPosts()) return true;
+		if(user.getPercentageCommentedPosts() == responsive.getPercentageCommentedPosts())
+			if(user.getId().compareTo(responsive.getId()) > 0) return true;
+		return false;
+	}
+	
+	private boolean shameless(Liar user) {
+		if(shameless == null || user.getNumberOfLies() > shameless.getNumberOfLies()) return true;
+		int userSum = user.getNumberComments() + user.getNumberPosts();
+		int shamelessSum = shameless.getNumberComments() + shameless.getNumberPosts();							/// Atencao aos casts e verificar o number posts
+		if ( user.getNumberOfLies() == shameless.getNumberOfLies()) {
+			if(userSum < shamelessSum) return true;
+			if(userSum == shamelessSum && user.getId().compareTo(shameless.getId()) > 0) return true;
+		}
+		return false;
+	}
+	
+	private boolean morePopular(Post post) {
 		if(popularPost == null || post.getNumComments() > popularPost.getNumComments()) return true;
 		if(post.getNumComments() == popularPost.getNumComments()) { 
 			if(post.getAuthorId().compareTo(popularPost.getAuthorId()) < 0) return true;
@@ -125,7 +134,7 @@ public class FakeSystemClass implements FakeSystem {
 		return false;
 	}
 	                                                                                                        // TODO Class Comparable.
-	private boolean TopPoster(User user) {
+	private boolean topPoster(User user) {
 		if(topPoster == null || user.getNumberPosts() > topPoster.getNumberPosts()) return true;
 		else if(user.getNumberPosts() == topPoster.getNumberPosts()) {
 			if(user.getNumberComments() > topPoster.getNumberComments()) return true;
@@ -185,11 +194,13 @@ public class FakeSystemClass implements FakeSystem {
 	}
 	
 	public User getResponsive() {
-		return null;                    // TODO
+		if(responsive == null) throw new NoKingOfResponsivenessException();
+		return responsive;                 
 	}
 	
 	public Liar getShameless() {
-		return null;                    // TODO
+		if(shameless == null) throw new NoKingOfLiarsException();
+		return shameless;                
 	}
 
 	public Iterator<User> listUsers() throws NoUsersException{

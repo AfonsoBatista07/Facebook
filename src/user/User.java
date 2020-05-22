@@ -22,6 +22,7 @@ public interface User {
 	int getNumberFriends();
 	int getNumberPosts();
 	int getNumberComments();
+	float getPercentageCommentedPosts();
 	boolean hasPost(int postId);
 	boolean hasFriend(User user);
 	Post getPost(int postId);

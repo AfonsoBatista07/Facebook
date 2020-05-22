@@ -38,13 +38,14 @@ public class FanaticClass extends UserClass implements Fanatic {
 		boolean found = false;
 		while (it.hasNext() && found == false) {
 			String fanaticism = it.next();
-			for(int i = 0; i < numFanaticisms; i++) {				//Separate and fix it later
-				if(hashTags.get(1 + 2*i).equals(fanaticism)) {
+			for(int i = 0; i < numFanaticisms; i++) {
+				String tag = hashTags.get(1 + 2*i);            //Separate and fix it later
+				if(tag.equals(fanaticism)) {
 					found = true;
-					if(loves(hashTags.get(1 + 2*i))) {
+					if(loves(tag)) {
 						if((!post.isHonest() && comment.isPositive()) || (post.isHonest() && !comment.isPositive())) throw new InvalidCommentStanceException();;
 					}
-					if(hates(hashTags.get(1 + 2*i))) {
+					if(hates(tag)) {
 						if((!post.isHonest() && !comment.isPositive()) || (post.isHonest() && comment.isPositive())) throw new InvalidCommentStanceException();;
 					}
 				}

@@ -59,7 +59,8 @@ public abstract class UserClass implements User {
 	}
 	
 	public float getPercentageCommentedPosts() {          //TODO
-		return 0;
+		return numComments/getNumCanCommentPosts();       //TODO
+														  //TODO
 	}
 	
 	public void addFeed(Post post) {
@@ -71,8 +72,16 @@ public abstract class UserClass implements User {
 		friends.put(user.getId(), user);
 	}
 	
+	public int getNumCanCommentPosts() {
+		return getNumberPosts()+getNumFriendPosts();
+	}
+	
 	public int getNumberFriends() {
 		return friends.size();
+	}
+	
+	public int getNumFriendPosts() {
+		return myFeed.size();
 	}
 	
 	public int getNumberPosts() {
