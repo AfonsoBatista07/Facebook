@@ -248,8 +248,9 @@ public class FakeSystemClass implements FakeSystem {
 	
 	public Iterator<Post> listTopicPosts(int numberOfPosts, String hashtag) {
 		if(numberOfPosts < 1) throw new InvalidNumberOfPostsException();
-		SortedSet<Post> set = posts.get(hashtag);
-		if(set == null) throw new UnKnownTopicException();
-		return set.iterator();   
+		LinkedList<Post> list = posts.get(hashtag);
+		if(list == null) throw new UnKnownTopicException();
+		Collections.sort(list, new SortPosts());
+		return list.iterator();   
 	}
 }
