@@ -8,16 +8,16 @@ import java.util.*;
 public class FakeSystemClass implements FakeSystem {
 	
 	private SortedMap<String, User> users;
+	private Map<String, LinkedList<Post>> posts;
 	private Map<String, SortedSet<String>> fanaticsBytopic;   
-	private Map<String, SortedSet<Post>> posts;
 	private Post popularPost;
 	private User topPoster;
 	private Liar shameless;
 	
 	public FakeSystemClass() {
 		users = new TreeMap<String, User>();
-		posts = new HashMap<String, SortedSet<Post>>();
 		fanaticsBytopic = new HashMap<String, SortedSet<String>>();
+		posts = new HashMap<String, LinkedList<Post>>();
 	}
 	
 	public boolean isFanatic(String kind) {
@@ -83,19 +83,19 @@ public class FakeSystemClass implements FakeSystem {
 		Iterator<String> it = hashtags.iterator();
 		while(it.hasNext()) {
 			String tag = it.next();
-			SortedSet<Post> set = posts.get(tag);
-			if (set == null) {
-				set = new TreeSet<Post>(new SortPosts());
-				posts.put(tag, set);
+			LinkedList<Post> list = posts.get(tag);
+			if (list == null) {
+				list = new LinkedList<Post>();
+				posts.put(tag, list);
 			}
-			set.add(post);
+			list.add(post);
 		}
 	}
 	
 	private boolean Shameless(User user) {
 		if(shameless == null || ((Liar) user).getNumberOfLies() > shameless.getNumberOfLies()) return true;
 		int userSum = user.getNumberComments() + user.getNumberPosts();
-		int shamelessSum = shameless.getNumberComments() + shameless.getNumberPosts();							/// Atencao aos casts
+		int shamelessSum = shameless.getNumberComments() + shameless.getNumberPosts();							/// Atencao aos casts e verificar o number posts
 		if (((Liar) user).getNumberOfLies() == shameless.getNumberOfLies()) {
 			if(userSum < shamelessSum) return true;
 			if(userSum == shamelessSum && user.getId().compareTo(shameless.getId()) > 0) return true;
@@ -248,7 +248,7 @@ public class FakeSystemClass implements FakeSystem {
 	
 	public Iterator<Post> listTopicPosts(int numberOfPosts, String hashtag) {
 		if(numberOfPosts < 1) throw new InvalidNumberOfPostsException();
-		SortedSet<Post> set = posts.get(hashtag);                                      // TODO Professora : Nao da assim tem que possivelmente fazer uma lista... bla bla bla... Collection Sort
+		SortedSet<Post> set = posts.get(hashtag);
 		if(set == null) throw new UnKnownTopicException();
 		return set.iterator();   
 	}
