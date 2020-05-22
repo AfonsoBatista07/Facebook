@@ -12,6 +12,7 @@ public class FakeSystemClass implements FakeSystem {
 	private Map<String, SortedSet<Post>> posts;
 	private Post popularPost;
 	private User topPoster;
+	private Liar shameless;
 	
 	
 	public FakeSystemClass() {
@@ -76,6 +77,7 @@ public class FakeSystemClass implements FakeSystem {
 		sharePost(post, user);
 		
 		if(TopPoster(user)) topPoster = user;
+		if(user.getKind().equals(User.LIAR) && Shameless(user)) shameless = (Liar) user;
 	}
 	
 	private void addPostsByTopic(int hashtagsNumber, LinkedList<String> hashtags, Post post) {
@@ -90,6 +92,17 @@ public class FakeSystemClass implements FakeSystem {
 			set.add(post);
 		}
 	}
+	
+	private boolean Shameless(User user) {
+		if(shameless == null || ((Liar) user).getNumberOfLies() > shameless.getNumberOfLies()) return true;
+		int userSum = user.getNumberComments() + user.getNumberPosts();
+		int shamelessSum = shameless.getNumberComments() + shameless.getNumberPosts();							/// Atencao aos casts
+		if (((Liar) user).getNumberOfLies() == shameless.getNumberOfLies()) {
+			if(userSum < shamelessSum) return true;
+			if(userSum == shamelessSum && user.getId().compareTo(shameless.getId()) > 0) return true;
+		}
+		return false;
+	}
 
 	public void addComment(String idUserComment, String idUserAuthor, int idPost, String stance, String comment) {
 		User userComment = getUser(idUserComment), userAuthor = getUser(idUserAuthor);
@@ -100,13 +113,14 @@ public class FakeSystemClass implements FakeSystem {
 		
 		Post post = userAuthor.getPost(idPost);
 		if(MorePopular(post)) popularPost = post;
+		if(userComment.getKind().equals(User.LIAR) && Shameless(userComment)) shameless = (Liar) userComment;
 	}
 	
 	private boolean MorePopular(Post post) {
 		if(popularPost == null || post.getNumComments() > popularPost.getNumComments()) return true;
-		else if(post.getNumComments() == popularPost.getNumComments()) { 
+		if(post.getNumComments() == popularPost.getNumComments()) { 
 			if(post.getAuthorId().compareTo(popularPost.getAuthorId()) < 0) return true;
-			else if(post.getAuthorId().compareTo(popularPost.getAuthorId()) == 0)
+			if(post.getAuthorId().compareTo(popularPost.getAuthorId()) == 0)
 				if(post.getIdPost() > popularPost.getIdPost()) return true;	
 		}
 		return false;
