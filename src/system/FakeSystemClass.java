@@ -242,7 +242,7 @@ public class FakeSystemClass implements FakeSystem {
 	
 	public Iterator<String> listFanaticsByTopic(String hashtag) {
 		SortedSet<String> map = fanaticsBytopic.get(hashtag);
-		if(fanaticsBytopic == null) throw new UnknownFanaticismException();
+		if(map == null) throw new UnknownFanaticismException();
 		return map.iterator();
 	}
 	

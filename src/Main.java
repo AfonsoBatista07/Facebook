@@ -345,9 +345,9 @@ public class Main {
 		String hashtag = in.next();
 		
 		try {
-			Iterator<User> it = fsys.listFanaticsByTopic(hashtag);
+			Iterator<String> it = fsys.listFanaticsByTopic(hashtag);
 			while(it.hasNext()) {
-				System.out.printf(it.next().getId());
+				System.out.printf(it.next());
 				if(it.hasNext()) System.out.printf(", ");
 				else System.out.printf(".");						//Fazer Constantes
 			}
