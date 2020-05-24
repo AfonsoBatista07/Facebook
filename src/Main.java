@@ -377,7 +377,7 @@ public class Main {
 
 	private static void shameless(FakeSystem fsys) {
 		try {
-			Liar user = fsys.getShameless();
+			User user = fsys.getShameless();
 			System.out.printf(SUCCESS_SHAMELESS, user.getId(), user.getNumberOfLies());
 		} catch(NoKingOfLiarsException e) {
 			System.out.println(ERROR_NO_KING_OF_LIARS);

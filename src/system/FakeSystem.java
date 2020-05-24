@@ -33,7 +33,7 @@ public interface FakeSystem {
 	
 	User getResponsive() throws NoKingOfResponsivenessException;
 	
-	Liar getShameless() throws NoKingOfLiarsException;
+	User getShameless() throws NoKingOfLiarsException;
 	
 	Post getPost(String userId, int postId);
 	

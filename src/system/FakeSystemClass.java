@@ -11,8 +11,7 @@ public class FakeSystemClass implements FakeSystem {
 	private Map<String, LinkedList<Post>> posts;
 	private Map<String, SortedSet<String>> fanaticsBytopic;   
 	private Post popularPost;
-	private User topPoster, responsive;
-	private Liar shameless;
+	private User topPoster, responsive, shameless;
 	
 	public FakeSystemClass() {
 		users = new TreeMap<String, User>();
@@ -74,7 +73,7 @@ public class FakeSystemClass implements FakeSystem {
 		
 		if(topPoster(user)) topPoster = user;
 		if(responsive(user)) responsive = user;
-		if(user.getKind().equals(User.LIAR) && shameless((Liar) user)) shameless = (Liar) user;
+		if(shameless(user)) shameless = user;
 	}
 	
 	private void addPostsByTopic(int hashtagsNumber, LinkedList<String> hashtags, Post post) {
@@ -116,10 +115,12 @@ public class FakeSystemClass implements FakeSystem {
 		return false;
 	}
 	
-	private boolean shameless(Liar user) {
-		if(shameless == null || user.getNumberOfLies() < shameless.getNumberOfLies()) return true;
+	private boolean shameless(User user) {
+		if(shameless == null || user.getNumberOfLies() > shameless.getNumberOfLies()) return true;
 		int userSum = user.getTotalNumberComments() + user.getNumberPosts();
-		int shamelessSum = shameless.getTotalNumberComments() + shameless.getNumberPosts();							/// Atencao aos casts e verificar o number posts
+		int shamelessSum = shameless.getTotalNumberComments() + shameless.getNumberPosts();		/// Atencao aos casts e verificar o number posts
+		System.out.println(userSum);
+		System.out.println(shamelessSum);
 		if ( user.getNumberOfLies() == shameless.getNumberOfLies()) {
 			if(userSum < shamelessSum) return true;
 			if(userSum == shamelessSum && user.getId().compareTo(shameless.getId()) > 0) return true;
@@ -208,8 +209,8 @@ public class FakeSystemClass implements FakeSystem {
 		return responsive;                 
 	}
 	
-	public Liar getShameless() {
-		if(shameless == null) throw new NoKingOfLiarsException();
+	public User getShameless() {
+		if(shameless == null || shameless.getNumberOfLies() == 0) throw new NoKingOfLiarsException();
 		return shameless;                
 	}
 
