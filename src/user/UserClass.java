@@ -45,13 +45,14 @@ public abstract class UserClass implements User {
 
 	public void newComment(Comment comment) {
 		Post post = comment.getPost();
+		
+		if(!post.hasComment(getId())) numComments++;
+		
 		Iterator<String> it = post.getHashTags();
 		while(it.hasNext()) {
 			addToList(it, comment);
 		}
 		post.newComment(comment);
-		
-		if(post.hasComment(getId())) numComments++;
 		totalNumComments++;
 	}
 	
@@ -65,8 +66,8 @@ public abstract class UserClass implements User {
 		list.add(comment);
 	}
 	
-	public float getPercentageCommentedPosts() {    
-		return numComments/getNumCanCommentPosts();
+	public float getPercentageCommentedPosts() {
+		return (float)numComments/getNumCanCommentPosts();
 	}
 	
 	public void addFeed(Post post) {

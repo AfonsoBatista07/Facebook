@@ -117,9 +117,9 @@ public class FakeSystemClass implements FakeSystem {
 	}
 	
 	private boolean shameless(Liar user) {
-		if(shameless == null || user.getNumberOfLies() < shameless.getNumberOfLies()) return true;
+		if(shameless == null || user.getNumberOfLies() > shameless.getNumberOfLies()) return true;
 		int userSum = user.getTotalNumberComments() + user.getNumberPosts();
-		int shamelessSum = shameless.getTotalNumberComments() + shameless.getNumberPosts();							/// Atencao aos casts e verificar o number posts
+		int shamelessSum = shameless.getTotalNumberComments() + shameless.getNumberPosts();							
 		if ( user.getNumberOfLies() == shameless.getNumberOfLies()) {
 			if(userSum < shamelessSum) return true;
 			if(userSum == shamelessSum && user.getId().compareTo(shameless.getId()) > 0) return true;
