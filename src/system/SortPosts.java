@@ -4,9 +4,8 @@ import java.util.Comparator;
 
 import post.Post;
 
-public class SortPosts implements Comparator <Post>{
+public class ComparatorSortPosts implements Comparator<Post> {
 
-	@Override
 	public int compare(Post a, Post b) {
 		if(a.getNumComments() < b.getNumComments()) return 1;
 		if(a.getNumComments() > b.getNumComments()) return -1;  // Passar os gets para apenas 1

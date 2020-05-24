@@ -30,7 +30,7 @@ public class Main {
 	private static final String HELP = "HELP";
 	
 	/* Success Constants */
- 	private static final String SUCCESS_EXIT = "Bye!\n";
+ 	private static final String SUCCESS_EXIT = "Bye!";
  	private static final String SUCCESS_ADD_FRIEND = "%s is friend of %s.\n";
  	private static final String SUCCESS_ADD_USER = "%s registered.\n";
  	private static final String SUCCESS_NEW_POST = "%s sent a %s post to %d friends. Post id = %s.\n";
@@ -70,7 +70,7 @@ public class Main {
  	private static final String ERROR_INVALID_NUMBER_POSTS = "Invalid number of posts to present!\n";
  	private static final String ERROR_NO_KING_OF_LIARS = "Social distancing has reached fakebook. Post a lie and become the king of liars.";
  	private static final String ERROR_NO_KING_OF_RESPONSIVENESS = "Social distancing has reached fakebook. Post something and then comment your own post to become the king of responsiveness.";
- 	private static final String ERROR_NO_KING_POSTERS = "Social distancing has reached fakebook. Post something the king of posters.";
+ 	private static final String ERROR_NO_KING_POSTERS = "Social distancing has reached fakebook. Post something to become the king of posters.";
  	private static final String ERROR_NO_KING_POPULAR_POST = "Social distancing has reached fakebook. Please post something.";
  	private static final String ERROR_NO_POSTS = "%s has no posts!\n";
  	private static final String ERROR_NO_USERS = "There are no users!";
@@ -261,7 +261,7 @@ public class Main {
 			while(it.hasNext()) {
 				User user = it.next();
 				System.out.printf(SUCCESS_LIST_USERS, user.getId(), user.getKind(),
-						user.getNumberFriends(), user.getNumberPosts(), user.getNumberComments());
+						user.getNumberFriends(), user.getNumberPosts(), user.getTotalNumberComments());
 			}
 		} catch (NoUsersException e) {
 			System.out.println(ERROR_NO_USERS);
@@ -387,7 +387,7 @@ public class Main {
 	private static void responsive(FakeSystem fsys) {
 		try {
 			User user = fsys.getResponsive();
-			System.out.printf(SUCCESS_TOP_POSTER, user.getId(), user.getNumberComments(), user.getNumberPosts());
+			System.out.printf(SUCCESS_TOP_POSTER, user.getId(), user.getTotalNumberComments(), user.getNumCanCommentPosts());
 		} catch (NoKingOfResponsivenessException e) {
 			System.out.println(ERROR_NO_KING_OF_RESPONSIVENESS);
 		}
@@ -396,7 +396,7 @@ public class Main {
 	private static void topPoster(FakeSystem fsys) {
 		try {
 			User user = fsys.getTopPoster();
-			System.out.printf(SUCCESS_TOP_POSTER, user.getId(), user.getNumberPosts(), user.getNumberComments());
+			System.out.printf(SUCCESS_TOP_POSTER, user.getId(), user.getNumberPosts(), user.getTotalNumberComments());
 		} catch(NoKingPostersException e) {
 			System.out.println(ERROR_NO_KING_POSTERS);
 		}

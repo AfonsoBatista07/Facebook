@@ -16,16 +16,12 @@ public class FakeSystemClass implements FakeSystem {
 	
 	public FakeSystemClass() {
 		users = new TreeMap<String, User>();
-		fanaticsBytopic = new HashMap<String, SortedSet<String>>();
 		posts = new HashMap<String, LinkedList<Post>>();
-	}
-	
-	public boolean isFanatic(String kind) {
-		return kind.equals(User.FANATIC);
+		fanaticsBytopic = new HashMap<String, SortedSet<String>>();
 	}
 	
 	public void addUser(String kind, String userId, int numFanaticisms, LinkedList<String> sequence) { //Mudar possivelments a linkedlist to arrayList
-		User user=null;    
+		User user;    
 		
 		switch(kind) {
 			case User.LIAR:
@@ -64,6 +60,7 @@ public class FakeSystemClass implements FakeSystem {
 	public void addFriend(String firstUserId, String secondUserId) {
 		User firstUser = getUser(firstUserId), secondUser = getUser(secondUserId);
 		if(firstUser.equals(secondUser)) throw new UserCanNotBeTheSameException();
+		
 		firstUser.addFriend(secondUser); secondUser.addFriend(firstUser);
 	}
 	
@@ -95,8 +92,10 @@ public class FakeSystemClass implements FakeSystem {
 
 	public void addComment(String idUserComment, String idUserAuthor, int idPost, String stance, String comment) {
 		User userComment = getUser(idUserComment), userAuthor = getUser(idUserAuthor);
+		
 		if(!hasFriend(userComment, userAuthor) && !idUserComment.equals(idUserAuthor)) throw new UserNoAccessToPostException();
 		if(!hasPost(userAuthor, idPost)) throw new UserHasNoPostsException();
+		
 		Comment cmt = new CommentClass(idUserComment, stance, comment, userAuthor.getPost(idPost));
 		userComment.newComment(cmt);
 		
@@ -106,17 +105,21 @@ public class FakeSystemClass implements FakeSystem {
 		if(userComment.getKind().equals(User.LIAR) && shameless((Liar) userComment)) shameless = (Liar) userComment;
 	}
 	
+	private void sharePost(Post post, User user) {
+		user.sharePost(post);
+	}
+	
 	private boolean responsive(User user) {
-		if(responsive == null || user.getPercentageCommentedPosts() < responsive.getPercentageCommentedPosts()) return true;
+		if(responsive == null || user.getPercentageCommentedPosts() > responsive.getPercentageCommentedPosts()) return true;
 		if(user.getPercentageCommentedPosts() == responsive.getPercentageCommentedPosts())
 			if(user.getId().compareTo(responsive.getId()) > 0) return true;
 		return false;
 	}
 	
 	private boolean shameless(Liar user) {
-		if(shameless == null || user.getNumberOfLies() > shameless.getNumberOfLies()) return true;
-		int userSum = user.getNumberComments() + user.getNumberPosts();
-		int shamelessSum = shameless.getNumberComments() + shameless.getNumberPosts();							/// Atencao aos casts e verificar o number posts
+		if(shameless == null || user.getNumberOfLies() < shameless.getNumberOfLies()) return true;
+		int userSum = user.getTotalNumberComments() + user.getNumberPosts();
+		int shamelessSum = shameless.getTotalNumberComments() + shameless.getNumberPosts();							/// Atencao aos casts e verificar o number posts
 		if ( user.getNumberOfLies() == shameless.getNumberOfLies()) {
 			if(userSum < shamelessSum) return true;
 			if(userSum == shamelessSum && user.getId().compareTo(shameless.getId()) > 0) return true;
@@ -137,11 +140,15 @@ public class FakeSystemClass implements FakeSystem {
 	private boolean topPoster(User user) {
 		if(topPoster == null || user.getNumberPosts() > topPoster.getNumberPosts()) return true;
 		else if(user.getNumberPosts() == topPoster.getNumberPosts()) {
-			if(user.getNumberComments() > topPoster.getNumberComments()) return true;
-			else if(user.getNumberComments() == topPoster.getNumberComments())
-				if(user.getId().compareTo(topPoster.getId()) > 0) return true;
+			if(user.getTotalNumberComments() > topPoster.getTotalNumberComments()) return true;
+			else if(user.getTotalNumberComments() == topPoster.getTotalNumberComments())
+				if(user.getId().compareTo(topPoster.getId()) < 0) return true;
 		}
 		return false;	
+	}
+	
+	public boolean isFanatic(String kind) {
+		return kind.equals(User.FANATIC);
 	}
 	
 	private boolean hasPost(User user, int idPost) {
@@ -161,8 +168,8 @@ public class FakeSystemClass implements FakeSystem {
 		return false;
 	}
 	
-	private void sharePost(Post post, User user) {
-		user.sharePost(post);
+	public boolean userExists(String userId) {
+		return users.get(userId)!=null;
 	}
 	
 	private User getUser(String userId) {
@@ -170,7 +177,7 @@ public class FakeSystemClass implements FakeSystem {
 		if(user==null) throw new UserDoesNotExistException(userId);
 		return user;
 	}
-
+	
 	public int getNumberFriends(String userId) {
 		return getUser(userId).getNumberFriends();
 	}
@@ -179,8 +186,11 @@ public class FakeSystemClass implements FakeSystem {
 		return getUser(userId).getNumberPosts();
 	}
 	
-	public boolean userExists(String userId) {
-		return users.get(userId)!=null;
+	public Post getPost(String userId, int postId) {
+		User user = getUser(userId);
+		if(!hasPost(user, postId)) throw new UserHasNoPostsException();
+		
+		return getUser(userId).getPost(postId);
 	}
 	
 	public Post getPopularPost() {
@@ -194,7 +204,7 @@ public class FakeSystemClass implements FakeSystem {
 	}
 	
 	public User getResponsive() {
-		if(responsive == null) throw new NoKingOfResponsivenessException();
+		if(responsive == null || responsive.getTotalNumberComments() == 0) throw new NoKingOfResponsivenessException();
 		return responsive;                 
 	}
 	
@@ -228,13 +238,6 @@ public class FakeSystemClass implements FakeSystem {
 		
 		return it;
 	}
-	
-	public Post getPost(String userId, int postId) {
-		User user = getUser(userId);
-		if(!hasPost(user, postId)) throw new UserHasNoPostsException();
-		
-		return getUser(userId).getPost(postId);
-	}
 
 	public Iterator<Comment> readPost(Post post) {
 		User user = getUser(post.getAuthorId());
@@ -261,7 +264,7 @@ public class FakeSystemClass implements FakeSystem {
 		if(numberOfPosts < 1) throw new InvalidNumberOfPostsException();
 		LinkedList<Post> list = posts.get(hashtag);
 		if(list == null) throw new UnKnownTopicException();
-		Collections.sort(list, new SortPosts());
+		Collections.sort(list, new ComparatorSortPosts());
 		return list.iterator();   
 	}
 }

@@ -26,6 +26,14 @@ public class PostClass implements Post{
 		comments.add(comment);
 	}
 	
+	public boolean hasComment(String userId) {
+		for(Comment comment: comments) {
+			if(comment.getUserId().equals(userId));                //BETTER WAY?
+				return true;
+		}
+		return false;
+	}
+	
 	public String getMessage() {
 		return message;
 	}

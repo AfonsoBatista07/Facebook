@@ -18,7 +18,7 @@ public abstract class UserClass implements User {
 	private SortedMap<String, User> friends;
 	protected ArrayList<Post> myPosts, myFeed;
 	private Map<String,LinkedList<Comment>> commentsByTag;
-	private int numComments;
+	private int totalNumComments, numComments;
 	
 	public UserClass(String id, String kind) {
 		this.id = id;
@@ -27,6 +27,7 @@ public abstract class UserClass implements User {
 		myPosts =  new ArrayList<Post>();
 		myFeed =  new ArrayList<Post>();
 		commentsByTag = new HashMap<String, LinkedList<Comment>>();
+		totalNumComments = 0;
 		numComments = 0;
 	}
 	
@@ -46,21 +47,26 @@ public abstract class UserClass implements User {
 		Post post = comment.getPost();
 		Iterator<String> it = post.getHashTags();
 		while(it.hasNext()) {
-			String tag = it.next();
-			LinkedList<Comment> list = commentsByTag.get(tag);
-			if (list == null) {
-				list = new LinkedList<Comment>();
-				commentsByTag.put(tag,list);
-			}
-			list.add(comment);
+			addToList(it, comment);
 		}
 		post.newComment(comment);
-		numComments++;
+		
+		if(post.hasComment(getId())) numComments++;
+		totalNumComments++;
 	}
 	
-	public float getPercentageCommentedPosts() {          //TODO
-		return numComments/getNumCanCommentPosts();       //TODO
-														  //TODO
+	private void addToList(Iterator<String> it, Comment comment) {
+		String tag = it.next();
+		LinkedList<Comment> list = commentsByTag.get(tag);
+		if(list == null) {
+			list = new LinkedList<Comment>();
+			commentsByTag.put(tag,list);
+		}
+		list.add(comment);
+	}
+	
+	public float getPercentageCommentedPosts() {    
+		return numComments/getNumCanCommentPosts();
 	}
 	
 	public void addFeed(Post post) {
@@ -87,8 +93,9 @@ public abstract class UserClass implements User {
 	public int getNumberPosts() {
 		return myPosts.size();
 	}
-	public int getNumberComments() {
-		return numComments;
+	
+	public int getTotalNumberComments() {
+		return totalNumComments;
 	}
 	
 	public boolean hasFriend(User user) {
