@@ -12,8 +12,10 @@ public class FakeSystemClass implements FakeSystem {
 	private Map<String, SortedSet<String>> fanaticsBytopic;   
 	private Post popularPost;
 	private User topPoster, responsive, shameless;
+	private LinkedList<User> topLiars;
 	
 	public FakeSystemClass() {
+		topLiars = new LinkedList<User>();
 		users = new TreeMap<String, User>();
 		posts = new HashMap<String, LinkedList<Post>>();
 		fanaticsBytopic = new HashMap<String, SortedSet<String>>();
@@ -116,10 +118,21 @@ public class FakeSystemClass implements FakeSystem {
 	}
 	
 	private boolean shameless(User user) {
-		if(shameless == null || user.getNumberOfLies() > shameless.getNumberOfLies()) return true;
-		int userSum = user.getTotalNumberComments() + user.getNumberPosts();
-		int shamelessSum = shameless.getTotalNumberComments() + shameless.getNumberPosts();							
+		if(shameless == null || user.getNumberOfLies() > shameless.getNumberOfLies()) {
+			topLiars.clear();
+			return true;
+		}
 		if ( user.getNumberOfLies() == shameless.getNumberOfLies()) {
+			if(!topLiars.contains(user)) topLiars.add(user);
+			if(!topLiars.contains(shameless)) topLiars.add(shameless);
+			int shamelessSum = shameless.getTotalNumberComments() + shameless.getNumberPosts();
+			for( User liar : topLiars) {
+				int liarSum = liar.getTotalNumberComments() + liar.getNumberPosts();
+				if(liarSum < shamelessSum) shameless = liar;
+			}
+			int userSum = user.getTotalNumberComments() + user.getNumberPosts();		/// Atencao aos casts e verificar o number posts
+			System.out.println(userSum);
+			System.out.println(shamelessSum);
 			if(userSum < shamelessSum) return true;
 			if(userSum == shamelessSum && user.getId().compareTo(shameless.getId()) > 0) return true;
 		}
