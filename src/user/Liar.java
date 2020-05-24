@@ -7,5 +7,4 @@ public interface Liar extends User {
 	
 	void newPost(Post post);
 	void newComment(Comment comment);
-	int getNumberOfLies();
 }

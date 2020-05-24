@@ -7,12 +7,12 @@ import java.util.*;
 
 public class FakeSystemClass implements FakeSystem {
 	
+	private LinkedList<User> topLiars;
 	private SortedMap<String, User> users;
 	private Map<String, LinkedList<Post>> posts;
 	private Map<String, SortedSet<String>> fanaticsBytopic;   
 	private Post popularPost;
 	private User topPoster, responsive, shameless;
-	private LinkedList<User> topLiars;
 	
 	public FakeSystemClass() {
 		topLiars = new LinkedList<User>();
@@ -103,7 +103,7 @@ public class FakeSystemClass implements FakeSystem {
 		Post post = userAuthor.getPost(idPost);
 		if(morePopular(post)) popularPost = post;
 		if(responsive(userComment)) responsive = userComment;
-		if(userComment.getKind().equals(User.LIAR) && shameless((Liar) userComment)) shameless = (Liar) userComment;
+		if(shameless(userComment)) shameless = userComment;
 	}
 	
 	private void sharePost(Post post, User user) {
@@ -131,8 +131,6 @@ public class FakeSystemClass implements FakeSystem {
 				if(liarSum < shamelessSum) shameless = liar;
 			}
 			int userSum = user.getTotalNumberComments() + user.getNumberPosts();		/// Atencao aos casts e verificar o number posts
-			System.out.println(userSum);
-			System.out.println(shamelessSum);
 			if(userSum < shamelessSum) return true;
 			if(userSum == shamelessSum && user.getId().compareTo(shameless.getId()) > 0) return true;
 		}
