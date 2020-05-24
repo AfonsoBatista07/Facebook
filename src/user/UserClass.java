@@ -123,7 +123,7 @@ public abstract class UserClass implements User {
 	}
 	
 	public User getFriend(User user) {
-		return friends.get(user.getId());        // Null ???
+		return friends.get(user.getId());       
 	}
 	
 	public void sharePost(Post post) {

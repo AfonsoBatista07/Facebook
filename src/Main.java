@@ -5,7 +5,6 @@ import java.util.Scanner;
 import exceptions.*;
 import post.*;
 import system.*;
-import user.Liar;
 import user.User;
 
 public class Main {
