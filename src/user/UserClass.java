@@ -18,7 +18,7 @@ public abstract class UserClass implements User {
 	private SortedMap<String, User> friends;
 	protected ArrayList<Post> myPosts, myFeed;
 	private Map<String,LinkedList<Comment>> commentsByTag;
-	private int totalNumComments, numComments;
+	private int totalNumComments, numComments, numOfLies;
 	
 	public UserClass(String id, String kind) {
 		this.id = id;
@@ -29,6 +29,7 @@ public abstract class UserClass implements User {
 		commentsByTag = new HashMap<String, LinkedList<Comment>>();
 		totalNumComments = 0;
 		numComments = 0;
+		numOfLies = 0;
 	}
 	
 	public String getId() {
@@ -38,9 +39,14 @@ public abstract class UserClass implements User {
 	public String getKind() {
 		return kind;
 	}
+	
+	public int getNumberOfLies() {
+		return numOfLies;
+	}
 
 	public void newPost(Post post) {
 		myPosts.add(post);
+		if(!post.isHonest()) numOfLies++;
 	}
 
 	public void newComment(Comment comment) {
@@ -52,8 +58,12 @@ public abstract class UserClass implements User {
 		while(it.hasNext()) {
 			addToList(it, comment);
 		}
+		if(!post.hasComment(getId())) numComments++;
 		post.newComment(comment);
 		totalNumComments++;
+		
+		if(!post.isHonest() && comment.isPositive()) numOfLies++;
+		else if(post.isHonest() && !comment.isPositive()) numOfLies++;;
 	}
 	
 	private void addToList(Iterator<String> it, Comment comment) {
