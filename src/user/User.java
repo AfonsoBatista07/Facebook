@@ -30,7 +30,6 @@ public interface User {
 	Post getPost(int postId);
 	Iterator<User> getFriendIterator();
 	Iterator<Post> getMyPostsIterator();
-	Iterator<Post> getMyFeedIterator();
 	Iterator<Comment> readPost(Post post);
 	Iterator<Comment> getListCommentByUser(String hashtag);
 	

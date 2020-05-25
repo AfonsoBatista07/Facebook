@@ -17,7 +17,7 @@ public abstract class UserClass implements User {
 	
 	private String id, kind;
 	private SortedMap<String, User> friends;
-	protected ArrayList<Post> myPosts, myFeed;
+	private ArrayList<Post> myPosts, myFeed;
 	private Map<String,LinkedList<Comment>> commentsByTag;
 	private int totalNumComments, numComments, numOfLies;
 	
@@ -91,15 +91,11 @@ public abstract class UserClass implements User {
 	}
 	
 	public int getNumCanCommentPosts() {
-		return getNumberPosts()+getNumFriendPosts();
+		return getNumberPosts()+myFeed.size();
 	}
 	
 	public int getNumberFriends() {
 		return friends.size();
-	}
-	
-	public int getNumFriendPosts() {
-		return myFeed.size();
 	}
 	
 	public int getNumberPosts() {
@@ -138,10 +134,6 @@ public abstract class UserClass implements User {
 	
 	public Iterator<Post> getMyPostsIterator() {
 		return myPosts.iterator();
-	}
-	
-	public Iterator<Post> getMyFeedIterator() {
-		return myFeed.iterator();
 	}
 	
 	public Iterator<Comment> readPost(Post post) {
