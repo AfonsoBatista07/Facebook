@@ -8,7 +8,6 @@ import java.util.*;
 
 public class FakeSystemClass implements FakeSystem {
 	
-	private LinkedList<User> topLiars;
 	private SortedMap<String, User> users;
 	private Map<String, LinkedList<Post>> posts;
 	private Map<String, SortedSet<String>> fanaticsBytopic;   
@@ -16,7 +15,6 @@ public class FakeSystemClass implements FakeSystem {
 	private User topPoster, responsive, shameless;
 	
 	public FakeSystemClass() {
-		topLiars = new LinkedList<User>();
 		users = new TreeMap<String, User>();
 		posts = new HashMap<String, LinkedList<Post>>();
 		fanaticsBytopic = new HashMap<String, SortedSet<String>>();
@@ -69,10 +67,10 @@ public class FakeSystemClass implements FakeSystem {
 	public void newPost(String userId, int hashtagsNumber, LinkedList<String> hashtags, String truthfulness, String message) {
 		User user = getUser(userId);
 		if(hashtagsNumber < 0 || repeatedTags(hashtagsNumber, hashtags)) throw new InvalidHashtagsListException();
-		Post post = new PostClass(userId, getPostId(userId)+1, hashtagsNumber, hashtags, truthfulness, message);
+		Post post = new PostClass(userId, getNumPosts(userId)+1, hashtagsNumber, hashtags, truthfulness, message);
 		user.newPost(post);
 		addPostsByTopic(hashtagsNumber, hashtags, post);
-		sharePost(post, user);
+		user.sharePost(post);
 		
 		if(topPoster(user)) topPoster = user;
 		if(responsive(user)) responsive = user;
@@ -106,10 +104,6 @@ public class FakeSystemClass implements FakeSystem {
 		if(shameless(userComment)) shameless = userComment;
 	}
 	
-	private void sharePost(Post post, User user) {
-		user.sharePost(post);
-	}
-	
 	private boolean responsive(User user) {
 		ComparatorResponsive comparator = new ComparatorResponsive();
 		return comparator.compare(user, responsive)==1;
@@ -126,23 +120,8 @@ public class FakeSystemClass implements FakeSystem {
 	}
 	
 	private boolean shameless(User user) {
-		if(shameless == null || user.getNumberOfLies() > shameless.getNumberOfLies()) {
-			topLiars.clear();
-			return true;
-		}
-		if (user.getNumberOfLies() == shameless.getNumberOfLies()) {
-			if(!topLiars.contains(user)) topLiars.add(user);
-			if(!topLiars.contains(shameless)) topLiars.add(shameless);
-			int shamelessSum = shameless.getTotalNumberComments() + shameless.getNumberPosts();
-			for( User liar : topLiars) {
-				int liarSum = liar.getTotalNumberComments() + liar.getNumberPosts();
-				if(liarSum < shamelessSum) shameless = liar;
-			}
-			int userSum = user.getTotalNumberComments() + user.getNumberPosts();	
-			if(userSum < shamelessSum) return true;
-			if(userSum == shamelessSum && user.getId().compareTo(shameless.getId()) > 0) return true;
-		}
-		return false;
+		ComparatorShameless comparator = new ComparatorShameless();
+		return comparator.compare(user, shameless) == 1;
 	}
 	
 	public boolean isFanatic(String kind) {
@@ -170,7 +149,7 @@ public class FakeSystemClass implements FakeSystem {
 		return getUser(userId).getNumberFriends();
 	}
 
-	public int getPostId(String userId) {
+	public int getNumPosts(String userId) {
 		return getUser(userId).getNumberPosts();
 	}
 	

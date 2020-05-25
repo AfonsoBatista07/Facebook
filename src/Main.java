@@ -221,7 +221,7 @@ public class Main {
 		
 		try {
 			fsys.newPost(userId, hashtagsNumber, hashtags, truthfulness, message);
-			System.out.printf(SUCCESS_NEW_POST, userId, truthfulness, fsys.getNumberFriends(userId), fsys.getPostId(userId));
+			System.out.printf(SUCCESS_NEW_POST, userId, truthfulness, fsys.getNumberFriends(userId), fsys.getNumPosts(userId));
 		} catch (UserDoesNotExistException e) {
 			System.out.printf(ERROR_USER_DOES_NOT_EXISTS, e.getUserId());
 		} catch (InvalidHashtagsListException e) {

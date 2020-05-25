@@ -25,7 +25,7 @@ public interface FakeSystem {
 	
 	int getNumberFriends(String userId);
 	
-	int getPostId(String userId);
+	int getNumPosts(String userId);
 	
 	Post getPopularPost() throws NoKingPopularPostException;
 	
