@@ -95,7 +95,6 @@ public class FakeSystemClass implements FakeSystem {
 		User userComment = getUser(idUserComment), userAuthor = getUser(idUserAuthor);
 		
 		if(!hasFriend(userComment, userAuthor) && !idUserComment.equals(idUserAuthor)) throw new UserNoAccessToPostException();
-		//if(!hasPost(userAuthor, idPost)) throw new UserHasNoPostsException();
 		Post post = userAuthor.getPost(idPost);
 		
 		Comment cmt = new CommentClass(idUserComment, stance, comment, userAuthor.getPost(idPost));
@@ -149,10 +148,6 @@ public class FakeSystemClass implements FakeSystem {
 		return kind.equals(User.FANATIC);
 	}
 	
-	/*private boolean hasPost(User user, int idPost) {
-		return user.hasPost(idPost);
-	}*/
-	
 	private boolean hasFriend(User firstUser, User secondUser) {
 		return firstUser.hasFriend(secondUser);
 	}
@@ -185,9 +180,6 @@ public class FakeSystemClass implements FakeSystem {
 	}
 	
 	public Post getPost(String userId, int postId) {
-		//User user = getUser(userId);
-		//if(!hasPost(user, postId)) throw new UserHasNoPostsException();
-		
 		return getUser(userId).getPost(postId);
 	}
 	
