@@ -1,8 +1,8 @@
 package user;
 
-import exceptions.UserCanNotCommentPostException;
-import exceptions.InvalidCommentStanceException;
 import post.Comment;
+import user.exceptions.InvalidCommentStanceException;
+import user.exceptions.UserCanNotCommentPostException;
 
 public class SelfCenteredClass extends UserClass {
 	

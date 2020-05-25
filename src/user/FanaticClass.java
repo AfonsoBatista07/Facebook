@@ -3,10 +3,10 @@ package user;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import exceptions.InadequateStanceException;
-import exceptions.InvalidCommentStanceException;
 import post.Comment;
 import post.Post;
+import user.exceptions.InadequateStanceException;
+import user.exceptions.InvalidCommentStanceException;
 
 public class FanaticClass extends UserClass implements Fanatic {
 	

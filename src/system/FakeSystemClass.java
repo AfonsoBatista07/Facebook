@@ -1,8 +1,9 @@
 package system;
 
-import exceptions.*;
 import user.*;
 import post.*;
+import system.exceptions.*;
+
 import java.util.*;
 
 public class FakeSystemClass implements FakeSystem {
@@ -165,18 +166,18 @@ public class FakeSystemClass implements FakeSystem {
 		return users.get(userId)!=null;
 	}
 	
-	private User getUser(String userId) {
-		User user = users.get(userId);
-		if(user==null) throw new UserDoesNotExistException(userId);
-		return user;
-	}
-	
 	public int getNumberFriends(String userId) {
 		return getUser(userId).getNumberFriends();
 	}
 
 	public int getPostId(String userId) {
 		return getUser(userId).getNumberPosts();
+	}
+	
+	private User getUser(String userId) {
+		User user = users.get(userId);
+		if(user==null) throw new UserDoesNotExistException(userId);
+		return user;
 	}
 	
 	public Post getPost(String userId, int postId) {

@@ -1,9 +1,9 @@
 package user;
 
-import exceptions.InadequateStanceException;
-import exceptions.InvalidCommentStanceException;
 import post.Comment;
 import post.Post;
+import user.exceptions.InadequateStanceException;
+import user.exceptions.InvalidCommentStanceException;
 
 public class LiarClass extends UserClass implements Liar {
 	

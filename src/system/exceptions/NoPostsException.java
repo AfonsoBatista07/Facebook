@@ -1,4 +1,4 @@
-package exceptions;
+package system.exceptions;
 
 public class NoPostsException extends RuntimeException{
 

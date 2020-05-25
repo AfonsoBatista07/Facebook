@@ -1,7 +1,7 @@
 package user;
 
-import exceptions.InvalidCommentStanceException;
 import post.Comment;
+import user.exceptions.InvalidCommentStanceException;
 
 public class NaiveClass extends UserClass implements Naive {
 

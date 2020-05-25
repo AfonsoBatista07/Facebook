@@ -7,11 +7,11 @@ import java.util.TreeMap;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import exceptions.NoCommentsException;
-import exceptions.UserHasNoPostsException;
-import exceptions.UsersAlreadyFriendsException;
 import post.Comment;
 import post.Post;
+import system.exceptions.NoCommentsException;
+import user.exceptions.UserHasNoPostsException;
+import user.exceptions.UsersAlreadyFriendsException;
 
 public abstract class UserClass implements User {
 	

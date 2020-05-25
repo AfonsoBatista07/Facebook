@@ -2,7 +2,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Scanner;
 
-import exceptions.*;
+import system.exceptions.*;
+import user.exceptions.*;
 import post.*;
 import system.*;
 import user.User;

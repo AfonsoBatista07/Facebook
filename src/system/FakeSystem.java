@@ -3,10 +3,10 @@ package system;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import exceptions.*;
 import post.Post;
+import system.exceptions.*;
+import user.exceptions.*;
 import post.Comment;
-import user.Liar;
 import user.User;
 
 public interface FakeSystem {
