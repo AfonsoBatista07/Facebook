@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import exceptions.NoCommentsException;
+import exceptions.UserHasNoPostsException;
 import exceptions.UsersAlreadyFriendsException;
 import post.Comment;
 import post.Post;
@@ -118,7 +119,7 @@ public abstract class UserClass implements User {
 	}
 	
 	public Post getPost(int postId) {
-		if(postId-1 >= myPosts.size() || postId<=0) return null;
+		if(postId-1 >= myPosts.size() || postId<=0 ) throw new UserHasNoPostsException();
 		return myPosts.get(postId-1);
 	}
 	

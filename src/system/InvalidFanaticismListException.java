@@ -1,4 +1,4 @@
-package exceptions;
+package system;
 
 public class InvalidFanaticismListException  extends RuntimeException{
 	

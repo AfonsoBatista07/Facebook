@@ -95,12 +95,12 @@ public class FakeSystemClass implements FakeSystem {
 		User userComment = getUser(idUserComment), userAuthor = getUser(idUserAuthor);
 		
 		if(!hasFriend(userComment, userAuthor) && !idUserComment.equals(idUserAuthor)) throw new UserNoAccessToPostException();
-		if(!hasPost(userAuthor, idPost)) throw new UserHasNoPostsException();
+		//if(!hasPost(userAuthor, idPost)) throw new UserHasNoPostsException();
+		Post post = userAuthor.getPost(idPost);
 		
 		Comment cmt = new CommentClass(idUserComment, stance, comment, userAuthor.getPost(idPost));
 		userComment.newComment(cmt);
 		
-		Post post = userAuthor.getPost(idPost);
 		if(morePopular(post)) popularPost = post;
 		if(responsive(userComment)) responsive = userComment;
 		if(shameless(userComment)) shameless = userComment;
@@ -111,10 +111,18 @@ public class FakeSystemClass implements FakeSystem {
 	}
 	
 	private boolean responsive(User user) {
-		if(responsive == null || user.getPercentageCommentedPosts() > responsive.getPercentageCommentedPosts()) return true;
-		if(user.getPercentageCommentedPosts() == responsive.getPercentageCommentedPosts())
-			if(user.getId().compareTo(responsive.getId()) > 0) return true;
-		return false;
+		ComparatorResponsive comparator = new ComparatorResponsive();
+		return comparator.compare(user, responsive)==1;
+	}
+	
+	private boolean morePopular(Post post) {
+		ComparatorPopularPost comparator = new ComparatorPopularPost();
+		return comparator.compare(post, popularPost)==1;
+	}
+	                                                                                                      
+	private boolean topPoster(User user) {
+		ComparatorTopPoster comparator = new ComparatorTopPoster();
+		return comparator.compare(user, topPoster)==1; 
 	}
 	
 	private boolean shameless(User user) {
@@ -122,7 +130,7 @@ public class FakeSystemClass implements FakeSystem {
 			topLiars.clear();
 			return true;
 		}
-		if ( user.getNumberOfLies() == shameless.getNumberOfLies()) {
+		if (user.getNumberOfLies() == shameless.getNumberOfLies()) {
 			if(!topLiars.contains(user)) topLiars.add(user);
 			if(!topLiars.contains(shameless)) topLiars.add(shameless);
 			int shamelessSum = shameless.getTotalNumberComments() + shameless.getNumberPosts();
@@ -130,40 +138,20 @@ public class FakeSystemClass implements FakeSystem {
 				int liarSum = liar.getTotalNumberComments() + liar.getNumberPosts();
 				if(liarSum < shamelessSum) shameless = liar;
 			}
-			int userSum = user.getTotalNumberComments() + user.getNumberPosts();		/// Atencao aos casts e verificar o number posts
+			int userSum = user.getTotalNumberComments() + user.getNumberPosts();	
 			if(userSum < shamelessSum) return true;
 			if(userSum == shamelessSum && user.getId().compareTo(shameless.getId()) > 0) return true;
 		}
 		return false;
 	}
 	
-	private boolean morePopular(Post post) {
-		if(popularPost == null || post.getNumComments() > popularPost.getNumComments()) return true;
-		if(post.getNumComments() == popularPost.getNumComments()) { 
-			if(post.getAuthorId().compareTo(popularPost.getAuthorId()) < 0) return true;
-			if(post.getAuthorId().compareTo(popularPost.getAuthorId()) == 0)
-				if(post.getIdPost() > popularPost.getIdPost()) return true;	
-		}
-		return false;
-	}
-	                                                                                                        // TODO Class Comparable.
-	private boolean topPoster(User user) {
-		if(topPoster == null || user.getNumberPosts() > topPoster.getNumberPosts()) return true;
-		else if(user.getNumberPosts() == topPoster.getNumberPosts()) {
-			if(user.getTotalNumberComments() > topPoster.getTotalNumberComments()) return true;
-			else if(user.getTotalNumberComments() == topPoster.getTotalNumberComments())
-				if(user.getId().compareTo(topPoster.getId()) < 0) return true;
-		}
-		return false;	
-	}
-	
 	public boolean isFanatic(String kind) {
 		return kind.equals(User.FANATIC);
 	}
 	
-	private boolean hasPost(User user, int idPost) {
+	/*private boolean hasPost(User user, int idPost) {
 		return user.hasPost(idPost);
-	}
+	}*/
 	
 	private boolean hasFriend(User firstUser, User secondUser) {
 		return firstUser.hasFriend(secondUser);
@@ -197,8 +185,8 @@ public class FakeSystemClass implements FakeSystem {
 	}
 	
 	public Post getPost(String userId, int postId) {
-		User user = getUser(userId);
-		if(!hasPost(user, postId)) throw new UserHasNoPostsException();
+		//User user = getUser(userId);
+		//if(!hasPost(user, postId)) throw new UserHasNoPostsException();
 		
 		return getUser(userId).getPost(postId);
 	}
@@ -259,9 +247,8 @@ public class FakeSystemClass implements FakeSystem {
 		return it;
 	}
 	
-	public Iterator<Comment> listCommentByUser(String userId, String hashtag) {
-		User user = getUser(userId);
-		return user.getListCommentByUser(hashtag);
+	public Iterator<Comment> listCommentByUser(String userId, String hashtag) {                 
+		return getUser(userId).getListCommentByUser(hashtag);
 	}
 	
 	public Iterator<String> listFanaticsByTopic(String hashtag) {
@@ -271,7 +258,7 @@ public class FakeSystemClass implements FakeSystem {
 	}
 	
 	public Iterator<Post> listTopicPosts(int numberOfPosts, String hashtag) {
-		if(numberOfPosts < 1) throw new InvalidNumberOfPostsException();
+		if(numberOfPosts < 1) throw new InvalidNumberOfPostsException();           //Voltar a ver
 		LinkedList<Post> list = posts.get(hashtag);
 		if(list == null) throw new UnKnownTopicException();
 		Collections.sort(list, new ComparatorSortPosts());
