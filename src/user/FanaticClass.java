@@ -1,7 +1,9 @@
 package user;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Map;
 
 import post.Comment;
 import post.Post;
@@ -10,16 +12,17 @@ import user.exceptions.InvalidCommentStanceException;
 
 public class FanaticClass extends UserClass implements Fanatic {
 	
-	private LinkedList<String>loves, hates, hashTags;
+	private LinkedList<String> hashTags;
+	private Map<String, String> tags;
 	private int numFanaticisms;
 	private static final String LOVES = "loves";
+	private static final String HATES = "hates";
 	
 	public FanaticClass(String id, int numFanaticisms, LinkedList<String> hashTags) {
 		super(id, FANATIC);
 		this.numFanaticisms = numFanaticisms;
-		loves = new	LinkedList<String>();	
-		hates = new	LinkedList<String>();
 		this.hashTags = hashTags;
+		tags = new HashMap<String, String>();
 		separateTags();
 	}
 	
@@ -56,9 +59,10 @@ public class FanaticClass extends UserClass implements Fanatic {
 	
 	private void separateTags() {
 		Iterator<String> it = hashTags.iterator();
-		for(int i = 0; i < numFanaticisms; i++) {
-			if(it.next().equals(LOVES)) loves.addLast(it.next());
-			else hates.addLast(it.next());
+		for(int i = 0; i < numFanaticisms; i++){
+			String value = it.next();
+			String tag = it.next();
+			tags.put(tag, value);
 		}
 	}
 	
@@ -67,30 +71,15 @@ public class FanaticClass extends UserClass implements Fanatic {
 	}
 	
 	public boolean loves(String love) {
-		return find(love, loves);
+		return tags.get(love).equals(LOVES);
 	}
 	
 	public boolean hates(String hate) {
-		return find(hate, hates);
+		return tags.get(hate).equals(HATES);
 	}
 	
 	private boolean hasFanaticism(String fanaticism) {
-		Iterator<String> itLove = loves.iterator();
-		Iterator<String> itHate = hates.iterator();
-		while(itLove.hasNext()) {
-			if(fanaticism.equals(itLove.next())) return true;
-		}
-		while(itHate.hasNext()) {
-			if(fanaticism.equals(itHate.next())) return true;
-		}
-		return false;
-	}
-	private boolean find(String word, LinkedList<String> type) {
-		Iterator<String> it = type.iterator();
-		while(it.hasNext()) {
-			String w = it.next();
-			if(w.equalsIgnoreCase(word)) return true;
-		}
-		return false;
+		if(tags.get(fanaticism) == null) return false;
+		else return true;
 	}
 }

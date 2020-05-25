@@ -6,8 +6,8 @@ import java.util.LinkedList;
 public class PostClass implements Post{
 	private String message, type, idUser;
 	private int numHashTags, idPost;
-	private LinkedList<String> hashTags;
-	private LinkedList<Comment> comments;
+	private LinkedList<String> hashTags; // Mapa de HashTags?
+	private LinkedList<Comment> comments; 
 	
 	private static final String HONEST = "honest";
 	

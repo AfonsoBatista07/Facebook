@@ -59,8 +59,8 @@ public abstract class UserClass implements User {
 		while(it.hasNext()) {
 			addToList(it, comment);
 		}
-		if(!post.hasComment(getId())) numComments++;
 		post.newComment(comment);
+		
 		totalNumComments++;
 		
 		if(!post.isHonest() && comment.isPositive()) numOfLies++;
@@ -128,7 +128,7 @@ public abstract class UserClass implements User {
 	}
 	
 	public void sharePost(Post post) {
-		for(User user: friends.values())
+		for(User user: friends.values())			//Perguntar prof
 			user.addFeed(post);	
 	}
 	
