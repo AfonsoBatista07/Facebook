@@ -9,6 +9,7 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import post.Comment;
 import post.Post;
@@ -32,7 +33,7 @@ public abstract class UserClass implements User {
 		this.kind = kind;
 		friends = new TreeMap<String, User>();
 		myPosts =  new ArrayList<Post>();
-		myFeed =  new TreeSet<Post>(new ComparatorSortPosts());
+		myFeed =  new HashSet<Post>();
 		commentsByTag = new HashMap<String, LinkedList<Comment>>();
 		totalNumComments = 0;
 		numComments = 0;
@@ -62,7 +63,6 @@ public abstract class UserClass implements User {
 
 	public void newComment(Comment comment) {
 		Post post = comment.getPost();
-		if(!hasAccess(post)) throw new UserNoAccessToPostException();
 		
 		if(!post.hasComment(getId())) numComments++;
 		
