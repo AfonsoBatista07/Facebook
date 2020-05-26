@@ -1,0 +1,35 @@
+register naive Forrest Gump
+users
+register liar Pinocchio
+register fanatic Pete
+3 loves #red hates #blue hates #green
+register selfcentered Dim Cardashian
+users
+register liar Big Bad Wolf
+register naive Pam
+register naive Pat
+register naive Pip
+register naive Anthony
+register fanatic Charles Dalbert
+2 loves #green hates #red
+register fanatic Francis Smaug
+1 hates #red
+register liar Robert Ripley
+register liar Victor Lustig
+users
+addfriend Pinocchio
+Dim Cardashian
+addfriend Big Bad Wolf
+Pam
+addfriend Big Bad Wolf
+Pat
+addfriend Big Bad Wolf
+Pip
+users
+friends Big Bad Wolf
+friends Pip
+friends Pam
+friends Pat
+friends Pinocchio
+friends Dim Cardashian
+exit

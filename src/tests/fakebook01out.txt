@@ -1,0 +1,154 @@
+register - registers a new user
+users - lists all users
+addfriend - adds a new friend
+friends - lists the user friends
+post - posts a new message
+userposts - lists all posts by a user
+comment - user comments on a post
+readpost - prints detailed info on a post
+commentsbyuser - shows all the comments by a user on a given post
+topicfanatics - shows a list of fanatic users on a topic
+topicposts - shows a list of posts on a given topic
+popularpost - shows the most commented post
+topposter - shows the user with more posts
+responsive - shows the user with a higher percentage of commented posts
+shameless - shows the top liars
+help - shows the available commands
+exit - terminates the execution of the program
+register - registers a new user
+users - lists all users
+addfriend - adds a new friend
+friends - lists the user friends
+post - posts a new message
+userposts - lists all posts by a user
+comment - user comments on a post
+readpost - prints detailed info on a post
+commentsbyuser - shows all the comments by a user on a given post
+topicfanatics - shows a list of fanatic users on a topic
+topicposts - shows a list of posts on a given topic
+popularpost - shows the most commented post
+topposter - shows the user with more posts
+responsive - shows the user with a higher percentage of commented posts
+shameless - shows the top liars
+help - shows the available commands
+exit - terminates the execution of the program
+register - registers a new user
+users - lists all users
+addfriend - adds a new friend
+friends - lists the user friends
+post - posts a new message
+userposts - lists all posts by a user
+comment - user comments on a post
+readpost - prints detailed info on a post
+commentsbyuser - shows all the comments by a user on a given post
+topicfanatics - shows a list of fanatic users on a topic
+topicposts - shows a list of posts on a given topic
+popularpost - shows the most commented post
+topposter - shows the user with more posts
+responsive - shows the user with a higher percentage of commented posts
+shameless - shows the top liars
+help - shows the available commands
+exit - terminates the execution of the program
+register - registers a new user
+users - lists all users
+addfriend - adds a new friend
+friends - lists the user friends
+post - posts a new message
+userposts - lists all posts by a user
+comment - user comments on a post
+readpost - prints detailed info on a post
+commentsbyuser - shows all the comments by a user on a given post
+topicfanatics - shows a list of fanatic users on a topic
+topicposts - shows a list of posts on a given topic
+popularpost - shows the most commented post
+topposter - shows the user with more posts
+responsive - shows the user with a higher percentage of commented posts
+shameless - shows the top liars
+help - shows the available commands
+exit - terminates the execution of the program
+register - registers a new user
+users - lists all users
+addfriend - adds a new friend
+friends - lists the user friends
+post - posts a new message
+userposts - lists all posts by a user
+comment - user comments on a post
+readpost - prints detailed info on a post
+commentsbyuser - shows all the comments by a user on a given post
+topicfanatics - shows a list of fanatic users on a topic
+topicposts - shows a list of posts on a given topic
+popularpost - shows the most commented post
+topposter - shows the user with more posts
+responsive - shows the user with a higher percentage of commented posts
+shameless - shows the top liars
+help - shows the available commands
+exit - terminates the execution of the program
+register - registers a new user
+users - lists all users
+addfriend - adds a new friend
+friends - lists the user friends
+post - posts a new message
+userposts - lists all posts by a user
+comment - user comments on a post
+readpost - prints detailed info on a post
+commentsbyuser - shows all the comments by a user on a given post
+topicfanatics - shows a list of fanatic users on a topic
+topicposts - shows a list of posts on a given topic
+popularpost - shows the most commented post
+topposter - shows the user with more posts
+responsive - shows the user with a higher percentage of commented posts
+shameless - shows the top liars
+help - shows the available commands
+exit - terminates the execution of the program
+register - registers a new user
+users - lists all users
+addfriend - adds a new friend
+friends - lists the user friends
+post - posts a new message
+userposts - lists all posts by a user
+comment - user comments on a post
+readpost - prints detailed info on a post
+commentsbyuser - shows all the comments by a user on a given post
+topicfanatics - shows a list of fanatic users on a topic
+topicposts - shows a list of posts on a given topic
+popularpost - shows the most commented post
+topposter - shows the user with more posts
+responsive - shows the user with a higher percentage of commented posts
+shameless - shows the top liars
+help - shows the available commands
+exit - terminates the execution of the program
+register - registers a new user
+users - lists all users
+addfriend - adds a new friend
+friends - lists the user friends
+post - posts a new message
+userposts - lists all posts by a user
+comment - user comments on a post
+readpost - prints detailed info on a post
+commentsbyuser - shows all the comments by a user on a given post
+topicfanatics - shows a list of fanatic users on a topic
+topicposts - shows a list of posts on a given topic
+popularpost - shows the most commented post
+topposter - shows the user with more posts
+responsive - shows the user with a higher percentage of commented posts
+shameless - shows the top liars
+help - shows the available commands
+exit - terminates the execution of the program
+register - registers a new user
+users - lists all users
+addfriend - adds a new friend
+friends - lists the user friends
+post - posts a new message
+userposts - lists all posts by a user
+comment - user comments on a post
+readpost - prints detailed info on a post
+commentsbyuser - shows all the comments by a user on a given post
+topicfanatics - shows a list of fanatic users on a topic
+topicposts - shows a list of posts on a given topic
+popularpost - shows the most commented post
+topposter - shows the user with more posts
+responsive - shows the user with a higher percentage of commented posts
+shameless - shows the top liars
+help - shows the available commands
+exit - terminates the execution of the program
+Bye!

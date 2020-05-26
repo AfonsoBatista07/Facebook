@@ -1,0 +1,145 @@
+popularpost
+register naive Forrest Gump
+register liar Pinocchio
+register fanatic Pete
+3 loves #red hates #blue hates #green
+register selfcentered Dim Cardashian
+register liar Big Bad Wolf
+register naive Pam
+register naive Pat
+register naive Pip
+register naive Anthony
+register fanatic Charles Dalbert
+2 loves #green hates #red
+register fanatic Francis Smaug
+1 hates #red
+register liar Robert Ripley
+register liar Victor Lustig
+register fanatic 6-year old kid
+1 loves #tvschool
+addfriend Forrest Gump
+Dim Cardashian
+addfriend Pete
+Dim Cardashian
+addfriend Anthony
+Pete
+addfriend Anthony
+Forrest Gump
+addfriend 6-year old kid
+Anthony
+addfriend Victor Lustig
+Anthony
+addfriend Robert Ripley
+Anthony
+addfriend Big Bad Wolf
+Pam
+addfriend Big Bad Wolf
+Pat
+addfriend Big Bad Wolf
+Pip
+post Pete
+1 #red
+honest It is all perfectly legal.
+post Pete
+1 #green
+fake It is all perfectly legal.
+post Dim Cardashian
+1 #duckface
+fake Last few years I have been too cool for duck face. So that is not going to happen.
+post Dim Cardashian
+3 #hotvampires #crazywerewolves #kristen
+honest I would, like, died to be in Twilight.
+post Dim Cardashian
+4 #AwesomeDim #red #blue #whatever
+honest Well, a bear can juggle while standing on a ball and he is talented, but he is not famous. You understand what I am saying?
+post Anthony
+1 #MentalSamurai
+honest Oh my, this is one is tricky... the number of letters in the alphabet, plus the number of vowels...
+post Anthony
+2 #MentalSamurai #theAlphabet
+honest Calm down, Tony. You have fingers, use them...
+post Victor Lustig
+1 #easymoney
+fake The Eiffel Tower is for sale and I am the sales representative.
+post Anthony
+2 #MentalSamurai #theAlphabet
+honest 1...2...3...4...5... oh no. No more fingers!
+post Anthony
+3 #MentalSamurai #reading #twoHandsRule
+honest What? Use the other hand?!? Brilliant!
+post Anthony
+1 #pocketCalculator
+honest If only I could use a pocket calculator.
+post Anthony
+3 #MentalSamurai #Eve #askingDirections
+fake No, I do not need any help.
+post Victor Lustig
+1 #easymoney
+fake The Eiffel Tower is for sale AGAIN and I am the sales representative.
+post Anthony
+3 #MentalSamurai #blue #tvschool
+fake I am pretty sure there are 27 letters in the Portuguese alphabet. abcdefghijklmnopqrstuvwxyz. 27! Block the answer!
+addfriend Anthony
+Pam
+post Anthony
+1 #BeingSoUnlucky
+honest I almost got it right... So close...
+post Pete
+1 #red
+honest It is all perfectly legal.
+post Pete
+1 #green
+fake It is all perfectly legal.
+popularpost
+comment Forrest Gump
+Dim Cardashian
+3 positive So true, I know what you mean!
+popularpost
+comment Forrest Gump
+Anthony
+7 positive Never been good with letters and stuff! You are probably right.
+popularpost
+comment 6-year old kid
+Anthony
+7 negative No way. 26!
+popularpost
+comment Dim Cardashian
+Dim Cardashian
+3 positive I bet you do, dear Gump!
+popularpost
+comment Dim Cardashian
+Dim Cardashian
+3 positive I want to share some info with you, dear Gump. The perfect date for me would be staying at home, making a big picnic in bed, eating Wotsits and cookies while watching cable TV.
+popularpost
+comment Pete
+Anthony
+7 positive Let me tell you something... Anybody with a true heart knows there are 27 letters in the Portuguese alphabet. I challenge you to prove otherwise!
+comment Pete
+Dim Cardashian
+3 positive Yeah, you should never see a bear on the RED carpet! LOL!
+comment 6-year old kid
+Anthony
+7 negative Isa from TV School told me there are 26 and that I should wash my hands!
+comment Pete
+Anthony
+7 positive Grow up, kid! I dare you to prove they are 26! Gosh! The nerve!
+comment 6-year old kid
+Anthony
+7 negative But... look: abcde... fghij... oopsie daisy... toes. Ok. klmno... pqrst... Moooom, I ran out of fingers, can I borrow your hands? Thanks. Where was I? Oh, yes, 20. Silly me. uvwxy...z. Look, its 26!
+comment Pete
+Anthony
+7 positive Put some socks on and go wash your hands, little brat!
+comment Anthony
+Anthony
+7 positive There must be some mistake, did I just lose 1250 euros?
+comment Pete
+Anthony
+7 positive I demand a recount!
+comment Robert Ripley
+Anthony
+1 negative You are absolutely right.
+comment Robert Ripley
+Anthony
+6 positive Go ahead, you seem to have a good handle on it!
+popularpost
+exit

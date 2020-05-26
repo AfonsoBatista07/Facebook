@@ -1,0 +1,93 @@
+Forrest Gump registered.
+Forrest Gump [naive] 0 0 0
+Pinocchio registered.
+Pete registered.
+Dim Cardashian registered.
+Dim Cardashian [selfcentered] 0 0 0
+Forrest Gump [naive] 0 0 0
+Pete [fanatic] 0 0 0
+Pinocchio [liar] 0 0 0
+Big Bad Wolf registered.
+Pam registered.
+Pat registered.
+Pip registered.
+Anthony registered.
+Charles Dalbert registered.
+Francis Smaug registered.
+Robert Ripley registered.
+Victor Lustig registered.
+6-year old kid registered.
+6-year old kid [fanatic] 0 0 0
+Anthony [naive] 0 0 0
+Big Bad Wolf [liar] 0 0 0
+Charles Dalbert [fanatic] 0 0 0
+Dim Cardashian [selfcentered] 0 0 0
+Forrest Gump [naive] 0 0 0
+Francis Smaug [fanatic] 0 0 0
+Pam [naive] 0 0 0
+Pat [naive] 0 0 0
+Pete [fanatic] 0 0 0
+Pinocchio [liar] 0 0 0
+Pip [naive] 0 0 0
+Robert Ripley [liar] 0 0 0
+Victor Lustig [liar] 0 0 0
+Forrest Gump is friend of Dim Cardashian.
+Pete is friend of Dim Cardashian.
+Anthony is friend of Pete.
+Anthony is friend of Forrest Gump.
+6-year old kid is friend of Anthony.
+Victor Lustig is friend of Anthony.
+Robert Ripley is friend of Anthony.
+Big Bad Wolf is friend of Pam.
+Big Bad Wolf is friend of Pat.
+Big Bad Wolf is friend of Pip.
+6-year old kid [fanatic] 1 0 0
+Anthony [naive] 5 0 0
+Big Bad Wolf [liar] 3 0 0
+Charles Dalbert [fanatic] 0 0 0
+Dim Cardashian [selfcentered] 2 0 0
+Forrest Gump [naive] 2 0 0
+Francis Smaug [fanatic] 0 0 0
+Pam [naive] 1 0 0
+Pat [naive] 1 0 0
+Pete [fanatic] 2 0 0
+Pinocchio [liar] 0 0 0
+Pip [naive] 1 0 0
+Robert Ripley [liar] 1 0 0
+Victor Lustig [liar] 1 0 0
+Pam, Pat, Pip.
+Big Bad Wolf.
+Big Bad Wolf.
+Big Bad Wolf.
+Pinocchio has no friends!
+Forrest Gump, Pete.
+Rainbow Unicorn does not exist!
+Invalid hashtags list!
+Invalid hashtags list!
+Inadequate stance!
+Inadequate stance!
+Inadequate stance!
+Inadequate stance!
+Inadequate stance!
+Inadequate stance!
+6-year old kid [fanatic] 1 0 0
+Anthony [naive] 5 0 0
+Big Bad Wolf [liar] 3 0 0
+Charles Dalbert [fanatic] 0 0 0
+Dim Cardashian [selfcentered] 2 0 0
+Forrest Gump [naive] 2 0 0
+Francis Smaug [fanatic] 0 0 0
+Pam [naive] 1 0 0
+Pat [naive] 1 0 0
+Pete [fanatic] 2 0 0
+Pinocchio [liar] 0 0 0
+Pip [naive] 1 0 0
+Robert Ripley [liar] 1 0 0
+Victor Lustig [liar] 1 0 0
+Rainbow Unicorn does not exist!
+Santa Claus does not exist!
+Dim Cardashian has no posts!
+Anthony has no posts!
+Pete has no posts!
+Victor Lustig has no posts!
+Bye!
