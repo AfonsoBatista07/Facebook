@@ -46,7 +46,7 @@ public class FakeSystemClass implements FakeSystem {
 	}
 	
 	private void addFanaticsByTopic (int numFanaticisms, LinkedList<String> sequence, User user) {
-		for(int i = 0; i < numFanaticisms; i++) {
+		for(int i = 0; i < numFanaticisms; i++) {// criar lita de hashtags na fanatic class
 			String topic = sequence.get(1 + 2*i); //Maybe change the whole cicle
 			SortedSet<String> map = fanaticsBytopic.get(topic); 
 			if (map == null) { 
@@ -92,11 +92,9 @@ public class FakeSystemClass implements FakeSystem {
 
 	public void addComment(String idUserComment, String idUserAuthor, int idPost, String stance, String comment) {
 		User userComment = getUser(idUserComment), userAuthor = getUser(idUserAuthor);
-		
-		if(!hasFriend(userComment, userAuthor) && !idUserComment.equals(idUserAuthor)) throw new UserNoAccessToPostException();
 		Post post = userAuthor.getPost(idPost);
 		
-		Comment cmt = new CommentClass(idUserComment, stance, comment, userAuthor.getPost(idPost));
+		Comment cmt = new CommentClass(idUserComment, stance, comment, userAuthor.getPost(idPost)); // Objecto flutuante???
 		userComment.newComment(cmt);
 		
 		if(morePopular(post)) popularPost = post;
@@ -126,10 +124,6 @@ public class FakeSystemClass implements FakeSystem {
 	
 	public boolean isFanatic(String kind) {
 		return kind.equals(User.FANATIC);
-	}
-	
-	private boolean hasFriend(User firstUser, User secondUser) {
-		return firstUser.hasFriend(secondUser);
 	}
 	
 	private boolean repeatedTags(int numTags, LinkedList<String> tags) {

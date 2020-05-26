@@ -1,0 +1,170 @@
+users
+readpost Santa Claus
+1
+register naive Forrest Gump
+readpost Santa Claus
+1
+register liar Pinocchio
+readpost Santa Claus
+2
+register fanatic Pete
+3 loves #red hates #blue hates #green
+register selfcentered Dim Cardashian
+register liar Big Bad Wolf
+register naive Pam
+register naive Pat
+register naive Pip
+register naive Anthony
+register fanatic Charles Dalbert
+2 loves #green hates #red
+register fanatic Francis Smaug
+1 hates #red
+register liar Robert Ripley
+register liar Victor Lustig
+register fanatic 6-year old kid
+1 loves #tvschool
+addfriend Forrest Gump
+Dim Cardashian
+addfriend Pete
+Dim Cardashian
+addfriend Anthony
+Pete
+addfriend Anthony
+Forrest Gump
+addfriend 6-year old kid
+Anthony
+addfriend Victor Lustig
+Anthony
+addfriend Robert Ripley
+Anthony
+addfriend Big Bad Wolf
+Pam
+addfriend Big Bad Wolf
+Pat
+addfriend Big Bad Wolf
+Pip
+friends Big Bad Wolf
+friends Pip
+friends Pam
+friends Pat
+friends Pinocchio
+friends Dim Cardashian
+post Pete
+1 #red
+honest It is all perfectly legal.
+post Pete
+1 #green
+fake It is all perfectly legal.
+post Dim Cardashian
+1 #duckface
+fake Last few years I have been too cool for duck face. So that is not going to happen.
+post Dim Cardashian
+3 #hotvampires #crazywerewolves #kristen
+honest I would, like, died to be in Twilight.
+post Dim Cardashian
+4 #AwesomeDim #red #blue #whatever
+honest Well, a bear can juggle while standing on a ball and he is talented, but he is not famous. You understand what I am saying?
+post Anthony
+1 #MentalSamurai
+honest Oh my, this is one is tricky... the number of letters in the alphabet, plus the number of vowels...
+post Anthony
+2 #MentalSamurai #theAlphabet
+honest Calm down, Tony. You have fingers, use them...
+post Victor Lustig
+1 #easymoney
+fake The Eiffel Tower is for sale and I am the sales representative.
+post Anthony
+2 #MentalSamurai #theAlphabet
+honest 1...2...3...4...5... oh no. No more fingers!
+post Anthony
+3 #MentalSamurai #reading #twoHandsRule
+honest What? Use the other hand?!? Brilliant!
+post Anthony
+1 #pocketCalculator
+honest If only I could use a pocket calculator.
+post Anthony
+3 #MentalSamurai #Eve #askingDirections
+fake No, I do not need any help.
+post Victor Lustig
+1 #easymoney
+fake The Eiffel Tower is for sale AGAIN and I am the sales representative.
+post Anthony
+2 #MentalSamurai #red
+fake I am pretty sure there are 27 letters in the Portuguese alphabet. abcdefghijklmnopqrstuvwxyz. 27! Block the answer!
+addfriend Anthony
+Pam
+post Anthony
+1 #BeingSoUnlucky
+honest I almost got it right... So close...
+post Pete
+1 #red
+honest It is all perfectly legal.
+post Pete
+1 #green
+fake It is all perfectly legal.
+users
+readpost Santa Claus
+1
+readpost Francis Smaug
+2
+readpost Anthony
+14
+userposts Dim Cardashian
+readpost Dim Cardashian
+1
+readpost Dim Cardashian
+2
+userposts Anthony
+readpost Anthony
+1
+readpost Anthony
+2
+readpost Anthony
+3
+readpost Anthony
+4
+readpost Anthony
+5
+readpost Anthony
+6
+readpost Anthony
+7
+readpost Anthony
+8
+userposts Pete
+readpost Pete
+1
+readpost Pete
+2
+userposts Victor Lustig
+readpost Victor Lustig
+1
+readpost Victor Lustig
+2
+readpost Anthony Hopkins
+1
+readpost Anthony Walker
+2
+readpost Anthony Bourdain
+3
+readpost Anthony
+0
+readpost Anthony
+9
+readpost Anthony
+10
+readpost Anthony
+-1
+readpost Anthony
+8
+userposts Pete
+readpost Peter Rabbit
+1
+readpost Peter Pan
+2
+userposts Victor Jara
+readpost Victor Valdes
+1
+readpost Victoria Beckham
+2
+exit

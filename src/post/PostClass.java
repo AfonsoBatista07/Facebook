@@ -2,12 +2,13 @@ package post;
 
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
 public class PostClass implements Post{
 	private String message, type, idUser;
 	private int numHashTags, idPost;
-	private LinkedList<String> hashTags; // Mapa de HashTags?
-	private LinkedList<Comment> comments; 
+	private List<String> hashTags; // Mapa de HashTags?
+	private List<Comment> comments; 
 	
 	private static final String HONEST = "honest";
 	

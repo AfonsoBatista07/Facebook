@@ -1,0 +1,83 @@
+register naive Forrest Gump
+users
+register liar Pinocchio
+register fanatic Pete
+3 loves #red hates #blue hates #green
+register selfcentered Dim Cardashian
+users
+register liar Big Bad Wolf
+register naive Pam
+register naive Pat
+register naive Pip
+register naive Anthony
+register fanatic Charles Dalbert
+2 loves #green hates #red
+register fanatic Francis Smaug
+1 hates #red
+register liar Robert Ripley
+register liar Victor Lustig
+register fanatic 6-year old kid
+1 loves #tvschool
+users
+addfriend Forrest Gump
+Dim Cardashian
+addfriend Pete
+Dim Cardashian
+addfriend Anthony
+Pete
+addfriend Anthony
+Forrest Gump
+addfriend 6-year old kid
+Anthony
+addfriend Victor Lustig
+Anthony
+addfriend Robert Ripley
+Anthony
+addfriend Big Bad Wolf
+Pam
+addfriend Big Bad Wolf
+Pat
+addfriend Big Bad Wolf
+Pip
+users
+friends Big Bad Wolf
+friends Pip
+friends Pam
+friends Pat
+friends Pinocchio
+friends Dim Cardashian
+post Rainbow Unicorn
+1 #cute
+honest Be a unicorn in a field full of horses!
+post Pinocchio
+3 #flatearth #soLongUncleNosy #flatearth
+fake Just the other day my uncle was minding his own business and fell off the edge of the world!
+post Pinocchio
+3 #flatearth #soLongUncleNosy #flatearth
+fake Just the other day my uncle was minding his own business and fell off the edge of the world!
+post Pinocchio
+2 #flatearth #soLongUncleNosy
+honest Just the other day I said my uncle was minding his own business and fell off the edge of the world!
+post Victor Lustig
+1 #flatearth
+honest Scrapyard owners of the world, I have great news.
+post Victor Lustig
+1 #beingcaughtlying
+honest The Eiffel Tower is not for sale. Trust me.
+post Pinocchio
+0
+honest Gepeto is my dad!
+post Pete
+1 #blue
+honest The sky is blue and I just love it!
+post Pete
+1 #red
+fake I hate red!
+users
+userposts Rainbow Unicorn
+userposts Santa Claus
+userposts Dim Cardashian
+userposts Anthony
+userposts Pete
+userposts Victor Lustig
+exit

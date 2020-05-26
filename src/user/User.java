@@ -19,6 +19,7 @@ public interface User {
 	void addFeed(Post post);
 	void sharePost(Post post);
 	void addFriend(User user);
+	boolean hasAccess(Post post);
 	public int getNumberOfLies();
 	int getNumberFriends();
 	int getNumberPosts();
