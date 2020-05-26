@@ -10,7 +10,7 @@ import post.Post;
 import user.exceptions.InadequateStanceException;
 import user.exceptions.InvalidCommentStanceException;
 
-public class FanaticClass extends UserClass implements Fanatic {
+public class FanaticClass extends UserClass {
 	
 	private LinkedList<String> hashTags;
 	private Map<String, String> tags;

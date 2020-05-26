@@ -5,7 +5,7 @@ import post.Post;
 import user.exceptions.InadequateStanceException;
 import user.exceptions.InvalidCommentStanceException;
 
-public class LiarClass extends UserClass implements Liar {
+public class LiarClass extends UserClass {
 	
 	public LiarClass(String id) {
 		super(id, LIAR);
