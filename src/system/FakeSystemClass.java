@@ -6,6 +6,11 @@ import system.exceptions.*;
 
 import java.util.*;
 
+/**
+ * FakeSystemClass processes all the information from the other classes
+ * @author Afonso Batista 57796
+ * @author Joao Jorge 57994
+ */
 public class FakeSystemClass implements FakeSystem {
 	
 	private SortedMap<String, User> users;
@@ -39,7 +44,6 @@ public class FakeSystemClass implements FakeSystem {
 				addFanaticsByTopic(numFanaticisms, sequence, user);
 				break;
 			default:
-				
 				throw new UnknownUserKindException();
 		}
 		if(userExists(userId)) throw new UserAlreadyExistsException(userId);  
@@ -91,11 +95,13 @@ public class FakeSystemClass implements FakeSystem {
 		}
 	}
 
-	public void addComment(String idUserComment, String idUserAuthor, int idPost, String stance, String comment) {
+	public void addComment(String idUserComment, String idUserAuthor, int postId, String stance, String comment) {
 		User userComment = getUser(idUserComment), userAuthor = getUser(idUserAuthor);
-		Post post = userAuthor.getPost(idPost);
+		Post post = userAuthor.getPost(postId);
 		
-		Comment cmt = new CommentClass(idUserComment, stance, comment, userAuthor.getPost(idPost)); // Objecto flutuante???
+		if(!userComment.hasAccess(post)) throw new UserNoAccessToPostException();
+		
+		Comment cmt = new CommentClass(idUserComment, stance, comment, post); // Objecto flutuante???
 		userComment.newComment(cmt);
 		
 		if(morePopular(post)) popularPost = post;
@@ -120,7 +126,7 @@ public class FakeSystemClass implements FakeSystem {
 	
 	private boolean shameless(User user) {
 		ComparatorShameless comparator = new ComparatorShameless();
-		return comparator.compare(user, shameless) == 1;
+		return comparator.compare(user, shameless)==1;
 	}
 	
 	public boolean isFanatic(String kind) {

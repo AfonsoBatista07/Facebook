@@ -6,23 +6,20 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
-import java.util.TreeSet;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import post.Comment;
 import post.Post;
-import system.ComparatorSortPosts;
 import system.exceptions.NoCommentsException;
-import system.exceptions.UserNoAccessToPostException;
-import user.exceptions.UserHasNoPostsException;
-import user.exceptions.UsersAlreadyFriendsException;
+import user.exceptions.*;
 
 public abstract class UserClass implements User {
 	
 	private String id, kind;
 	private SortedMap<String, User> friends;
-	private List<Post> myPosts; // my feed set
+	private List<Post> myPosts; 
 	private Set<Post> myFeed;
 	private Map<String,LinkedList<Comment>> commentsByTag;
 	private int totalNumComments, numComments, numOfLies;
@@ -32,7 +29,7 @@ public abstract class UserClass implements User {
 		this.kind = kind;
 		friends = new TreeMap<String, User>();
 		myPosts =  new ArrayList<Post>();
-		myFeed =  new TreeSet<Post>(new ComparatorSortPosts());
+		myFeed =  new HashSet<Post>();
 		commentsByTag = new HashMap<String, LinkedList<Comment>>();
 		totalNumComments = 0;
 		numComments = 0;
@@ -62,7 +59,6 @@ public abstract class UserClass implements User {
 
 	public void newComment(Comment comment) {
 		Post post = comment.getPost();
-		if(!hasAccess(post)) throw new UserNoAccessToPostException();
 		
 		if(!post.hasComment(getId())) numComments++;
 		
