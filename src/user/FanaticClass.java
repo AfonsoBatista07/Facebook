@@ -3,6 +3,7 @@ package user;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import post.Comment;
@@ -10,9 +11,9 @@ import post.Post;
 import user.exceptions.InadequateStanceException;
 import user.exceptions.InvalidCommentStanceException;
 
-public class FanaticClass extends UserClass {
+public class FanaticClass extends UserClass implements Fanatic{
 	
-	private LinkedList<String> hashTags;
+	private List<String> fanaticisms;
 	private Map<String, String> tags;
 	private int numFanaticisms;
 	private static final String LOVES = "loves";
@@ -21,9 +22,10 @@ public class FanaticClass extends UserClass {
 	public FanaticClass(String id, int numFanaticisms, LinkedList<String> hashTags) {
 		super(id, FANATIC);
 		this.numFanaticisms = numFanaticisms;
-		this.hashTags = hashTags;
 		tags = new HashMap<String, String>();
-		separateTags();
+		fanaticisms = new LinkedList<String>();
+		separateTags(hashTags);
+		listOnlyTags(hashTags);
 	}
 	
 	public void newPost(Post post) {
@@ -35,20 +37,32 @@ public class FanaticClass extends UserClass {
 		super.newPost(post);
 	}
 	
+	private void listOnlyTags(LinkedList<String> hashTags) {
+		for(int i = 0; i < numFanaticisms; i++) {
+			String tag = hashTags.get(1 + 2*i);
+			fanaticisms.add(tag);
+		}
+	}
+	
+	public Iterator<String> getFanaticisms() {
+		return fanaticisms.iterator();
+	}
+	
 	public void newComment(Comment comment) {
 		Post post = comment.getPost();
 		boolean found = false;
-		for(int i = 0; i < numFanaticisms; i++) {
-			String tag = hashTags.get(1 + 2*i);
+		Iterator<String> fan = fanaticisms.iterator();
+		while(fan.hasNext()) {
+			String fanaticism = fan.next();
 			Iterator<String> it = post.getHashTags(); 			// it ????????????
 			while (it.hasNext() && found == false) {
-				String fanaticism = it.next();					//Separate and fix it later
+				String tag = it.next();					//Separate and fix it later
 				if(tag.equals(fanaticism)) {
 					found = true;
-					if(loves(tag)) {
+					if(loves(fanaticism)) {
 						if((!post.isHonest() && comment.isPositive()) || (post.isHonest() && !comment.isPositive())) throw new InvalidCommentStanceException();
 					}
-					if(hates(tag)) {
+					if(hates(fanaticism)) {
 						if((!post.isHonest() && !comment.isPositive()) || (post.isHonest() && comment.isPositive())) throw new InvalidCommentStanceException();
 					}
 				}
@@ -57,7 +71,7 @@ public class FanaticClass extends UserClass {
 		super.newComment(comment);
 	}
 	
-	private void separateTags() {
+	private void separateTags(LinkedList<String> hashTags) {
 		Iterator<String> it = hashTags.iterator();
 		for(int i = 0; i < numFanaticisms; i++){
 			String value = it.next();

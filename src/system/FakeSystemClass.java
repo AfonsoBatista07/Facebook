@@ -41,7 +41,7 @@ public class FakeSystemClass implements FakeSystem {
 			case User.FANATIC:
 				if(repeatedTags(numFanaticisms, sequence)) throw new InvalidFanaticismListException();   
 				user = new FanaticClass(userId, numFanaticisms, sequence);
-				addFanaticsByTopic(numFanaticisms, sequence, user);
+				addFanaticsByTopic((Fanatic) user);
 				break;
 			default:
 				throw new UnknownUserKindException();
@@ -50,9 +50,10 @@ public class FakeSystemClass implements FakeSystem {
 		users.put(userId, user);
 	}
 	
-	private void addFanaticsByTopic (int numFanaticisms, LinkedList<String> sequence, User user) {
-		for(int i = 0; i < numFanaticisms; i++) {// criar lita de hashtags na fanatic class
-			String topic = sequence.get(1 + 2*i); //Maybe change the whole cicle
+	private void addFanaticsByTopic (Fanatic user) {
+		Iterator<String> fanaticisms = user.getFanaticisms();
+		while(fanaticisms.hasNext()) {
+			String topic = fanaticisms.next();
 			SortedSet<String> map = fanaticsBytopic.get(topic); 
 			if (map == null) { 
 				map = new TreeSet<String>(); 

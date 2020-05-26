@@ -12,11 +12,10 @@ public class ComparatorSortPosts implements Comparator<Post> {
 		
 		int i = a.getAuthorId().compareTo(b.getAuthorId());
 		if(i != 0) return i;
-		
+
 		if(a.getIdPost() < b.getIdPost()) return 1;
 		if(a.getIdPost() > b.getIdPost()) return -1;
 		
 		return 0;
-		
 	}
 }
