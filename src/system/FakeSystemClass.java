@@ -39,6 +39,7 @@ public class FakeSystemClass implements FakeSystem {
 				addFanaticsByTopic(numFanaticisms, sequence, user);
 				break;
 			default:
+				
 				throw new UnknownUserKindException();
 		}
 		if(userExists(userId)) throw new UserAlreadyExistsException(userId);  
@@ -145,7 +146,7 @@ public class FakeSystemClass implements FakeSystem {
 		return users.get(userId)!=null;
 	}
 	
-	public int getNumberFriends(String userId) {
+	public int getNumFriends(String userId) {
 		return getUser(userId).getNumberFriends();
 	}
 

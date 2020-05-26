@@ -8,6 +8,13 @@ import post.*;
 import system.*;
 import user.User;
 
+
+
+/**
+ * Main Program.
+ * @author Afonso Batista 57796
+ * @author Joao Jorge 57994
+ */
 public class Main {
 
 	/* Commands Constants */
@@ -221,7 +228,7 @@ public class Main {
 		
 		try {
 			fsys.newPost(userId, hashtagsNumber, hashtags, truthfulness, message);
-			System.out.printf(SUCCESS_NEW_POST, userId, truthfulness, fsys.getNumberFriends(userId), fsys.getNumPosts(userId));
+			System.out.printf(SUCCESS_NEW_POST, userId, truthfulness, fsys.getNumFriends(userId), fsys.getNumPosts(userId));
 		} catch (UserDoesNotExistException e) {
 			System.out.printf(ERROR_USER_DOES_NOT_EXISTS, e.getUserId());
 		} catch (InvalidHashtagsListException e) {
@@ -278,7 +285,7 @@ public class Main {
 				if(it.hasNext())
 					System.out.print(", ");
 			}
-			System.out.print(".\n");
+			System.out.println(".");
 		} catch (UserDoesNotExistException e) {
 			System.out.printf(ERROR_USER_DOES_NOT_EXISTS, e.getUserId());
 		} catch (NoFriendsException e) {
@@ -363,7 +370,7 @@ public class Main {
 		
 		try {
 			Iterator<Post> it = fsys.listTopicPosts(numberOfPosts, hashtag);
-			while(it.hasNext() && numberOfPosts > 0) {										//É bad code usar a variavel?
+			while(it.hasNext() && numberOfPosts > 0) {										
 				Post post = it.next();
 				System.out.printf(SUCCESS_LIST_TOPIC_POSTS ,post.getAuthorId(), post.getIdPost(),post.getNumComments(), post.getMessage());
 				numberOfPosts--;
