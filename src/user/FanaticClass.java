@@ -40,7 +40,7 @@ public class FanaticClass extends UserClass implements Fanatic {
 		boolean found = false;
 		for(int i = 0; i < numFanaticisms; i++) {
 			String tag = hashTags.get(1 + 2*i);
-			Iterator<String> it = post.getHashTags();
+			Iterator<String> it = post.getHashTags(); 			// it ????????????
 			while (it.hasNext() && found == false) {
 				String fanaticism = it.next();					//Separate and fix it later
 				if(tag.equals(fanaticism)) {
