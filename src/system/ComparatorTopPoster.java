@@ -13,6 +13,6 @@ public class ComparatorTopPoster implements Comparator<User> {
 			else if(user.getTotalNumberComments() == topPoster.getTotalNumberComments())
 				if(user.getId().compareTo(topPoster.getId()) < 0) return 1;
 		}
-		return 0;
+		return -1;
 	}
 }

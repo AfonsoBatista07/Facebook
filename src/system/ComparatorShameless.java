@@ -13,7 +13,7 @@ public class ComparatorShameless implements Comparator<User>{
 		super();
 		topLiars = new LinkedList<User>();
 	}
-	@Override
+
 	public int compare(User user, User shameless) {
 		if(shameless == null || user.getNumberOfLies() > shameless.getNumberOfLies()) {
 			topLiars.clear();

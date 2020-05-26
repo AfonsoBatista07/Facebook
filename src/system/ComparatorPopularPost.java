@@ -13,7 +13,7 @@ public class ComparatorPopularPost implements Comparator<Post> {
 			if(post.getAuthorId().compareTo(popularPost.getAuthorId()) == 0)
 				if(post.getIdPost() > popularPost.getIdPost()) return 1;	
 		}
-		return 0;
+		return -1;
 	}
 	
 }

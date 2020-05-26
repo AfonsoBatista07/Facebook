@@ -10,6 +10,6 @@ public class ComparatorResponsive implements Comparator<User> {
 		if(responsive == null || user.getPercentageCommentedPosts() > responsive.getPercentageCommentedPosts()) return 1;
 		if(user.getPercentageCommentedPosts() == responsive.getPercentageCommentedPosts())
 			if(user.getId().compareTo(responsive.getId()) > 0) return 1;
-		return 0;
+		return -1;
 	}
 }
