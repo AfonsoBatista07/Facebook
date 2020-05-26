@@ -3,7 +3,7 @@ package user;
 import post.Comment;
 import user.exceptions.InvalidCommentStanceException;
 
-public class NaiveClass extends UserClass implements Naive {
+public class NaiveClass extends UserClass {
 
 	public NaiveClass(String id) {
 		super(id, NAIVE);
