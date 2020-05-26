@@ -18,8 +18,10 @@ public class FakeSystemClass implements FakeSystem {
 	private Map<String, SortedSet<String>> fanaticsBytopic;   
 	private Post popularPost;
 	private User topPoster, responsive, shameless;
+	private List<User> topLiars;
 	
 	public FakeSystemClass() {
+		topLiars = new LinkedList<User>();
 		users = new TreeMap<String, User>();
 		posts = new HashMap<String, LinkedList<Post>>();
 		fanaticsBytopic = new HashMap<String, SortedSet<String>>();
@@ -75,8 +77,8 @@ public class FakeSystemClass implements FakeSystem {
 		if(hashtagsNumber < 0 || repeatedTags(hashtagsNumber, hashtags)) throw new InvalidHashtagsListException();
 		Post post = new PostClass(userId, getNumPosts(userId)+1, hashtagsNumber, hashtags, truthfulness, message);
 		user.newPost(post);
-		addPostsByTopic(hashtagsNumber, hashtags, post);
 		user.sharePost(post);
+		addPostsByTopic(hashtagsNumber, hashtags, post);
 		
 		if(topPoster(user)) topPoster = user;
 		if(responsive(user)) responsive = user;
@@ -126,8 +128,23 @@ public class FakeSystemClass implements FakeSystem {
 	}
 	
 	private boolean shameless(User user) {
-		ComparatorShameless comparator = new ComparatorShameless();
-		return comparator.compare(user, shameless)==1;
+		if(shameless == null || user.getNumberOfLies() > shameless.getNumberOfLies()) {
+			topLiars.clear();
+			return true;
+		}
+		if ( user.getNumberOfLies() == shameless.getNumberOfLies()) {
+			if(!topLiars.contains(user)) topLiars.add(user);
+			if(!topLiars.contains(shameless)) topLiars.add(shameless);
+			int shamelessSum = shameless.getTotalNumberComments() + shameless.getNumberPosts();
+			for( User liar : topLiars) {
+				int liarSum = liar.getTotalNumberComments() + liar.getNumberPosts();
+				if(liarSum < shamelessSum) shameless = liar;
+			}
+			int userSum = user.getTotalNumberComments() + user.getNumberPosts();		/// Atencao aos casts e verificar o number posts
+			if(userSum < shamelessSum) return true;
+			if(userSum == shamelessSum && user.getId().compareTo(shameless.getId()) > 0) return true;
+		}
+		return false;
 	}
 	
 	public boolean isFanatic(String kind) {
