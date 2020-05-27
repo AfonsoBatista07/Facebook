@@ -78,15 +78,15 @@ public class FakeSystemClass implements FakeSystem {
 		Post post = new PostClass(userId, getNumPosts(userId)+1, hashtagsNumber, hashtags, truthfulness, message);
 		user.newPost(post);
 		user.sharePost(post);
-		addPostsByTopic(hashtagsNumber, hashtags, post);
+		addPostsByTopic(post);
 		
 		if(topPoster(user)) topPoster = user;
 		if(responsive(user)) responsive = user;
 		if(shameless(user)) shameless = user;
 	}
 	
-	private void addPostsByTopic(int hashtagsNumber, LinkedList<String> hashtags, Post post) {
-		Iterator<String> it = hashtags.iterator();
+	private void addPostsByTopic(Post post) {
+		Iterator<String> it = post.getHashTags();
 		while(it.hasNext()) {
 			String tag = it.next();
 			LinkedList<Post> list = posts.get(tag);
