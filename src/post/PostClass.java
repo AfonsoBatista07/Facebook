@@ -4,6 +4,11 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Implements User.
+ * @author Afonso Batista 57796
+ * @author Joao Jorge 57994
+ */
 public class PostClass implements Post{
 	private String message, type, idUser;
 	private int numHashTags, idPost;
@@ -12,6 +17,15 @@ public class PostClass implements Post{
 	
 	private static final String HONEST = "honest";
 	
+	/**
+	 * Constructor of PostClass, initializes variables.
+	 * @param idUser - Id of the Author of the Post
+	 * @param idPost - Id of the Post
+	 * @param numHashTags - Number of HashTags
+	 * @param hashTags - List of HashTags
+	 * @param type - Type of Post ( Fake or Honest )
+	 * @param message - Message of the Post
+	 */
 	public PostClass(String idUser, int idPost, int numHashTags, LinkedList<String> hashTags, String type, String message) {
 		this.idUser = idUser;
 		this.idPost = idPost;
