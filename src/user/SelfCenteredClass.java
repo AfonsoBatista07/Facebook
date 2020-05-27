@@ -11,6 +11,10 @@ import user.exceptions.UserCanNotCommentPostException;
 */
 public class SelfCenteredClass extends UserClass {
 	
+	/**
+	 * Constructor of the SelfCenteredClass.
+	 * @param id - Id of the User
+	 */
 	public SelfCenteredClass(String id) {
 		super(id, SELF_CENTERED);
 	}

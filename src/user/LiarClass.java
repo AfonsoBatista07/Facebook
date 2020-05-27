@@ -12,6 +12,10 @@ import user.exceptions.InvalidCommentStanceException;
 */
 public class LiarClass extends UserClass {
 	
+	/**
+	 * Constructor of the LiarClass.
+	 * @param id - Id of the User
+	 */
 	public LiarClass(String id) {
 		super(id, LIAR);
 	}

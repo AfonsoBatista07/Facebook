@@ -10,6 +10,10 @@ import user.exceptions.InvalidCommentStanceException;
 */
 public class NaiveClass extends UserClass {
 
+	/**
+	 * Constructor of the NaiveClass.
+	 * @param id - Id of the User
+	 */
 	public NaiveClass(String id) {
 		super(id, NAIVE);
 	}

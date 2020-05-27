@@ -24,6 +24,12 @@ public class FanaticClass extends UserClass implements Fanatic{
 	private static final String LOVES = "loves";
 	private static final String HATES = "hates";
 	
+	/**
+	 * Constructor of the FanaticClass, initializes variables.
+	 * @param id - User Id
+	 * @param numFanaticisms - Number of Fanaticisms
+	 * @param hashTags - List of HashTags
+	 */
 	public FanaticClass(String id, int numFanaticisms, LinkedList<String> hashTags) {
 		super(id, FANATIC);
 		this.numFanaticisms = numFanaticisms;
