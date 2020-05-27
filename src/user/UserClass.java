@@ -30,7 +30,8 @@ public abstract class UserClass implements User {
 	private Map<String,LinkedList<Comment>> commentsByTag;
 	private int numComments, numPostsCommented, numOfLies;
 	
-	/**Constructor of UserClass, initializes variables.
+	/**
+	 * Constructor of UserClass, initializes variables.
 	 * @param id - User Id
 	 * @param kind - Type of User ( Fanatic, Liar, Naive, SelfCentered )
 	 */

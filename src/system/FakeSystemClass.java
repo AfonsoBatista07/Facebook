@@ -13,13 +13,16 @@ import java.util.*;
  */
 public class FakeSystemClass implements FakeSystem {
 	
+	private List<User> topLiars;
 	private SortedMap<String, User> users;
 	private Map<String, LinkedList<Post>> posts;
 	private Map<String, SortedSet<String>> fanaticsBytopic;   
 	private Post popularPost;
 	private User topPoster, responsive, shameless;
-	private List<User> topLiars;
 	
+	/**
+	 * Constructor of FakeSystemClass, initializes variables.
+	 */
 	public FakeSystemClass() {
 		topLiars = new LinkedList<User>();
 		users = new TreeMap<String, User>();
@@ -52,19 +55,6 @@ public class FakeSystemClass implements FakeSystem {
 		users.put(userId, user);
 	}
 	
-	private void addFanaticsByTopic (Fanatic user) { 
-		Iterator<String> fanaticisms = user.getFanaticisms(); 
-		while(fanaticisms.hasNext()) { 
-			String topic = fanaticisms.next(); 
-			SortedSet<String> map = fanaticsBytopic.get(topic);  
-			if (map == null) {  
-				map = new TreeSet<String>();  
-				fanaticsBytopic.put(topic, map);  
-			}  
-			map.add(user.getId()); 
-		} 
-	} 
-	
 	public void addFriend(String firstUserId, String secondUserId) {
 		User firstUser = getUser(firstUserId), secondUser = getUser(secondUserId);
 		if(firstUser.equals(secondUser)) throw new UserCanNotBeTheSameException();
@@ -85,6 +75,27 @@ public class FakeSystemClass implements FakeSystem {
 		if(shameless(user)) shameless = user;
 	}
 	
+	/**
+	 * Adds a sorted set to the map fanaticsBytopic and then a Fanatic user to the sorted set.
+	 * @param user - Fanatic user.
+	 */
+	private void addFanaticsByTopic (Fanatic user) {    //Por User ?????
+		Iterator<String> fanaticisms = user.getFanaticisms(); 
+		while(fanaticisms.hasNext()) { 
+			String topic = fanaticisms.next(); 
+			SortedSet<String> map = fanaticsBytopic.get(topic);  
+			if (map == null) {  
+				map = new TreeSet<String>();  
+				fanaticsBytopic.put(topic, map);  
+			}  
+			map.add(user.getId()); 
+		} 
+	} 
+	
+	/**
+	 * Adds a linked list to the map posts and then a post to the linked list.
+	 * @param post - Post.
+	 */
 	private void addPostsByTopic(Post post) {
 		Iterator<String> it = post.getHashTags();
 		while(it.hasNext()) {
@@ -112,21 +123,43 @@ public class FakeSystemClass implements FakeSystem {
 		if(shameless(userComment)) shameless = userComment;
 	}
 	
-	private boolean responsive(User user) {
-		ComparatorResponsive comparator = new ComparatorResponsive();
-		return comparator.compare(user, responsive)==1;
-	}
-	
+	/**
+	 * @param post - Post.
+	 * @return true if post post have more comments than the popularPost, if there is a tie,
+	 * true if post is more recent than the popularPost.
+	 */
 	private boolean morePopular(Post post) {
 		ComparatorPopularPost comparator = new ComparatorPopularPost();
 		return comparator.compare(post, popularPost)==1;
 	}
 	                                                                                                      
+	/**
+	 * @param user - User
+	 * @return true if user have more posts than the topPoster, if there is a tie,
+	 * true if user have wrote more comments than the topPoster, if there is still a tie,
+	 * true if user a user id alphabetically bigger than topPoster.
+	 */
 	private boolean topPoster(User user) {
 		ComparatorTopPoster comparator = new ComparatorTopPoster();
 		return comparator.compare(user, topPoster)==1; 
 	}
 	
+	/**
+	 * @param user - User.
+	 * @return true if user have a higher percentage of commented posts than the responsive,
+	 * if there is a draw, true user have a user id alphabetically bigger than responsive.
+	 */
+	private boolean responsive(User user) {
+		ComparatorResponsive comparator = new ComparatorResponsive();
+		return comparator.compare(user, responsive)==1;
+	}
+	
+	/**
+	 * @param user - User.
+	 * @return true if user have more lies than the shameless or if are the same,
+	 * true if user have lower sum of posts and comments, if the ties still remain,
+	 * true if user have a user id alphabetically bigger than shameless
+	 */
 	private boolean shameless(User user) {
 		if(shameless == null || user.getNumberOfLies() > shameless.getNumberOfLies()) {
 			topLiars.clear();
@@ -140,7 +173,7 @@ public class FakeSystemClass implements FakeSystem {
 				int liarSum = liar.getTotalNumberComments() + liar.getNumberPosts();
 				if(liarSum < shamelessSum) shameless = liar;
 			}
-			int userSum = user.getTotalNumberComments() + user.getNumberPosts();		/// Atencao aos casts e verificar o number posts
+			int userSum = user.getTotalNumberComments() + user.getNumberPosts();
 			if(userSum < shamelessSum) return true;
 			if(userSum == shamelessSum && user.getId().compareTo(shameless.getId()) > 0) return true;
 		}
@@ -151,6 +184,11 @@ public class FakeSystemClass implements FakeSystem {
 		return kind.equals(User.FANATIC);
 	}
 	
+	/**
+	 * @param numTags - Number of hashTags.
+	 * @param tags - HashTags.
+	 * @return true if there are any repeatedTags.
+	 */
 	private boolean repeatedTags(int numTags, LinkedList<String> tags) {
 		for (int i = 0; i < numTags-1; i++) {
 			for(int j = i+1; j < numTags; j++) {
@@ -249,7 +287,7 @@ public class FakeSystemClass implements FakeSystem {
 	}
 	
 	public Iterator<Post> listTopicPosts(int numberOfPosts, String hashtag) {
-		if(numberOfPosts < 1) throw new InvalidNumberOfPostsException();           //Voltar a ver
+		if(numberOfPosts < 1) throw new InvalidNumberOfPostsException();         
 		LinkedList<Post> list = posts.get(hashtag);
 		if(list == null) throw new UnKnownTopicException();
 		Collections.sort(list, new ComparatorSortPosts());
