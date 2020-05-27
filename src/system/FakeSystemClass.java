@@ -55,6 +55,20 @@ public class FakeSystemClass implements FakeSystem {
 		users.put(userId, user);
 	}
 	
+	public void addComment(String idUserComment, String idUserAuthor, int postId, String stance, String comment) {
+		User userComment = getUser(idUserComment), userAuthor = getUser(idUserAuthor);
+		Post post = userAuthor.getPost(postId);
+		
+		if(!userComment.hasAccess(post)) throw new UserNoAccessToPostException();
+		
+		Comment cmt = new CommentClass(idUserComment, stance, comment, post); // Objecto flutuante???
+		userComment.newComment(cmt);
+		
+		if(morePopular(post)) popularPost = post;
+		if(responsive(userComment)) responsive = userComment;
+		if(shameless(userComment)) shameless = userComment;
+	}
+	
 	public void addFriend(String firstUserId, String secondUserId) {
 		User firstUser = getUser(firstUserId), secondUser = getUser(secondUserId);
 		if(firstUser.equals(secondUser)) throw new UserCanNotBeTheSameException();
@@ -75,131 +89,8 @@ public class FakeSystemClass implements FakeSystem {
 		if(shameless(user)) shameless = user;
 	}
 	
-	/**
-	 * Adds a sorted set to the map fanaticsBytopic and then a Fanatic user to the sorted set.
-	 * @param user - Fanatic user.
-	 */
-	private void addFanaticsByTopic (Fanatic user) {    //Por User ?????
-		Iterator<String> fanaticisms = user.getFanaticisms(); 
-		while(fanaticisms.hasNext()) { 
-			String topic = fanaticisms.next(); 
-			SortedSet<String> map = fanaticsBytopic.get(topic);  
-			if (map == null) {  
-				map = new TreeSet<String>();  
-				fanaticsBytopic.put(topic, map);  
-			}  
-			map.add(user.getId()); 
-		} 
-	} 
-	
-	/**
-	 * Adds a linked list to the map posts and then a post to the linked list.
-	 * @param post - Post.
-	 */
-	private void addPostsByTopic(Post post) {
-		Iterator<String> it = post.getHashTags();
-		while(it.hasNext()) {
-			String tag = it.next();
-			LinkedList<Post> list = posts.get(tag);
-			if (list == null) {
-				list = new LinkedList<Post>();
-				posts.put(tag, list);
-			}
-			list.add(post);
-		}
-	}
-
-	public void addComment(String idUserComment, String idUserAuthor, int postId, String stance, String comment) {
-		User userComment = getUser(idUserComment), userAuthor = getUser(idUserAuthor);
-		Post post = userAuthor.getPost(postId);
-		
-		if(!userComment.hasAccess(post)) throw new UserNoAccessToPostException();
-		
-		Comment cmt = new CommentClass(idUserComment, stance, comment, post); // Objecto flutuante???
-		userComment.newComment(cmt);
-		
-		if(morePopular(post)) popularPost = post;
-		if(responsive(userComment)) responsive = userComment;
-		if(shameless(userComment)) shameless = userComment;
-	}
-	
-	/**
-	 * @param post - Post.
-	 * @return true if post post have more comments than the popularPost, if there is a tie,
-	 * true if post is more recent than the popularPost.
-	 */
-	private boolean morePopular(Post post) {
-		ComparatorPopularPost comparator = new ComparatorPopularPost();
-		return comparator.compare(post, popularPost)==1;
-	}
-	                                                                                                      
-	/**
-	 * @param user - User
-	 * @return true if user have more posts than the topPoster, if there is a tie,
-	 * true if user have wrote more comments than the topPoster, if there is still a tie,
-	 * true if user a user id alphabetically bigger than topPoster.
-	 */
-	private boolean topPoster(User user) {
-		ComparatorTopPoster comparator = new ComparatorTopPoster();
-		return comparator.compare(user, topPoster)==1; 
-	}
-	
-	/**
-	 * @param user - User.
-	 * @return true if user have a higher percentage of commented posts than the responsive,
-	 * if there is a draw, true user have a user id alphabetically bigger than responsive.
-	 */
-	private boolean responsive(User user) {
-		ComparatorResponsive comparator = new ComparatorResponsive();
-		return comparator.compare(user, responsive)==1;
-	}
-	
-	/**
-	 * @param user - User.
-	 * @return true if user have more lies than the shameless or if are the same,
-	 * true if user have lower sum of posts and comments, if the ties still remain,
-	 * true if user have a user id alphabetically bigger than shameless
-	 */
-	private boolean shameless(User user) {
-		if(shameless == null || user.getNumberOfLies() > shameless.getNumberOfLies()) {
-			topLiars.clear();
-			return true;
-		}
-		if ( user.getNumberOfLies() == shameless.getNumberOfLies()) {
-			if(!topLiars.contains(user)) topLiars.add(user);
-			if(!topLiars.contains(shameless)) topLiars.add(shameless);
-			int shamelessSum = shameless.getTotalNumberComments() + shameless.getNumberPosts();
-			for( User liar : topLiars) {
-				int liarSum = liar.getTotalNumberComments() + liar.getNumberPosts();
-				if(liarSum < shamelessSum) shameless = liar;
-			}
-			int userSum = user.getTotalNumberComments() + user.getNumberPosts();
-			if(userSum < shamelessSum) return true;
-			if(userSum == shamelessSum && user.getId().compareTo(shameless.getId()) > 0) return true;
-		}
-		return false;
-	}
-	
 	public boolean isFanatic(String kind) {
 		return kind.equals(User.FANATIC);
-	}
-	
-	/**
-	 * @param numTags - Number of hashTags.
-	 * @param tags - HashTags.
-	 * @return true if there are any repeatedTags.
-	 */
-	private boolean repeatedTags(int numTags, LinkedList<String> tags) {
-		for (int i = 0; i < numTags-1; i++) {
-			for(int j = i+1; j < numTags; j++) {
-				if(tags.get(i).equals(tags.get(j))) return true;
-			}
-		}
-		return false;
-	}
-	
-	public boolean userExists(String userId) {
-		return users.get(userId)!=null;
 	}
 	
 	public int getNumFriends(String userId) {
@@ -292,5 +183,118 @@ public class FakeSystemClass implements FakeSystem {
 		if(list == null) throw new UnKnownTopicException();
 		Collections.sort(list, new ComparatorSortPosts());
 		return list.iterator();   
+	}
+	
+	/**
+	 * Adds a sorted set to the map fanaticsBytopic and then a Fanatic user to the sorted set.
+	 * @param user - Fanatic user.
+	 */
+	private void addFanaticsByTopic (Fanatic user) {    //Por User ?????
+		Iterator<String> fanaticisms = user.getFanaticisms(); 
+		while(fanaticisms.hasNext()) { 
+			String topic = fanaticisms.next(); 
+			SortedSet<String> map = fanaticsBytopic.get(topic);  
+			if (map == null) {  
+				map = new TreeSet<String>();  
+				fanaticsBytopic.put(topic, map);  
+			}  
+			map.add(user.getId()); 
+		} 
+	} 
+	
+	/**
+	 * Adds a linked list to the map posts and then a post to the linked list.
+	 * @param post - Post.
+	 */
+	private void addPostsByTopic(Post post) {
+		Iterator<String> it = post.getHashTags();
+		while(it.hasNext()) {
+			String tag = it.next();
+			LinkedList<Post> list = posts.get(tag);
+			if (list == null) {
+				list = new LinkedList<Post>();
+				posts.put(tag, list);
+			}
+			list.add(post);
+		}
+	}
+	
+	/**
+	 * @param post - Post.
+	 * @return true if post post have more comments than the popularPost, if there is a tie,
+	 * true if post is more recent than the popularPost.
+	 */
+	private boolean morePopular(Post post) {
+		ComparatorPopularPost comparator = new ComparatorPopularPost();
+		return comparator.compare(post, popularPost)==1;
+	}
+	
+	/**
+	 * @param user - User
+	 * @return true if user have more posts than the topPoster, if there is a tie,
+	 * true if user have wrote more comments than the topPoster, if there is still a tie,
+	 * true if user a user id alphabetically bigger than topPoster.
+	 */
+	private boolean topPoster(User user) {
+		ComparatorTopPoster comparator = new ComparatorTopPoster();
+		return comparator.compare(user, topPoster)==1; 
+	}
+	
+	/**
+	 * @param user - User.
+	 * @return true if user have a higher percentage of commented posts than the responsive,
+	 * if there is a draw, true user have a user id alphabetically bigger than responsive.
+	 */
+	private boolean responsive(User user) {
+		ComparatorResponsive comparator = new ComparatorResponsive();
+		return comparator.compare(user, responsive)==1;
+	}
+	
+	/**
+	 * @param numTags - Number of hashTags.
+	 * @param tags - HashTags.
+	 * @return true if there are any repeatedTags.
+	 */
+	private boolean repeatedTags(int numTags, LinkedList<String> tags) {
+		for (int i = 0; i < numTags-1; i++) {
+			for(int j = i+1; j < numTags; j++) {
+				if(tags.get(i).equals(tags.get(j))) return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * @param user - User.
+	 * @return true if user have more lies than the shameless or if are the same,
+	 * true if user have lower sum of posts and comments, if the ties still remain,
+	 * true if user have a user id alphabetically bigger than shameless
+	 */
+	private boolean shameless(User user) {
+		if(shameless == null || user.getNumberOfLies() > shameless.getNumberOfLies()) {
+			topLiars.clear();
+			return true;
+		}
+		if ( user.getNumberOfLies() == shameless.getNumberOfLies()) {
+			if(!topLiars.contains(user)) topLiars.add(user);
+			if(!topLiars.contains(shameless)) topLiars.add(shameless);
+			int shamelessSum = shameless.getTotalNumberComments() + shameless.getNumberPosts();
+			for( User liar : topLiars) {
+				int liarSum = liar.getTotalNumberComments() + liar.getNumberPosts();
+				if(liarSum < shamelessSum) shameless = liar;
+			}
+			int userSum = user.getTotalNumberComments() + user.getNumberPosts();
+			if(userSum < shamelessSum) return true;
+			if(userSum == shamelessSum && user.getId().compareTo(shameless.getId()) > 0) return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * @param userId - Id of the User.
+	 * @return true if the user exits.
+	 */
+	private boolean userExists(String userId) {
+		return users.get(userId)!=null;
 	}
 }

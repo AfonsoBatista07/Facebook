@@ -18,18 +18,7 @@ import user.User;
 public interface FakeSystem {
 	
 	/**
-	 * @param userId - Id of the User.
-	 * @return true if the user exits.
-	 */
-	boolean userExists(String userId);
-	
-	/**
-	 * @param kind - User kind (Fanatic, Naive, Self Centered, Liar).
-	 * @return true if the user kind is Fanatic.
-	 */
-	boolean isFanatic(String kind);
-	
-	/**
+	 * Registers a User into the System.
 	 * @param kind - User kind (Fanatic, Naive, Self Centered, Liar).
 	 * @param userId - Id of the User
 	 * @param numberFanaticisms - number of fanaticisms.
@@ -41,6 +30,8 @@ public interface FakeSystem {
 	void addUser(String kind, String userId, int numberFanaticisms, LinkedList<String> sequence) throws UnknownUserKindException, UserAlreadyExistsException, InvalidFanaticismListException;
 	
 	/**
+	 * Registers a Comment into the System.
+	 * Updates if needed, the most popular Post, the most responsive User and the most shameless User.
 	 * @param idUserComment - Id of the user commenting.
 	 * @param idUserAuthor - Id of the user author of the post.
 	 * @param postId - Id of the Post.
@@ -55,6 +46,7 @@ public interface FakeSystem {
 	void addComment(String idUserComment, String idUserAuthor, int postId, String stance, String comment) throws UserDoesNotExistException, UserHasNoPostsException, UserCanNotCommentPostException, UserNoAccessToPostException, InvalidCommentStanceException;
 	
 	/**
+	 * Makes the Users given friends.
 	 * @param firstUserId - Id of the first user.
 	 * @param secondUserId - Id of the second user.
 	 * @throws UserDoesNotExistException If some of the users does not exist.
@@ -64,6 +56,8 @@ public interface FakeSystem {
 	void addFriend(String firstUserId, String secondUserId) throws UserDoesNotExistException, UsersAlreadyFriendsException, UserCanNotBeTheSameException;
 	
 	/**
+	 * Registers a Post into the System.
+	 * Updates if needed, the most popular Post, the most responsive User and the most shameless User.
 	 * @param userId - Id of the first user.
 	 * @param hashtagsNumber - Number of hashTags.
 	 * @param hashtags - HashTags.
@@ -74,6 +68,12 @@ public interface FakeSystem {
 	 * @throws InadequateStanceException If the post stance contradicts the user’s stance.
 	 */
 	void newPost(String userId, int hashtagsNumber, LinkedList<String> hashtags, String truthfulness, String message) throws UserDoesNotExistException, InvalidHashtagsListException, InadequateStanceException;
+	
+	/**
+	 * @param kind - User kind (Fanatic, Naive, Self Centered, Liar).
+	 * @return true if the user kind given is Fanatic.
+	 */
+	boolean isFanatic(String kind);
 	
 	/**
 	 * @param userId - Id of the user.
