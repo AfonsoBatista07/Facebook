@@ -25,7 +25,7 @@ public interface FakeSystem {
 	 * @param sequence - sequence of fanaticisms.
 	 * @throws UnknownUserKindException If the user kind is unknown.
 	 * @throws UserAlreadyExistsException If there is already a user with the same id.
-	 * @throws InvalidFanaticismListException If the user is a fanatic but there are repeated fanaticisms in the user's list.
+	 * @throws InvalidFanaticismListException If the user is a fanatic but there are repeated fanaticisms in the users list.
 	 */
 	void addUser(String kind, String userId, int numberFanaticisms, LinkedList<String> sequence) throws UnknownUserKindException, UserAlreadyExistsException, InvalidFanaticismListException;
 	
@@ -135,7 +135,7 @@ public interface FakeSystem {
 	
 	/**
 	 * @param userId - Id of the user.
-	 * @return Iterator of all the user's friends.
+	 * @return Iterator of all the users friends.
 	 * @throws UserDoesNotExistException If the user id is unknown.
 	 * @throws NoFriendsException If the user has no friends.
 	 */
@@ -143,7 +143,7 @@ public interface FakeSystem {
 	
 	/**
 	 * @param userId - Id of the user.
-	 * @return Iterator of all user's posts.
+	 * @return Iterator of all users posts.
 	 * @throws UserDoesNotExistException If the user id is unknown.
 	 * @throws NoPostsException If the user exists, but has no posts.
 	 */
@@ -152,7 +152,7 @@ public interface FakeSystem {
 	/**
 	 * @param userId - Id of the user.
 	 * @param hashtag - HashTag you want to search.
-	 * @return Iterator of all user's comments on a given hashTag.
+	 * @return Iterator of all users comments on a given hashTag.
 	 * @throws UserDoesNotExistException If the user id is unknown.
 	 * @throws NoCommentsException If the user has not made any comments.
 	 */
