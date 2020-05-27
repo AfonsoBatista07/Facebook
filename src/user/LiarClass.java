@@ -5,6 +5,11 @@ import post.Post;
 import user.exceptions.InadequateStanceException;
 import user.exceptions.InvalidCommentStanceException;
 
+/**
+* Implements a Liar User.
+* @author Afonso Batista 57796
+* @author Joao Jorge 57994
+*/
 public class LiarClass extends UserClass {
 	
 	public LiarClass(String id) {

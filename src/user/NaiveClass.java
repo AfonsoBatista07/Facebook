@@ -3,6 +3,11 @@ package user;
 import post.Comment;
 import user.exceptions.InvalidCommentStanceException;
 
+/**
+* Implements a Naive User.
+* @author Afonso Batista 57796
+* @author Joao Jorge 57994
+*/
 public class NaiveClass extends UserClass {
 
 	public NaiveClass(String id) {

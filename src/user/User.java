@@ -4,10 +4,11 @@ import java.util.Iterator;
 
 import post.Comment;
 import post.Post;
+import system.exceptions.NoCommentsException;
 import user.exceptions.UsersAlreadyFriendsException;
 
 /**
- * Implements a User.
+ * Interface of the UserClass.
  * @author Afonso Batista 57796
  * @author Joao Jorge 57994
  */
@@ -127,7 +128,8 @@ public interface User {
 	/**
 	 * @param hashtag - HashTag
 	 * @return Iterator of the Users Comments with the given HashTag.
+	 * @throws NoCommentsException if there is no Comments with the given HashTag.
 	 */
-	Iterator<Comment> getListCommentByUser(String hashtag);
+	Iterator<Comment> getListCommentByUser(String hashtag) throws NoCommentsException;
 	
 }

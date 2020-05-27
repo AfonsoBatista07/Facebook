@@ -3,7 +3,7 @@ package post;
 import java.util.Iterator;
 
 /**
- * Interface of the PostClass that implements a Post.
+ * Interface of the PostClass.
  * @author Afonso Batista 57796
  * @author Joao Jorge 57994
  */
