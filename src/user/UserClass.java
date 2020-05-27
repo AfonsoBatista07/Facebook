@@ -15,6 +15,12 @@ import post.Post;
 import system.exceptions.NoCommentsException;
 import user.exceptions.*;
 
+/**
+ * Implements a User.
+ * @author Afonso Batista 57796
+ * @author Joao Jorge 57994
+ */
+
 public abstract class UserClass implements User {
 	
 	private String id, kind;
@@ -22,8 +28,12 @@ public abstract class UserClass implements User {
 	private List<Post> myPosts; 
 	private Set<Post> myFeed;
 	private Map<String,LinkedList<Comment>> commentsByTag;
-	private int totalNumComments, numComments, numOfLies;
+	private int numComments, numPostsCommented, numOfLies;
 	
+	/**Constructor of UserClass, initializes variables.
+	 * @param id - User Id
+	 * @param kind - Type of User ( Fanatic, Liar, Naive, SelfCentered )
+	 */
 	public UserClass(String id, String kind) {
 		this.id = id;
 		this.kind = kind;
@@ -31,8 +41,8 @@ public abstract class UserClass implements User {
 		myPosts =  new ArrayList<Post>();
 		myFeed =  new HashSet<Post>();
 		commentsByTag = new HashMap<String, LinkedList<Comment>>();
-		totalNumComments = 0;
 		numComments = 0;
+		numPostsCommented = 0;
 		numOfLies = 0;
 	}
 	
@@ -60,32 +70,20 @@ public abstract class UserClass implements User {
 	public void newComment(Comment comment) {
 		Post post = comment.getPost();
 		
-		if(!post.hasComment(getId())) numComments++;
+		if(!post.hasComment(getId())) numPostsCommented++;
 		
-		Iterator<String> it = post.getHashTags();
-		while(it.hasNext()) {
-			addToList(it, comment);
-		}
+		addToMap(post ,comment);
+		
 		post.newComment(comment);
 		
-		totalNumComments++;
+		numComments++;
 		
 		if(!post.isHonest() && comment.isPositive()) numOfLies++;
 		else if(post.isHonest() && !comment.isPositive()) numOfLies++;;
 	}
 	
-	private void addToList(Iterator<String> it, Comment comment) {
-		String tag = it.next();
-		LinkedList<Comment> list = commentsByTag.get(tag);
-		if(list == null) {
-			list = new LinkedList<Comment>();
-			commentsByTag.put(tag,list);
-		}
-		list.add(comment);
-	}
-	
 	public float getPercentageCommentedPosts() {
-		return (float)numComments/getNumCanCommentPosts();
+		return (float)numPostsCommented/getNumCanCommentPosts();
 	}
 	
 	public void addFeed(Post post) {
@@ -110,24 +108,12 @@ public abstract class UserClass implements User {
 	}
 	
 	public int getTotalNumberComments() {
-		return totalNumComments;
-	}
-	
-	public boolean hasFriend(User user) {
-		return getFriend(user)!=null;
-	}
-	
-	public boolean hasPost(int postId) {
-		return getPost(postId)!=null;
+		return numComments;
 	}
 	
 	public Post getPost(int postId) {
-		if(postId-1 >= myPosts.size() || postId<=0 ) throw new UserHasNoPostsException();
+		if(postId > myPosts.size() || postId < 1 ) throw new UserHasNoPostsException();  // this was changed
 		return myPosts.get(postId-1);
-	}
-	
-	public User getFriend(User user) {
-		return friends.get(user.getId());       
 	}
 	
 	public void sharePost(Post post) {
@@ -152,6 +138,32 @@ public abstract class UserClass implements User {
 		LinkedList<Comment> comment = commentsByTag.get(hashtag);
 		if(comment==null) throw new NoCommentsException();
 		return commentsByTag.get(hashtag).iterator();
+	}
+	
+	/**Adds the Comment to the designated linkedList inside the commentsByTag Map, 
+	 * if there is no list with the posts tag creates a new one and puts it into the map.
+	 * @param post - Post
+	 * @param comment - Comment
+	 */
+	private void addToMap(Post post, Comment comment) {
+		Iterator<String> it = post.getHashTags();
+		while(it.hasNext()) {
+			String tag = it.next();
+			LinkedList<Comment> list = commentsByTag.get(tag);
+			if(list == null) {
+				list = new LinkedList<Comment>();
+				commentsByTag.put(tag,list);
+			}
+			list.add(comment);
+		}
+	}
+	
+	/**Verifies if the User is friends with the given User.
+	 * @param user - Given User
+	 * @return True - is they are friends, False - if not.
+	 */
+	private boolean hasFriend(User user) {
+		return friends.get(user.getId()) !=null;
 	}
 
 }
