@@ -1,5 +1,10 @@
 package system.exceptions;
 
+/**
+ * Exception Class for no king of responsiveness.
+ * @author Afonso Batista 57796
+ * @author Joao Jorge 57994
+ */
 public class NoKingOfResponsivenessException extends RuntimeException{
 	/**
 	 * If there are no posts on fakebook.

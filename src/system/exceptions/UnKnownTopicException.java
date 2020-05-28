@@ -1,6 +1,12 @@
 package system.exceptions;
 
-public class UnKnownTopicException extends RuntimeException{
+/**
+ * Exception Class for unknown topic.
+ * @author Afonso Batista 57796
+ * @author Joao Jorge 57994
+ */
+public class UnKnownTopicException extends RuntimeException {
+	
 	/**
 	 * If the topic id a is unknown.
 	 */

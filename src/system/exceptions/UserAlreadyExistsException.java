@@ -1,6 +1,11 @@
 package system.exceptions;
 
-public class UserAlreadyExistsException extends RuntimeException{
+/**
+ * Exception Class for user already exists.
+ * @author Afonso Batista 57796
+ * @author Joao Jorge 57994
+ */
+public class UserAlreadyExistsException extends RuntimeException {
 	
 	/**
 	 * If there is already a user with the same id.

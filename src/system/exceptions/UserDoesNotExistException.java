@@ -1,6 +1,11 @@
 package system.exceptions;
 
-public class UserDoesNotExistException extends RuntimeException{
+/**
+ * Exception Class for user does not exists.
+ * @author Afonso Batista 57796
+ * @author Joao Jorge 57994
+ */
+public class UserDoesNotExistException extends RuntimeException {
 
 	/**
 	 * If the user id of either the author of the comment, or the author of the post is unknown.

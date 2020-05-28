@@ -1,5 +1,10 @@
 package system.exceptions;
 
+/**
+ * Exception Class for unknown user kind.
+ * @author Afonso Batista 57796
+ * @author Joao Jorge 57994
+ */
 public class UnknownUserKindException extends RuntimeException{
 	
 	/**

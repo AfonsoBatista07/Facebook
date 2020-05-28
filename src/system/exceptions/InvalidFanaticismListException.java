@@ -1,5 +1,10 @@
 package system.exceptions;
 
+/**
+ * Exception Class for invalid fanaticism list.
+ * @author Afonso Batista 57796
+ * @author Joao Jorge 57994
+ */
 public class InvalidFanaticismListException  extends RuntimeException{
 	
 	/**
