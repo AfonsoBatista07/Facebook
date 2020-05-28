@@ -35,6 +35,8 @@ public class Main {
 	private static final String HELP = "HELP";
 	
 	/* Success Constants */
+	private static final String DOT = ".";
+	private static final String COMA = ", ";
  	private static final String SUCCESS_EXIT = "Bye!";
  	private static final String SUCCESS_ADD_FRIEND = "%s is friend of %s.\n";
  	private static final String SUCCESS_ADD_USER = "%s registered.\n";
@@ -326,9 +328,9 @@ public class Main {
 			while(it.hasNext()) {
 				System.out.print(it.next().getId());
 				if(it.hasNext())
-					System.out.print(", ");
+					System.out.print(COMA);
 			}
-			System.out.println(".");
+			System.out.println(DOT);
 		} catch (UserDoesNotExistException e) {
 			System.out.printf(ERROR_USER_DOES_NOT_EXISTS, e.getUserId());
 		} catch (NoFriendsException e) {
@@ -418,8 +420,8 @@ public class Main {
 			Iterator<String> it = fsys.listFanaticsByTopic(hashtag);
 			while(it.hasNext()) {
 				System.out.printf(it.next());
-				if(it.hasNext()) System.out.printf(", ");
-				else System.out.printf(".");						//Fazer Constantes
+				if(it.hasNext()) System.out.printf(COMA);
+				else System.out.printf(DOT);						//Fazer Constantes
 			}
 			System.out.println();
 		} catch(UnknownFanaticismException e) {
