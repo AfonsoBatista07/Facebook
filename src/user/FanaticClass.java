@@ -1,8 +1,8 @@
 package user;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -34,7 +34,7 @@ public class FanaticClass extends UserClass implements Fanatic{
 		super(id, FANATIC);
 		this.numFanaticisms = numFanaticisms;
 		tags = new HashMap<String, String>();
-		fanaticisms = new LinkedList<String>();
+		fanaticisms = new ArrayList<String>(numFanaticisms);
 		separateTags(hashTags);
 		listOnlyTags(hashTags);
 	}

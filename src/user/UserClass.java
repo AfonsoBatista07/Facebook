@@ -115,7 +115,7 @@ public abstract class UserClass implements User {
 	}
 	
 	public Post getPost(int postId) {
-		if(postId > myPosts.size() || postId < 1 ) throw new UserHasNoPostsException();  // this was changed
+		if(postId > myPosts.size() || postId < 1 ) throw new UserHasNoPostsException();
 		return myPosts.get(postId-1);
 	}
 	

@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -197,11 +198,12 @@ public class Main {
 	private static void addUser(Scanner in, FakeSystem fsys) {
 		String kind = in.next();
 		String userId = in.nextLine().trim();
+		List<String> sequence = null;							//NULL?
 		
 		int numberFanaticisms = 0;
-		List<String> sequence = new LinkedList<String>() ; // Podia ser array list com a dimensao logo definida mudar declara��es para list
 		if(fsys.isFanatic(kind)) {
 			numberFanaticisms = in.nextInt();
+			sequence = new ArrayList<String>(numberFanaticisms*2) ;
 			for(int i=0; i<numberFanaticisms*2; i++) {
 				sequence.add(in.next().trim());          
 			}
@@ -250,7 +252,7 @@ public class Main {
 		String userId = in.nextLine().trim();
 		int hashtagsNumber = in.nextInt();
 		
-		List<String> hashtags = new LinkedList<String>();; 
+		List<String> hashtags = new ArrayList<String>(hashtagsNumber);
 		for(int i = 0; i < hashtagsNumber; i++) {
 			hashtags.add(in.next());
 		}
