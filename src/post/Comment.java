@@ -1,7 +1,7 @@
 package post;
 
 /**
- * Interface of the CommentClass..
+ * Interface of the CommentClass.
  * @author Afonso Batista 57796
  * @author Joao Jorge 57994
  */

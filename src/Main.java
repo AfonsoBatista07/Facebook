@@ -1,5 +1,6 @@
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 
 import system.exceptions.*;
@@ -198,7 +199,7 @@ public class Main {
 		String userId = in.nextLine().trim();
 		
 		int numberFanaticisms = 0;
-		LinkedList<String> sequence = new LinkedList<String>() ;
+		List<String> sequence = new LinkedList<String>() ; // Podia ser array list com a dimensao logo definida mudar declara��es para list
 		if(fsys.isFanatic(kind)) {
 			numberFanaticisms = in.nextInt();
 			for(int i=0; i<numberFanaticisms*2; i++) {
@@ -249,7 +250,7 @@ public class Main {
 		String userId = in.nextLine().trim();
 		int hashtagsNumber = in.nextInt();
 		
-		LinkedList<String> hashtags = new LinkedList<String>();; 
+		List<String> hashtags = new LinkedList<String>();; 
 		for(int i = 0; i < hashtagsNumber; i++) {
 			hashtags.add(in.next());
 		}

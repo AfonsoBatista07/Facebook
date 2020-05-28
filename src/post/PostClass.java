@@ -12,7 +12,7 @@ import java.util.List;
 public class PostClass implements Post{
 	private String message, type, idUser;
 	private int numHashTags, idPost;
-	private List<String> hashTags; // Mapa de HashTags?
+	private List<String> hashTags;
 	private List<Comment> comments; 
 	
 	private static final String HONEST = "honest";
@@ -26,7 +26,7 @@ public class PostClass implements Post{
 	 * @param type - Type of Post ( Fake or Honest )
 	 * @param message - Message of the Post
 	 */
-	public PostClass(String idUser, int idPost, int numHashTags, LinkedList<String> hashTags, String type, String message) {
+	public PostClass(String idUser, int idPost, int numHashTags, List<String> hashTags, String type, String message) {
 		this.idUser = idUser;
 		this.idPost = idPost;
 		this.numHashTags = numHashTags;

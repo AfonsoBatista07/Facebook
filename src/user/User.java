@@ -17,7 +17,7 @@ public interface User {
 	public static final String FANATIC = "fanatic";
 	public static final String LIAR = "liar";                 
 	public static final String NAIVE = "naive";                       
-	public static final String	SELF_CENTERED = "selfcentered";
+	public static final String SELF_CENTERED = "selfcentered";
 	
 	/**
 	 * @return User Id.

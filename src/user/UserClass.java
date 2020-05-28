@@ -135,7 +135,7 @@ public abstract class UserClass implements User {
 	}
 	
 	public Iterator<Comment> getListCommentByUser(String hashtag) {
-		LinkedList<Comment> comment = commentsByTag.get(hashtag);
+		List<Comment> comment = commentsByTag.get(hashtag);
 		if(comment==null) throw new NoCommentsException();
 		return commentsByTag.get(hashtag).iterator();
 	}

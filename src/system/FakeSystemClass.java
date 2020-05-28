@@ -29,7 +29,7 @@ public class FakeSystemClass implements FakeSystem {
 		fanaticsBytopic = new HashMap<String, SortedSet<String>>();
 	}
 	
-	public void addUser(String kind, String userId, int numFanaticisms, LinkedList<String> sequence) { //Mudar possivelments a linkedlist to arrayList
+	public void addUser(String kind, String userId, int numFanaticisms, List<String> sequence) { //Mudar possivelments a linkedlist to arrayList
 		User user;    
 		
 		switch(kind) {
@@ -75,7 +75,7 @@ public class FakeSystemClass implements FakeSystem {
 		firstUser.addFriend(secondUser); secondUser.addFriend(firstUser);
 	}
 	
-	public void newPost(String userId, int hashtagsNumber, LinkedList<String> hashtags, String truthfulness, String message) {
+	public void newPost(String userId, int hashtagsNumber, List<String> hashtags, String truthfulness, String message) {
 		User user = getUser(userId);
 		if(hashtagsNumber < 0 || repeatedTags(hashtagsNumber, hashtags)) throw new InvalidHashtagsListException();
 		Post post = new PostClass(userId, getNumPosts(userId)+1, hashtagsNumber, hashtags, truthfulness, message);
@@ -178,7 +178,7 @@ public class FakeSystemClass implements FakeSystem {
 	
 	public Iterator<Post> listTopicPosts(int numberOfPosts, String hashtag) {
 		if(numberOfPosts < 1) throw new InvalidNumberOfPostsException();         
-		LinkedList<Post> list = posts.get(hashtag);
+		List<Post> list = posts.get(hashtag);
 		if(list == null) throw new UnKnownTopicException();
 		Collections.sort(list, new ComparatorSortPosts());
 		return list.iterator();   
@@ -254,7 +254,7 @@ public class FakeSystemClass implements FakeSystem {
 	 * @param tags - HashTags.
 	 * @return true if there are any repeatedTags.
 	 */
-	private boolean repeatedTags(int numTags, LinkedList<String> tags) {
+	private boolean repeatedTags(int numTags, List<String> tags) {
 		for (int i = 0; i < numTags-1; i++) {
 			for(int j = i+1; j < numTags; j++) {
 				if(tags.get(i).equals(tags.get(j))) return true;

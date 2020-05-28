@@ -2,6 +2,8 @@ package system;
 
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
+
 import post.Post;
 import system.exceptions.*;
 import user.exceptions.*;
@@ -26,7 +28,7 @@ public interface FakeSystem {
 	 * @throws UserAlreadyExistsException If there is already a user with the same id.
 	 * @throws InvalidFanaticismListException If the user is a fanatic but there are repeated fanaticisms in the users list.
 	 */
-	void addUser(String kind, String userId, int numberFanaticisms, LinkedList<String> sequence) throws UnknownUserKindException, UserAlreadyExistsException, InvalidFanaticismListException;
+	void addUser(String kind, String userId, int numberFanaticisms, List<String> sequence) throws UnknownUserKindException, UserAlreadyExistsException, InvalidFanaticismListException;
 	
 	/**
 	 * Registers a Comment into the System.
@@ -66,7 +68,7 @@ public interface FakeSystem {
 	 * @throws InvalidHashtagsListException If the number of hashTags is not greater or equal to 0.
 	 * @throws InadequateStanceException If the post stance contradicts the user’s stance.
 	 */
-	void newPost(String userId, int hashtagsNumber, LinkedList<String> hashtags, String truthfulness, String message) throws UserDoesNotExistException, InvalidHashtagsListException, InadequateStanceException;
+	void newPost(String userId, int hashtagsNumber, List<String> hashtags, String truthfulness, String message) throws UserDoesNotExistException, InvalidHashtagsListException, InadequateStanceException;
 	
 	/**
 	 * @param kind - User kind (Fanatic, Naive, Self Centered, Liar).

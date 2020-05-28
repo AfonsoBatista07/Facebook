@@ -30,7 +30,7 @@ public class FanaticClass extends UserClass implements Fanatic{
 	 * @param numFanaticisms - Number of Fanaticisms
 	 * @param hashTags - List of HashTags
 	 */
-	public FanaticClass(String id, int numFanaticisms, LinkedList<String> hashTags) {
+	public FanaticClass(String id, int numFanaticisms, List<String> hashTags) {
 		super(id, FANATIC);
 		this.numFanaticisms = numFanaticisms;
 		tags = new HashMap<String, String>();
@@ -54,32 +54,39 @@ public class FanaticClass extends UserClass implements Fanatic{
 	
 	public void newComment(Comment comment) {
 		Post post = comment.getPost();
-		boolean found = false;
+		String fanaticism = getCommonHashTag(post);
+		if(fanaticism == null) throw new InvalidCommentStanceException();
+			if(loves(fanaticism)) {
+				if((!post.isHonest() && comment.isPositive()) || (post.isHonest() && !comment.isPositive())) throw new InvalidCommentStanceException();
+			}
+				if(hates(fanaticism)) {
+					if((!post.isHonest() && !comment.isPositive()) || (post.isHonest() && comment.isPositive())) throw new InvalidCommentStanceException();
+			}
+		super.newComment(comment);
+	}
+	
+	/**
+	 * @param post - Post
+	 * @return The first HashTag the User is fanatic about that is also present on the Posts HashTags
+	 */
+	private String getCommonHashTag(Post post) {
 		Iterator<String> fan = fanaticisms.iterator();
 		while(fan.hasNext()) {
 			String fanaticism = fan.next();
-			Iterator<String> it = post.getHashTags(); 			// it ????????????
-			while (it.hasNext() && found == false) {
-				String tag = it.next();					//Separate and fix it later
-				if(tag.equals(fanaticism)) {
-					found = true;
-					if(loves(fanaticism)) {
-						if((!post.isHonest() && comment.isPositive()) || (post.isHonest() && !comment.isPositive())) throw new InvalidCommentStanceException();
-					}
-					if(hates(fanaticism)) {
-						if((!post.isHonest() && !comment.isPositive()) || (post.isHonest() && comment.isPositive())) throw new InvalidCommentStanceException();
-					}
-				}
+			Iterator<String> it = post.getHashTags();
+			while (it.hasNext()) {
+				String tag = it.next();
+				if(tag.equals(fanaticism)) return fanaticism;
 			}
 		}
-		super.newComment(comment);
+		return null;
 	}
 	
 	/**
 	 * Copies only the HashTags from the given List to another list.
 	 * @param hashTags - List of HashTags with Loves and Hates
 	 */
-	private void listOnlyTags(LinkedList<String> hashTags) {
+	private void listOnlyTags(List<String> hashTags) {
 		for(int i = 0; i < numFanaticisms; i++) {
 			String tag = hashTags.get(1 + 2*i);
 			fanaticisms.add(tag);
@@ -91,7 +98,7 @@ public class FanaticClass extends UserClass implements Fanatic{
 	 * with the HashTag as the key and Loves/Hates as the value.
 	 * @param hashTags - - List of HashTags with Loves and Hates
 	 */
-	private void separateTags(LinkedList<String> hashTags) {
+	private void separateTags(List<String> hashTags) {
 		Iterator<String> it = hashTags.iterator();
 		for(int i = 0; i < numFanaticisms; i++){
 			String value = it.next();
