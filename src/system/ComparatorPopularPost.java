@@ -14,7 +14,7 @@ public class ComparatorPopularPost implements Comparator<Post> {
 	/**
 	 * @param popularPost - Popular post.
 	 * @param post - Post.
-	 * @return 1 if post post have more comments than the popularPost, if there is a tie,
+	 * @return 1 if post post has more comments than the popularPost, if there is a tie,
 	 * 1 if post is more recent than the popularPost.
 	 */
 	public int compare(Post post, Post popularPost) {

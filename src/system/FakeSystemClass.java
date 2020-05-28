@@ -3,7 +3,6 @@ package system;
 import user.*;
 import post.*;
 import system.exceptions.*;
-
 import java.util.*;
 
 /**
@@ -189,7 +188,7 @@ public class FakeSystemClass implements FakeSystem {
 	 * Adds a sorted set to the map fanaticsBytopic and then a Fanatic user to the sorted set.
 	 * @param user - Fanatic user.
 	 */
-	private void addFanaticsByTopic (Fanatic user) {    //Por User ?????
+	private void addFanaticsByTopic (Fanatic user) {    		//Por User ?????
 		Iterator<String> fanaticisms = user.getFanaticisms(); 
 		while(fanaticisms.hasNext()) { 
 			String topic = fanaticisms.next(); 
@@ -251,6 +250,20 @@ public class FakeSystemClass implements FakeSystem {
 	}
 	
 	/**
+	 * @param numTags - Number of hashTags.
+	 * @param tags - HashTags.
+	 * @return true if there are any repeatedTags.
+	 */
+	private boolean repeatedTags(int numTags, LinkedList<String> tags) {
+		for (int i = 0; i < numTags-1; i++) {
+			for(int j = i+1; j < numTags; j++) {
+				if(tags.get(i).equals(tags.get(j))) return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
 	 * @param user - User.
 	 * @return true if user have more lies than the shameless or if are the same,
 	 * true if user have lower sum of posts and comments, if the ties still remain,
@@ -272,20 +285,6 @@ public class FakeSystemClass implements FakeSystem {
 			int userSum = user.getTotalNumberComments() + user.getNumberPosts();
 			if(userSum < shamelessSum) return true;
 			if(userSum == shamelessSum && user.getId().compareTo(shameless.getId()) > 0) return true;
-		}
-		return false;
-	}
-	
-	/**
-	 * @param numTags - Number of hashTags.
-	 * @param tags - HashTags.
-	 * @return true if there are any repeatedTags.
-	 */
-	private boolean repeatedTags(int numTags, LinkedList<String> tags) {
-		for (int i = 0; i < numTags-1; i++) {
-			for(int j = i+1; j < numTags; j++) {
-				if(tags.get(i).equals(tags.get(j))) return true;
-			}
 		}
 		return false;
 	}

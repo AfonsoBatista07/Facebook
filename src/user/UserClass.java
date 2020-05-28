@@ -20,7 +20,6 @@ import user.exceptions.*;
  * @author Afonso Batista 57796
  * @author Joao Jorge 57994
  */
-
 public abstract class UserClass implements User {
 	
 	private String id, kind;
@@ -33,7 +32,7 @@ public abstract class UserClass implements User {
 	/**
 	 * Constructor of UserClass, initializes variables.
 	 * @param id - User Id
-	 * @param kind - Type of User ( Fanatic, Liar, Naive, SelfCentered )
+	 * @param kind - Type of User ( Fanatic, Liar, Naive or SelfCentered )
 	 */
 	public UserClass(String id, String kind) {
 		this.id = id;
