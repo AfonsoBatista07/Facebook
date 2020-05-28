@@ -4,10 +4,11 @@ import java.util.Iterator;
 
 import post.Comment;
 import post.Post;
+import system.exceptions.NoCommentsException;
 import user.exceptions.UsersAlreadyFriendsException;
 
 /**
- * Interface of the UserClass that implements a User.
+ * Interface of the UserClass.
  * @author Afonso Batista 57796
  * @author Joao Jorge 57994
  */
@@ -28,13 +29,15 @@ public interface User {
 	 */
 	String getKind();
 	
-	/**Adds Post to the myPosts List
+	/**
+	 * Adds Post to the myPosts List
 	 * If the Post is fake increments the number of lies.
 	 * @param post - Post
 	 */
 	void newPost(Post post);
 	
-	/**Adds Comment to the commentsByTag Map.
+	/**
+	 * Adds Comment to the commentsByTag Map.
 	 * Increments numPostsCommented (number of posts with at least one comment) if the User hasnt commented the Post yet.
 	 * Increments numComment (total number of comments by the User).
 	 * Increments numOfLies if the comment contradicts the posts stance.
@@ -42,23 +45,28 @@ public interface User {
 	 */
 	void newComment(Comment comment);
 	
-	/**Adds Post to the Users myFeed Set.
+	/**
+	 * Adds Post to the Users myFeed Set.
 	 * @param post - Post
 	 */
 	void addFeed(Post post);
 	
-	/**Adds the Post to the feed of all the Users friends.
+	/**
+	 * Adds the Post to the feed of all the Users friends.
 	 * @param post - Post
 	 */
-	void sharePost(Post post) throws UsersAlreadyFriendsException;
+	void sharePost(Post post);
 	
-	/**Verifies if the Users are already friends, if so throws UsersAlreadyFriendsException.
+	/**
+	 * Adds the friend to the Users friends SortedMap.
 	 * If not the friend is added to the friends SortedMap.
 	 * @param user - User (friend)
+	 * @throws UsersAlreadyFriendsException if the Users are already friends.
 	 */
-	void addFriend(User user);
+	void addFriend(User user) throws UsersAlreadyFriendsException;
 	
-	/**Verifies if the User has access to the given Post.
+	/**
+	 * Verifies if the User has access to the given Post.
 	 * @param post - Post
 	 * @return True if has access. False if not.
 	 */
@@ -94,9 +102,10 @@ public interface User {
 	 */
 	float getPercentageCommentedPosts();
 	
-	/**Verifies if the User has a post with the given Id, if not throws UserHasNoPostsException.
+	/**
 	 * @param postId - Id of the Post
 	 * @return The Post with the given id if the id is correct.
+	 * @throws UserHasNoPostsException if there is no post with the given id.
 	 */
 	Post getPost(int postId);
 	
@@ -119,7 +128,8 @@ public interface User {
 	/**
 	 * @param hashtag - HashTag
 	 * @return Iterator of the Users Comments with the given HashTag.
+	 * @throws NoCommentsException if there is no Comments with the given HashTag.
 	 */
-	Iterator<Comment> getListCommentByUser(String hashtag);
+	Iterator<Comment> getListCommentByUser(String hashtag) throws NoCommentsException;
 	
 }

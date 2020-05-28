@@ -11,6 +11,11 @@ import post.Post;
 import user.exceptions.InadequateStanceException;
 import user.exceptions.InvalidCommentStanceException;
 
+/**
+* Implements a Fanatic User.
+* @author Afonso Batista 57796
+* @author Joao Jorge 57994
+*/
 public class FanaticClass extends UserClass implements Fanatic{
 	
 	private List<String> fanaticisms;
@@ -19,6 +24,12 @@ public class FanaticClass extends UserClass implements Fanatic{
 	private static final String LOVES = "loves";
 	private static final String HATES = "hates";
 	
+	/**
+	 * Constructor of the FanaticClass, initializes variables.
+	 * @param id - User Id
+	 * @param numFanaticisms - Number of Fanaticisms
+	 * @param hashTags - List of HashTags
+	 */
 	public FanaticClass(String id, int numFanaticisms, LinkedList<String> hashTags) {
 		super(id, FANATIC);
 		this.numFanaticisms = numFanaticisms;
@@ -35,13 +46,6 @@ public class FanaticClass extends UserClass implements Fanatic{
 			if((post.isHonest() && hates(tag)) || (!post.isHonest() && loves(tag)) || !hasFanaticism(tag) ) throw new InadequateStanceException();
 		}
 		super.newPost(post);
-	}
-	
-	private void listOnlyTags(LinkedList<String> hashTags) {
-		for(int i = 0; i < numFanaticisms; i++) {
-			String tag = hashTags.get(1 + 2*i);
-			fanaticisms.add(tag);
-		}
 	}
 	
 	public Iterator<String> getFanaticisms() {
@@ -71,6 +75,22 @@ public class FanaticClass extends UserClass implements Fanatic{
 		super.newComment(comment);
 	}
 	
+	/**
+	 * Copies only the HashTags from the given List to another list.
+	 * @param hashTags - List of HashTags with Loves and Hates
+	 */
+	private void listOnlyTags(LinkedList<String> hashTags) {
+		for(int i = 0; i < numFanaticisms; i++) {
+			String tag = hashTags.get(1 + 2*i);
+			fanaticisms.add(tag);
+		}
+	}
+	
+	/**
+	 * Copies the HashTags from the given list into a Map,
+	 * with the HashTag as the key and Loves/Hates as the value.
+	 * @param hashTags - - List of HashTags with Loves and Hates
+	 */
 	private void separateTags(LinkedList<String> hashTags) {
 		Iterator<String> it = hashTags.iterator();
 		for(int i = 0; i < numFanaticisms; i++){
@@ -80,14 +100,29 @@ public class FanaticClass extends UserClass implements Fanatic{
 		}
 	}
 	
+	/**
+	 * Verifies is the given HashTag is Loved by the User.
+	 * @param love - HashTag
+	 * @return True if the User loves the HashTag. False if not.
+	 */
 	private boolean loves(String love) {
 		return tags.get(love).equals(LOVES);
 	}
 	
+	/**
+	 * Verifies if the given HashTag is Hated by the User.
+	 * @param hate - HashTag
+	 * @return True if the User hates the HashTag. False if not.
+	 */
 	private boolean hates(String hate) {
 		return tags.get(hate).equals(HATES);
 	}
 	
+	/**
+	 * Verifies if the User has a given fanaticism.
+	 * @param fanaticism - fanaticism
+	 * @return True if the User is fanatic about it. False if not.
+	 */
 	private boolean hasFanaticism(String fanaticism) {
 		if(tags.get(fanaticism) == null) return false;
 		else return true;

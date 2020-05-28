@@ -8,8 +8,6 @@ import post.*;
 import system.*;
 import user.User;
 
-
-
 /**
  * Main Program.
  * @author Afonso Batista 57796
@@ -106,10 +104,21 @@ public class Main {
 		
 	}
 	
+	/**
+	 * Read the user inputs.
+	 * @param in - Scanner.
+	 * @return the user input.
+	 */
 	private static String readOption(Scanner in) {
 		return in.next().toUpperCase();
 	}
 	
+	/**
+	 * Execute one available option.
+	 * @param in - Scanner.
+	 * @param sec - SecuritySystem
+	 * @param option - the user input.
+	 */
 	private static void exeOption(Scanner in, FakeSystem fsys, String option) {
 		switch(option) {
 			case ADD_USER:
@@ -168,11 +177,20 @@ public class Main {
 		}
 	}
 	
+	/**
+	 * Sends error Message.
+	 * @param in - Scanner
+	 */
 	private static void wrongCommand(Scanner in) {
 		in.nextLine();
 		System.out.printf(UNKNNOWN_COMMAND);
 	}
 	
+	/**
+	 * Registers a new User into the System.
+	 * @param in - Scanner
+	 * @param fsys - fakeSystem
+	 */
 	private static void addUser(Scanner in, FakeSystem fsys) {
 		String kind = in.next();
 		String userId = in.nextLine().trim();
@@ -199,6 +217,11 @@ public class Main {
 		}
 	}
 
+	/**
+	 * Makes two Users friends.
+	 * @param in - Scanner 
+	 * @param fsys - FakeSystem
+	 */
 	private static void addFriend(Scanner in, FakeSystem fsys) {
 		String firstUserId = in.nextLine().trim();
 		String secondUserId = in.nextLine().trim();
@@ -215,6 +238,11 @@ public class Main {
 		}
 	}
 	
+	/**
+	 * Registers a new Post into the System.
+	 * @param in - Scanner
+	 * @param fsys - FakeSystem
+	 */
 	private static void newPost(Scanner in, FakeSystem fsys) {
 		String userId = in.nextLine().trim();
 		int hashtagsNumber = in.nextInt();
@@ -238,6 +266,11 @@ public class Main {
 		}
 	}
 	
+	/**
+	 * Registers new Comment into the System.
+	 * @param in - Scanner
+	 * @param fsys - FakeSystem
+	 */
 	private static void newComment(Scanner in, FakeSystem fsys) {
 		
 		String idUserComment = in.nextLine().trim();
@@ -262,6 +295,11 @@ public class Main {
 		}
 	}
 	
+	/**
+	 * Lists registered Users.
+	 * @param in - Scanner
+	 * @param fsys - FakeSystem
+	 */
 	private static void listUsers(Scanner in, FakeSystem fsys) {
 		try {
 			Iterator<User> it = fsys.listUsers();
@@ -275,6 +313,11 @@ public class Main {
 		}
 	}
 	
+	/**
+	 * Lists friends of a User.
+	 * @param in - Scanner
+	 * @param fsys - FakeSystem
+	 */
 	private static void listFriends(Scanner in, FakeSystem fsys) {
 		String userId = in.nextLine().trim();
 		
@@ -293,6 +336,11 @@ public class Main {
 		}
 	}
 	
+    /**
+     * Lists all Posts of a User.
+ 	 * @param in - Scanner
+	 * @param fsys - FakeSystem
+     */
     private static void listPosts(Scanner in, FakeSystem fsys) {
 		String userId = in.nextLine().trim();
 		try {
@@ -310,6 +358,11 @@ public class Main {
 		}
 	}
     
+    /**
+     * Lists all Comments of a Post.
+	 * @param in - Scanner
+	 * @param fsys - FakeSystem
+     */
     private static void readPost(Scanner in, FakeSystem fsys) {
     	String userId = in.nextLine().trim();
     	int postId = in.nextInt();
@@ -330,6 +383,11 @@ public class Main {
         }
 	}
     
+    /**
+     * Lists all of the Users Posts with a specific tag.
+	 * @param in - Scanner
+	 * @param fsys - FakeSystem
+     */
     private static void listComments(Scanner in, FakeSystem fsys) {
 		String userId = in.nextLine().trim();
 		String hashtag = in.next();
@@ -348,6 +406,11 @@ public class Main {
         }
 	}
     
+    /**
+     * Lists all Fanatic Users of a specific fanaticism.
+	 * @param in - Scanner
+	 * @param fsys - FakeSystem
+     */
     private static void listTopicFanatics(Scanner in, FakeSystem fsys) {
 		String hashtag = in.next();
 		
@@ -364,6 +427,11 @@ public class Main {
 		}
 	}
 
+	/**
+	 * Lists all Posts with a specific tag.
+	 * @param in - Scanner
+	 * @param fsys - FakeSystem
+	 */
 	private static void listTopicPosts(Scanner in, FakeSystem fsys) {
 		String hashtag = in.next();
 		int numberOfPosts = in.nextInt();
@@ -382,6 +450,10 @@ public class Main {
 		}
 	}
 
+	/**
+	 * Shows the most shameless User.
+	 * @param fsys - FakeSystem
+	 */
 	private static void shameless(FakeSystem fsys) {
 		try {
 			User user = fsys.getShameless();
@@ -391,6 +463,10 @@ public class Main {
 		}
 	}
 
+	/**
+	 * Shows the most responsive User.
+	 * @param fsys - FakeSystem
+	 */
 	private static void responsive(FakeSystem fsys) {
 		try {
 			User user = fsys.getResponsive();
@@ -400,6 +476,10 @@ public class Main {
 		}
 	}
 
+	/**
+	 * Shows the User with the most posts.
+	 * @param fsys
+	 */
 	private static void topPoster(FakeSystem fsys) {
 		try {
 			User user = fsys.getTopPoster();
@@ -409,6 +489,10 @@ public class Main {
 		}
 	}
 
+	/**
+	 * Shows the most popular Post.
+	 * @param fsys - FakeSystem
+	 */
 	private static void popularPosts(FakeSystem fsys) {
 		try {
 			Post post = fsys.getPopularPost();
@@ -418,10 +502,16 @@ public class Main {
 		}
 	}
 
+	/**
+	 * Terminates the execution of the program.
+	 */
 	private static void exit() {
 		System.out.println(SUCCESS_EXIT);
 	}
 	
+	/**
+	 * Shows the available commands. 
+	 */
 	private static void help() {
 		System.out.print(SUCCESS_HELP);
 	}
