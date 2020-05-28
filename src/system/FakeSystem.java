@@ -20,13 +20,6 @@ public interface FakeSystem {
 	/**
 	 * Registers a User into the System.
 	 * @param kind - User kind (Fanatic, Naive, Self Centered, Liar).
-	 * @return true if the user kind is Fanatic.
-	 */
-	boolean isFanatic(String kind);
-	
-	/**
-	 * Adds a user to system.
-	 * @param kind - User kind (Fanatic, Naive, Self Centered, Liar).
 	 * @param userId - Id of the User
 	 * @param numberFanaticisms - number of fanaticisms.
 	 * @param sequence - sequence of fanaticisms.
@@ -46,7 +39,7 @@ public interface FakeSystem {
 	 * @throws UserDoesNotExistException If the user id of either the author of the comment, or the author of the post is unknown.
 	 * @throws UserHasNoPostsException If the post id does not exist for that author.
 	 * @throws UserCanNotCommentPostException If the user is friends with the author of the post, but is not allowed to comment on that post.
-	 * @throws UserNoAccessToPostException If the user cannot comment that post, because he has not received it from the author
+	 * @throws UserNoAccessToPostException If the user cannot comment that post, because he has not received it from the author.
 	 * @throws InvalidCommentStanceException If the comment stance is invalid for that user id and that post.
 	 */
 	void addComment(String idUserComment, String idUserAuthor, int postId, String stance, String comment) throws UserDoesNotExistException, UserHasNoPostsException, UserCanNotCommentPostException, UserNoAccessToPostException, InvalidCommentStanceException;
@@ -62,7 +55,7 @@ public interface FakeSystem {
 	void addFriend(String firstUserId, String secondUserId) throws UserDoesNotExistException, UsersAlreadyFriendsException, UserCanNotBeTheSameException;
 	
 	/**
-	 * Adds a post to a user and share him to all the user's friends.
+	 * Adds a post to a user and shares it with all the users friends.
 	 * @param userId - Id of the first user.
 	 * @param hashtagsNumber - Number of hashTags.
 	 * @param hashtags - HashTags.
@@ -70,7 +63,7 @@ public interface FakeSystem {
 	 * @param message - Message.
 	 * @throws UserDoesNotExistException If the user id is unknown.
 	 * @throws InvalidHashtagsListException If the number of hashTags is not greater or equal to 0.
-	 * @throws InadequateStanceException If the post stance contradicts the user�s stance.
+	 * @throws InadequateStanceException If the post stance contradicts the users stance.
 	 */
 	void newPost(String userId, int hashtagsNumber, LinkedList<String> hashtags, String truthfulness, String message) throws UserDoesNotExistException, InvalidHashtagsListException, InadequateStanceException;
 	
@@ -166,7 +159,7 @@ public interface FakeSystem {
 	/**
 	 * @param hashtag - hashTag you want to search.
 	 * @return Iterator of all Fanatics on a given hashTag.
-	 * @throws UnknownFanaticismException  If the kind of fanaticism is unknown.
+	 * @throws UnknownFanaticismException If the kind of fanaticism is unknown.
 	 */
 	Iterator<String> listFanaticsByTopic(String hashtag) throws UnknownFanaticismException; 
 	
