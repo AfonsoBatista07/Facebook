@@ -68,6 +68,7 @@ public class FakeSystemClass implements FakeSystem {
 		if(morePopular(post)) popularPost = post;
 		if(responsive(userComment)) responsive = userComment;
 		if(!lameList.contains(userComment)) lameList.add(userComment);
+		usersShameless.add(userComment);
 		
 	}
 	
@@ -89,6 +90,7 @@ public class FakeSystemClass implements FakeSystem {
 		if(topPoster(user)) topPoster = user;
 		if(responsive(user)) responsive = user;
 		if(!lameList.contains(user)) lameList.add(user);
+		usersShameless.add(user);
 	}
 	
 	public boolean isFanatic(String kind) {
@@ -129,10 +131,9 @@ public class FakeSystemClass implements FakeSystem {
 	}
 	
 	public User getShameless() {
-		//if(usersShameless.size() == 0) throw new NoKingOfLiarsException();
-		//User shameless = usersShameless.first();
-		//if(shameless.getNumberOfLies() == 0) throw new NoKingOfLiarsException();
-		if(lameList.size() == 0) throw new NoKingOfLiarsException();
+		if(usersShameless.size() == 0) throw new NoKingOfLiarsException();
+		User shameless = usersShameless.first();
+		if(shameless.getNumberOfLies() == 0) throw new NoKingOfLiarsException();
 		Collections.sort(lameList, new ComparatorShameless());
 		if(lameList.get(0).getNumberOfLies() == 0) throw new NoKingOfLiarsException();
 		return lameList.get(0);                
