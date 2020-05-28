@@ -14,8 +14,8 @@ public class ComparatorResponsive implements Comparator<User> {
 	/**
 	 * @param user - User
 	 * @param responsive - Responsive user.
-	 * @return 1 if user have a higher percentage of commented posts than the responsive,
-	 * if there is a draw, return 1 if user have a user id alphabetically bigger than responsive.
+	 * @return 1 if user has a higher percentage of commented posts than the responsive,
+	 * if there is a draw, return 1 if user has a user id alphabetically bigger than responsive.
 	 */
 	public int compare(User user, User responsive) {
 		if(responsive == null || user.getPercentageCommentedPosts() > responsive.getPercentageCommentedPosts()) return 1;
