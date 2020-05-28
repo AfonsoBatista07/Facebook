@@ -30,6 +30,7 @@ public interface FakeSystem {
 	boolean isFanatic(String kind);
 	
 	/**
+	 * Adds a user to system.
 	 * @param kind - User kind (Fanatic, Naive, Self Centered, Liar).
 	 * @param userId - Id of the User
 	 * @param numberFanaticisms - number of fanaticisms.
@@ -41,6 +42,7 @@ public interface FakeSystem {
 	void addUser(String kind, String userId, int numberFanaticisms, LinkedList<String> sequence) throws UnknownUserKindException, UserAlreadyExistsException, InvalidFanaticismListException;
 	
 	/**
+	 * Adds a comment to a user.
 	 * @param idUserComment - Id of the user commenting.
 	 * @param idUserAuthor - Id of the user author of the post.
 	 * @param postId - Id of the Post.
@@ -55,6 +57,7 @@ public interface FakeSystem {
 	void addComment(String idUserComment, String idUserAuthor, int postId, String stance, String comment) throws UserDoesNotExistException, UserHasNoPostsException, UserCanNotCommentPostException, UserNoAccessToPostException, InvalidCommentStanceException;
 	
 	/**
+	 * Link two users by friendship, adds a friend to a user.
 	 * @param firstUserId - Id of the first user.
 	 * @param secondUserId - Id of the second user.
 	 * @throws UserDoesNotExistException If some of the users does not exist.
@@ -64,6 +67,7 @@ public interface FakeSystem {
 	void addFriend(String firstUserId, String secondUserId) throws UserDoesNotExistException, UsersAlreadyFriendsException, UserCanNotBeTheSameException;
 	
 	/**
+	 * Adds a post to a user and share him to all the user's friends.
 	 * @param userId - Id of the first user.
 	 * @param hashtagsNumber - Number of hashTags.
 	 * @param hashtags - HashTags.
