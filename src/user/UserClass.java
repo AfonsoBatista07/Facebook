@@ -20,7 +20,6 @@ import user.exceptions.*;
  * @author Afonso Batista 57796
  * @author Joao Jorge 57994
  */
-
 public abstract class UserClass implements User {
 	
 	private String id, kind;

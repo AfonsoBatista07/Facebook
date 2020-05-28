@@ -2,7 +2,6 @@ package system;
 
 import java.util.Iterator;
 import java.util.LinkedList;
-
 import post.Post;
 import system.exceptions.*;
 import user.exceptions.*;
@@ -30,7 +29,8 @@ public interface FakeSystem {
 	void addUser(String kind, String userId, int numberFanaticisms, LinkedList<String> sequence) throws UnknownUserKindException, UserAlreadyExistsException, InvalidFanaticismListException;
 	
 	/**
-	 * Adds a comment to a user.
+	 * Registers a Comment into the System.
+	 * Updates if needed, the most popular Post, the most responsive User and the most shameless User.
 	 * @param idUserComment - Id of the user commenting.
 	 * @param idUserAuthor - Id of the user author of the post.
 	 * @param postId - Id of the Post.
@@ -39,13 +39,13 @@ public interface FakeSystem {
 	 * @throws UserDoesNotExistException If the user id of either the author of the comment, or the author of the post is unknown.
 	 * @throws UserHasNoPostsException If the post id does not exist for that author.
 	 * @throws UserCanNotCommentPostException If the user is friends with the author of the post, but is not allowed to comment on that post.
-	 * @throws UserNoAccessToPostException If the user cannot comment that post, because he has not received it from the author.
+	 * @throws UserNoAccessToPostException If the user cannot comment that post, because he has not received it from the author
 	 * @throws InvalidCommentStanceException If the comment stance is invalid for that user id and that post.
 	 */
 	void addComment(String idUserComment, String idUserAuthor, int postId, String stance, String comment) throws UserDoesNotExistException, UserHasNoPostsException, UserCanNotCommentPostException, UserNoAccessToPostException, InvalidCommentStanceException;
 	
 	/**
-	 * Link two users by friendship, adds a friend to a user.
+	 * Makes the Users given friends.
 	 * @param firstUserId - Id of the first user.
 	 * @param secondUserId - Id of the second user.
 	 * @throws UserDoesNotExistException If some of the users does not exist.
@@ -55,7 +55,8 @@ public interface FakeSystem {
 	void addFriend(String firstUserId, String secondUserId) throws UserDoesNotExistException, UsersAlreadyFriendsException, UserCanNotBeTheSameException;
 	
 	/**
-	 * Adds a post to a user and shares it with all the users friends.
+	 * Registers a Post into the System.
+	 * Updates if needed, the most popular Post, the most responsive User and the most shameless User.
 	 * @param userId - Id of the first user.
 	 * @param hashtagsNumber - Number of hashTags.
 	 * @param hashtags - HashTags.
@@ -63,7 +64,7 @@ public interface FakeSystem {
 	 * @param message - Message.
 	 * @throws UserDoesNotExistException If the user id is unknown.
 	 * @throws InvalidHashtagsListException If the number of hashTags is not greater or equal to 0.
-	 * @throws InadequateStanceException If the post stance contradicts the users stance.
+	 * @throws InadequateStanceException If the post stance contradicts the user’s stance.
 	 */
 	void newPost(String userId, int hashtagsNumber, LinkedList<String> hashtags, String truthfulness, String message) throws UserDoesNotExistException, InvalidHashtagsListException, InadequateStanceException;
 	
@@ -159,7 +160,7 @@ public interface FakeSystem {
 	/**
 	 * @param hashtag - hashTag you want to search.
 	 * @return Iterator of all Fanatics on a given hashTag.
-	 * @throws UnknownFanaticismException If the kind of fanaticism is unknown.
+	 * @throws UnknownFanaticismException  If the kind of fanaticism is unknown.
 	 */
 	Iterator<String> listFanaticsByTopic(String hashtag) throws UnknownFanaticismException; 
 	
