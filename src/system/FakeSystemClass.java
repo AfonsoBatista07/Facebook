@@ -12,20 +12,22 @@ import java.util.*;
  */
 public class FakeSystemClass implements FakeSystem {
 	
-	private List<User> topLiars;
+	private List<User> lameList;
 	private SortedMap<String, User> users;
+	private SortedSet<User> usersShameless;
 	private Map<String, LinkedList<Post>> posts;
 	private Map<String, SortedSet<String>> fanaticsBytopic;   
 	private Post popularPost;
-	private User topPoster, responsive, shameless;
+	private User topPoster, responsive;
 	
 	/**
 	 * Constructor of FakeSystemClass, initializes variables.
 	 */
 	public FakeSystemClass() {
-		topLiars = new LinkedList<User>();
+		lameList = new LinkedList<User>();
 		users = new TreeMap<String, User>();
 		posts = new HashMap<String, LinkedList<Post>>();
+		usersShameless = new TreeSet<User>(new ComparatorShameless());
 		fanaticsBytopic = new HashMap<String, SortedSet<String>>();
 	}
 	
@@ -65,7 +67,8 @@ public class FakeSystemClass implements FakeSystem {
 		
 		if(morePopular(post)) popularPost = post;
 		if(responsive(userComment)) responsive = userComment;
-		if(shameless(userComment)) shameless = userComment;
+		if(!lameList.contains(userComment)) lameList.add(userComment);
+		
 	}
 	
 	public void addFriend(String firstUserId, String secondUserId) {
@@ -85,7 +88,7 @@ public class FakeSystemClass implements FakeSystem {
 		
 		if(topPoster(user)) topPoster = user;
 		if(responsive(user)) responsive = user;
-		if(shameless(user)) shameless = user;
+		if(!lameList.contains(user)) lameList.add(user);
 	}
 	
 	public boolean isFanatic(String kind) {
@@ -126,8 +129,13 @@ public class FakeSystemClass implements FakeSystem {
 	}
 	
 	public User getShameless() {
-		if(shameless == null || shameless.getNumberOfLies() == 0) throw new NoKingOfLiarsException();
-		return shameless;                
+		//if(usersShameless.size() == 0) throw new NoKingOfLiarsException();
+		//User shameless = usersShameless.first();
+		//if(shameless.getNumberOfLies() == 0) throw new NoKingOfLiarsException();
+		if(lameList.size() == 0) throw new NoKingOfLiarsException();
+		Collections.sort(lameList, new ComparatorShameless());
+		if(lameList.get(0).getNumberOfLies() == 0) throw new NoKingOfLiarsException();
+		return lameList.get(0);                
 	}
 
 	public Iterator<User> listUsers() throws NoUsersException{
@@ -259,32 +267,6 @@ public class FakeSystemClass implements FakeSystem {
 			for(int j = i+1; j < numTags; j++) {
 				if(tags.get(i).equals(tags.get(j))) return true;
 			}
-		}
-		return false;
-	}
-	
-	/**
-	 * @param user - User.
-	 * @return true if user have more lies than the shameless or if are the same,
-	 * true if user have lower sum of posts and comments, if the ties still remain,
-	 * true if user have a user id alphabetically bigger than shameless
-	 */
-	private boolean shameless(User user) {
-		if(shameless == null || user.getNumberOfLies() > shameless.getNumberOfLies()) {
-			topLiars.clear();
-			return true;
-		}
-		if ( user.getNumberOfLies() == shameless.getNumberOfLies()) {
-			if(!topLiars.contains(user)) topLiars.add(user);
-			if(!topLiars.contains(shameless)) topLiars.add(shameless);
-			int shamelessSum = shameless.getTotalNumberComments() + shameless.getNumberPosts();
-			for( User liar : topLiars) {
-				int liarSum = liar.getTotalNumberComments() + liar.getNumberPosts();
-				if(liarSum < shamelessSum) shameless = liar;
-			}
-			int userSum = user.getTotalNumberComments() + user.getNumberPosts();
-			if(userSum < shamelessSum) return true;
-			if(userSum == shamelessSum && user.getId().compareTo(shameless.getId()) > 0) return true;
 		}
 		return false;
 	}
