@@ -27,7 +27,8 @@ public abstract class UserClass implements User {
 	private List<Post> myPosts; 
 	private Set<Post> myFeed;
 	private Map<String,LinkedList<Comment>> commentsByTag;
-	private int numComments, numPostsCommented, numOfLies;
+	private Set<Post> commentedPost;
+	private int numComments, numOfLies;
 	
 	/**
 	 * Constructor of UserClass, initializes variables.
@@ -41,8 +42,8 @@ public abstract class UserClass implements User {
 		myPosts =  new ArrayList<Post>();
 		myFeed =  new HashSet<Post>();
 		commentsByTag = new HashMap<String, LinkedList<Comment>>();
+		commentedPost = new HashSet<Post>();
 		numComments = 0;
-		numPostsCommented = 0;
 		numOfLies = 0;
 	}
 	
@@ -70,7 +71,9 @@ public abstract class UserClass implements User {
 	public void newComment(Comment comment) {
 		Post post = comment.getPost();
 		
-		if(!post.hasComment(getId())) numPostsCommented++;
+		if(!commentedPost.contains(post)) {
+			commentedPost.add(post);
+		}
 		
 		addToMap(post ,comment);
 		
@@ -83,7 +86,7 @@ public abstract class UserClass implements User {
 	}
 	
 	public float getPercentageCommentedPosts() {
-		return (float)numPostsCommented/getNumCanCommentPosts();
+		return (float)commentedPost.size()/getNumCanCommentPosts();
 	}
 	
 	public void addFeed(Post post) {

@@ -13,7 +13,7 @@ public class PostClass implements Post{
 	private String message, type, idUser;
 	private int numHashTags, idPost;
 	private List<String> hashTags;
-	private List<Comment> comments; 
+	private List<Comment> comments;
 	
 	private static final String HONEST = "honest";
 	
@@ -39,14 +39,6 @@ public class PostClass implements Post{
 	
 	public void newComment(Comment comment) {
 		comments.add(comment);
-	}
-	
-	public boolean hasComment(String userId) {
-		for(Comment comment: comments) {
-			if(comment.getUserId().equals(userId));                //BETTER WAY?
-				return true;
-		}
-		return false;
 	}
 	
 	public String getMessage() {

@@ -29,7 +29,7 @@ public class FakeSystemClass implements FakeSystem {
 		fanaticsBytopic = new HashMap<String, SortedSet<String>>();
 	}
 	
-	public void addUser(String kind, String userId, int numFanaticisms, List<String> sequence) { //Mudar possivelments a linkedlist to arrayList
+	public void addUser(String kind, String userId, int numFanaticisms, List<String> sequence) {
 		User user;    
 		
 		switch(kind) {
@@ -60,7 +60,7 @@ public class FakeSystemClass implements FakeSystem {
 		
 		if(!userComment.hasAccess(post)) throw new UserNoAccessToPostException();
 		
-		Comment cmt = new CommentClass(idUserComment, stance, comment, post); // Objecto flutuante???
+		Comment cmt = new CommentClass(idUserComment, stance, comment, post);
 		userComment.newComment(cmt);
 		
 		if(morePopular(post)) popularPost = post;
@@ -188,7 +188,7 @@ public class FakeSystemClass implements FakeSystem {
 	 * Adds a sorted set to the map fanaticsBytopic and then a Fanatic user to the sorted set.
 	 * @param user - Fanatic user.
 	 */
-	private void addFanaticsByTopic (Fanatic user) {    		//Por User ?????
+	private void addFanaticsByTopic (Fanatic user) {    	
 		Iterator<String> fanaticisms = user.getFanaticisms(); 
 		while(fanaticisms.hasNext()) { 
 			String topic = fanaticisms.next(); 

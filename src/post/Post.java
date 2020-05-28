@@ -46,13 +46,6 @@ public interface Post {
 	boolean isHonest();
 	
 	/**
-	 * Verifies if the User with the given Id has Commented on the Post.
-	 * @param userId - Id of the User
-	 * @return True if the User has commented. False if not.
-	 */
-	boolean hasComment(String userId);
-	
-	/**
 	 * Adds comment to the Posts Comment list.
 	 * @param comment - Comment
 	 */
