@@ -187,7 +187,7 @@ public class Main {
 	}
 	
 	/**
-	 * Registers a new User into the System.
+	 * Registers a new user on fakebook.
 	 * @param in - Scanner
 	 * @param fsys - fakeSystem
 	 */
@@ -218,7 +218,7 @@ public class Main {
 	}
 
 	/**
-	 * Makes two Users friends.
+	 * Lists all the friends of a user.
 	 * @param in - Scanner 
 	 * @param fsys - FakeSystem
 	 */
@@ -239,7 +239,7 @@ public class Main {
 	}
 	
 	/**
-	 * Registers a new Post into the System.
+	 * User posts a new message.
 	 * @param in - Scanner
 	 * @param fsys - FakeSystem
 	 */
@@ -267,7 +267,7 @@ public class Main {
 	}
 	
 	/**
-	 * Registers new Comment into the System.
+	 * User comments on a post.
 	 * @param in - Scanner
 	 * @param fsys - FakeSystem
 	 */
@@ -296,7 +296,7 @@ public class Main {
 	}
 	
 	/**
-	 * Lists registered Users.
+	 * Lists all registered users on fakebook.
 	 * @param in - Scanner
 	 * @param fsys - FakeSystem
 	 */
@@ -314,7 +314,7 @@ public class Main {
 	}
 	
 	/**
-	 * Lists friends of a User.
+	 * Lists all the friends of a user.
 	 * @param in - Scanner
 	 * @param fsys - FakeSystem
 	 */
@@ -337,7 +337,7 @@ public class Main {
 	}
 	
     /**
-     * Lists all Posts of a User.
+     * Lists all posts by a user.
  	 * @param in - Scanner
 	 * @param fsys - FakeSystem
      */
@@ -384,7 +384,7 @@ public class Main {
 	}
     
     /**
-     * Lists all of the Users Posts with a specific tag.
+     * Shows all the comments by a user on a particular topic.
 	 * @param in - Scanner
 	 * @param fsys - FakeSystem
      */
@@ -407,7 +407,7 @@ public class Main {
 	}
     
     /**
-     * Lists all Fanatic Users of a specific fanaticism.
+     * Shows a list of fanatic users on a given topic.
 	 * @param in - Scanner
 	 * @param fsys - FakeSystem
      */
@@ -428,7 +428,7 @@ public class Main {
 	}
 
 	/**
-	 * Lists all Posts with a specific tag.
+	 * Shows a list of posts on a given topic.
 	 * @param in - Scanner
 	 * @param fsys - FakeSystem
 	 */
@@ -451,7 +451,7 @@ public class Main {
 	}
 
 	/**
-	 * Shows the most shameless User.
+	 * Shows the id of the top liar as well as statistics on how many lies (s)he made in the network.
 	 * @param fsys - FakeSystem
 	 */
 	private static void shameless(FakeSystem fsys) {
@@ -464,7 +464,7 @@ public class Main {
 	}
 
 	/**
-	 * Shows the most responsive User.
+	 * Shows the id of the user with the higher percentage of commented posts.
 	 * @param fsys - FakeSystem
 	 */
 	private static void responsive(FakeSystem fsys) {
@@ -477,8 +477,8 @@ public class Main {
 	}
 
 	/**
-	 * Shows the User with the most posts.
-	 * @param fsys
+	 * Shows the id of the top poster.
+	 * @param fsys - FakeSystem
 	 */
 	private static void topPoster(FakeSystem fsys) {
 		try {
@@ -490,7 +490,7 @@ public class Main {
 	}
 
 	/**
-	 * Shows the most popular Post.
+	 * Shows the most commented post
 	 * @param fsys - FakeSystem
 	 */
 	private static void popularPosts(FakeSystem fsys) {
