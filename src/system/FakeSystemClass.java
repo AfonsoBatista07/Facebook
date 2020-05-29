@@ -14,7 +14,7 @@ public class FakeSystemClass implements FakeSystem {
 	
 	private List<User> lameList;
 	private SortedMap<String, User> users;
-	private SortedSet<User> usersShameless;
+	//private SortedSet<User> usersShameless;
 	private Map<String, LinkedList<Post>> posts;
 	private Map<String, SortedSet<String>> fanaticsBytopic;   
 	private Post popularPost;
@@ -24,10 +24,10 @@ public class FakeSystemClass implements FakeSystem {
 	 * Constructor of FakeSystemClass, initializes variables.
 	 */
 	public FakeSystemClass() {
-		lameList = new LinkedList<User>();
+		lameList = new ArrayList<User>();
 		users = new TreeMap<String, User>();
 		posts = new HashMap<String, LinkedList<Post>>();
-		usersShameless = new TreeSet<User>(new ComparatorShameless());
+		//usersShameless = new TreeSet<User>(new ComparatorShameless());
 		fanaticsBytopic = new HashMap<String, SortedSet<String>>();
 	}
 	
@@ -68,7 +68,7 @@ public class FakeSystemClass implements FakeSystem {
 		if(morePopular(post)) popularPost = post;
 		if(responsive(userComment)) responsive = userComment;
 		if(!lameList.contains(userComment)) lameList.add(userComment);
-		usersShameless.add(userComment);
+		//usersShameless.add(userComment);
 		
 	}
 	
@@ -90,7 +90,7 @@ public class FakeSystemClass implements FakeSystem {
 		if(topPoster(user)) topPoster = user;
 		if(responsive(user)) responsive = user;
 		if(!lameList.contains(user)) lameList.add(user);
-		usersShameless.add(user);
+		//usersShameless.add(user);
 	}
 	
 	public boolean isFanatic(String kind) {
@@ -131,12 +131,9 @@ public class FakeSystemClass implements FakeSystem {
 	}
 	
 	public User getShameless() {
-		if(usersShameless.size() == 0) throw new NoKingOfLiarsException();
-		User shameless = usersShameless.first();
-		if(shameless.getNumberOfLies() == 0) throw new NoKingOfLiarsException();
 		Collections.sort(lameList, new ComparatorShameless());
-		if(lameList.get(0).getNumberOfLies() == 0) throw new NoKingOfLiarsException();
-		return lameList.get(0);                
+		if(lameList.isEmpty() || lameList.get(0).getNumberOfLies() == 0) throw new NoKingOfLiarsException();
+		return lameList.get(0);                                                                                   // TENTAR NÃO IR À LISTA DUAS VEZES    
 	}
 
 	public Iterator<User> listUsers() throws NoUsersException{
