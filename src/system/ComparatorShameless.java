@@ -19,13 +19,13 @@ public class ComparatorShameless implements Comparator<User>{
 	 * if user has a user id alphabetically bigger than shameless 
 	 */
 	public int compare(User user, User shameless) {
-		int i = shameless.getNumberOfLies() - user.getNumberOfLies();
-		if(i != 0) return i;
+	//	int i = shameless.getNumberOfLies() - user.getNumberOfLies();
+		//if(i != 0) return i;
 
 		int shamelessSum = shameless.getTotalNumberComments() + shameless.getNumberPosts();
 		int userSum = user.getTotalNumberComments() + user.getNumberPosts();
 		
-		i = userSum - shamelessSum;
+		int i = userSum - shamelessSum;
 		if(i != 0) return i;
 		
 		i = user.getId().compareTo(shameless.getId());

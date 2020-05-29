@@ -12,21 +12,23 @@ import java.util.*;
  */
 public class FakeSystemClass implements FakeSystem {
 	
-	private List<User> shameless;
+	private List<User> topLiars;
 	private SortedMap<String, User> users;
 	private Map<String, LinkedList<Post>> posts;
 	private Map<String, SortedSet<String>> fanaticsBytopic;   
 	private Post popularPost;
 	private User topPoster, responsive;
+	private int topLies;
 	
 	/**
 	 * Constructor of FakeSystemClass, initializes variables.
 	 */
 	public FakeSystemClass() {
-		shameless = new ArrayList<User>();
+		topLiars = new ArrayList<User>();
 		users = new TreeMap<String, User>();
 		posts = new HashMap<String, LinkedList<Post>>();
 		fanaticsBytopic = new HashMap<String, SortedSet<String>>();
+		topLies = 0;
 	}
 	
 	public void addUser(String kind, String userId, int numFanaticisms, List<String> sequence) {
@@ -65,7 +67,7 @@ public class FakeSystemClass implements FakeSystem {
 		
 		if(morePopular(post)) popularPost = post;
 		if(responsive(userComment)) responsive = userComment;
-		if(!shameless.contains(userComment)) shameless.add(userComment);
+		updateShameless(userComment);
 		
 	}
 	
@@ -86,7 +88,17 @@ public class FakeSystemClass implements FakeSystem {
 		
 		if(topPoster(user)) topPoster = user;
 		if(responsive(user)) responsive = user;
-		if(!shameless.contains(user)) shameless.add(user);
+		updateShameless(user);
+	}
+	
+	private void updateShameless(User user) {
+		if(user.getNumberOfLies() > topLies) {
+			topLiars.clear();
+			topLiars.add(user);
+			topLies = user.getNumberOfLies();
+		}
+		
+		if(user.getNumberOfLies() == topLies) topLiars.add(user);
 	}
 	
 	public boolean isFanatic(String kind) {
@@ -127,9 +139,9 @@ public class FakeSystemClass implements FakeSystem {
 	}
 	
 	public User getShameless() {
-		Collections.sort(shameless, new ComparatorShameless());
-		if(shameless.isEmpty() || shameless.get(0).getNumberOfLies() == 0) throw new NoKingOfLiarsException();
-		return shameless.get(0);                                                                                   // TENTAR Nao ir a lista duas vezes  
+		Collections.sort(topLiars, new ComparatorShameless());
+		if(topLiars.isEmpty() || topLies == 0) throw new NoKingOfLiarsException();
+		return topLiars.get(0);                                                                                   // TENTAR Nao ir a lista duas vezes  
 	}
 
 	public Iterator<User> listUsers() throws NoUsersException{
