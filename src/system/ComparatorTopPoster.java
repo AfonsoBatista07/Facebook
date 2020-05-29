@@ -26,7 +26,7 @@ public class ComparatorTopPoster implements Comparator<User> {
 		i = topPoster.getTotalNumberComments() - user.getTotalNumberComments();
 		if(i != 0) return i;
 		
-		i = user.getId().compareTo(topPoster.getId());
+		i = topPoster.getId().compareTo(user.getId());
 		if(i != 0) return i;
 		
 		return 0;

@@ -23,7 +23,7 @@ public class ComparatorPopularPost implements Comparator<Post> {
 		int i = post.getNumComments() - popularPost.getNumComments();
 		if(i != 0) return i;
 		
-		i = post.getAuthorId().compareTo(popularPost.getAuthorId());
+		i = popularPost.getAuthorId().compareTo(post.getAuthorId());
 		if(i != 0) return i;
 		
 		i = post.getIdPost() - popularPost.getIdPost();
