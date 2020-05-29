@@ -91,6 +91,10 @@ public class FakeSystemClass implements FakeSystem {
 		updateShameless(user);
 	}
 	
+	/**
+	 * Verifies if user have more lies than the top liar, and then updates the topLiar list.
+	 * @param user - User
+	 */
 	private void updateShameless(User user) {
 		if(user.getNumberOfLies() > topLies) {
 			topLiars.clear();
