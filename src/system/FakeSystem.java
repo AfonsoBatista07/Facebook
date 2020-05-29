@@ -66,7 +66,7 @@ public interface FakeSystem {
 	 * @param message - Message.
 	 * @throws UserDoesNotExistException If the user id is unknown.
 	 * @throws InvalidHashtagsListException If the number of hashTags is not greater or equal to 0.
-	 * @throws InadequateStanceException If the post stance contradicts the user’s stance.
+	 * @throws InadequateStanceException If the post stance contradicts the users stance.
 	 */
 	void newPost(String userId, int hashtagsNumber, List<String> hashtags, String truthfulness, String message) throws UserDoesNotExistException, InvalidHashtagsListException, InadequateStanceException;
 	
