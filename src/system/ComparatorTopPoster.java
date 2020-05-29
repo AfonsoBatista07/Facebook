@@ -19,7 +19,7 @@ public class ComparatorTopPoster implements Comparator<User> {
 	 * 1 if user a user id alphabetically bigger than topPoster.
 	 */
 	public int compare(User user, User topPoster) {
-		if(topPoster == null || user.getNumberPosts() > topPoster.getNumberPosts()) return 1;
+		if(topPoster == null) return 1;
 		int i = user.getNumberPosts() - topPoster.getNumberPosts();
 		if(i != 0) return i;
 		

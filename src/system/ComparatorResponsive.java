@@ -18,7 +18,7 @@ public class ComparatorResponsive implements Comparator<User> {
 	 * if there is a draw, return 1 if user has a user id alphabetically bigger than responsive.
 	 */
 	public int compare(User user, User responsive) {
-		if(responsive == null || user.getPercentageCommentedPosts() > responsive.getPercentageCommentedPosts()) return 1;
+		if(responsive == null) return 1;
 		
 		float i = user.getPercentageCommentedPosts() - responsive.getPercentageCommentedPosts();
 		if(i != 0) return (int) i;
