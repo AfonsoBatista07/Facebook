@@ -20,7 +20,7 @@ public interface FakeSystem {
 	
 	/**
 	 * Registers a User into the System.
-	 * @param kind - User kind (Fanatic, Naive, Self Centered, Liar).
+	 * @param kind - User kind (Fanatic, Naive, Self Centered or Liar).
 	 * @param userId - Id of the User
 	 * @param numberFanaticisms - number of fanaticisms.
 	 * @param sequence - sequence of fanaticisms.
@@ -41,7 +41,7 @@ public interface FakeSystem {
 	 * @throws UserDoesNotExistException If the user id of either the author of the comment, or the author of the post is unknown.
 	 * @throws UserHasNoPostsException If the post id does not exist for that author.
 	 * @throws UserCanNotCommentPostException If the user is friends with the author of the post, but is not allowed to comment on that post.
-	 * @throws UserNoAccessToPostException If the user cannot comment that post, because he has not received it from the author
+	 * @throws UserNoAccessToPostException If the user cannot comment that post, because he has not received it from the author.
 	 * @throws InvalidCommentStanceException If the comment stance is invalid for that user id and that post.
 	 */
 	void addComment(String idUserComment, String idUserAuthor, int postId, String stance, String comment) throws UserDoesNotExistException, UserHasNoPostsException, UserCanNotCommentPostException, UserNoAccessToPostException, InvalidCommentStanceException;
