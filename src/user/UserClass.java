@@ -163,7 +163,7 @@ public abstract class UserClass implements User {
 	
 	/**Verifies if the User is friends with the given User.
 	 * @param user - Given User
-	 * @return True - is they are friends, False - if not.
+	 * @return True if they are friends.
 	 */
 	private boolean hasFriend(User user) {
 		return friends.get(user.getId()) !=null;

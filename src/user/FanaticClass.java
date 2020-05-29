@@ -96,7 +96,7 @@ public class FanaticClass extends UserClass implements Fanatic {
 	/**
 	 * Copies the HashTags from the given list into a Map,
 	 * with the HashTag as the key and Loves/Hates as the value.
-	 * @param hashTags - - List of HashTags with Loves and Hates
+	 * @param hashTags - List of HashTags with Loves and Hates
 	 */
 	private void separateTags(List<String> hashTags) {
 		Iterator<String> it = hashTags.iterator();

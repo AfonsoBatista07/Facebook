@@ -129,7 +129,7 @@ public class FakeSystemClass implements FakeSystem {
 	public User getShameless() {
 		Collections.sort(shameless, new ComparatorShameless());
 		if(shameless.isEmpty() || shameless.get(0).getNumberOfLies() == 0) throw new NoKingOfLiarsException();
-		return shameless.get(0);                                                                                   // TENTAR NÃO IR À LISTA DUAS VEZES    
+		return shameless.get(0);                                                                                      
 	}
 
 	public Iterator<User> listUsers() throws NoUsersException{
