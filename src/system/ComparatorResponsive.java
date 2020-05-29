@@ -19,8 +19,13 @@ public class ComparatorResponsive implements Comparator<User> {
 	 */
 	public int compare(User user, User responsive) {
 		if(responsive == null || user.getPercentageCommentedPosts() > responsive.getPercentageCommentedPosts()) return 1;
-		if(user.getPercentageCommentedPosts() == responsive.getPercentageCommentedPosts())
-			if(user.getId().compareTo(responsive.getId()) > 0) return 1;
-		return -1;
+		
+		float i = user.getPercentageCommentedPosts() - responsive.getPercentageCommentedPosts();
+		if(i != 0) return (int) i;
+		
+		int f = user.getId().compareTo(responsive.getId());
+		if(f != 0) return f;
+		
+		return 0;
 	}
 }

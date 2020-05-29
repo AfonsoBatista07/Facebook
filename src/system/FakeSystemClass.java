@@ -227,7 +227,7 @@ public class FakeSystemClass implements FakeSystem {
 	 */
 	private boolean morePopular(Post post) {
 		ComparatorPopularPost comparator = new ComparatorPopularPost();
-		return comparator.compare(post, popularPost)==1;
+		return comparator.compare(post, popularPost) > 0;
 	}
 	
 	/**
@@ -238,7 +238,7 @@ public class FakeSystemClass implements FakeSystem {
 	 */
 	private boolean topPoster(User user) {
 		ComparatorTopPoster comparator = new ComparatorTopPoster();
-		return comparator.compare(user, topPoster)==1; 
+		return comparator.compare(user, topPoster) > 0; 
 	}
 	
 	/**
@@ -248,7 +248,7 @@ public class FakeSystemClass implements FakeSystem {
 	 */
 	private boolean responsive(User user) {
 		ComparatorResponsive comparator = new ComparatorResponsive();
-		return comparator.compare(user, responsive)==1;
+		return comparator.compare(user, responsive) > 0;
 	}
 	
 	/**

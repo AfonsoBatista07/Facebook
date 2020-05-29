@@ -20,11 +20,15 @@ public class ComparatorTopPoster implements Comparator<User> {
 	 */
 	public int compare(User user, User topPoster) {
 		if(topPoster == null || user.getNumberPosts() > topPoster.getNumberPosts()) return 1;
-		else if(user.getNumberPosts() == topPoster.getNumberPosts()) {
-			if(user.getTotalNumberComments() > topPoster.getTotalNumberComments()) return 1;
-			else if(user.getTotalNumberComments() == topPoster.getTotalNumberComments())
-				if(user.getId().compareTo(topPoster.getId()) < 0) return 1;
-		}
-		return -1;
+		int i = user.getNumberPosts() - topPoster.getNumberPosts();
+		if(i != 0) return i;
+		
+		i = topPoster.getTotalNumberComments() - user.getTotalNumberComments();
+		if(i != 0) return i;
+		
+		i = user.getId().compareTo(topPoster.getId());
+		if(i != 0) return i;
+		
+		return 0;
 	}
 }

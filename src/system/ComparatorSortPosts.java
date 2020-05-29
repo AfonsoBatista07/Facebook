@@ -16,14 +16,14 @@ public class ComparatorSortPosts implements Comparator<Post> {
 	 * by alphabetic order of author id, followed by decreasing id for the post.
 	 */
 	public int compare(Post a, Post b) {
-		if(a.getNumComments() < b.getNumComments()) return 1;
-		if(a.getNumComments() > b.getNumComments()) return -1;  // Passar os gets para apenas 1
+		int i = b.getNumComments() - a.getNumComments();
+		if(i != 0) return i;
 		
-		int i = a.getAuthorId().compareTo(b.getAuthorId());
+		i = a.getAuthorId().compareTo(b.getAuthorId());
 		if(i != 0) return i;
 
-		if(a.getIdPost() < b.getIdPost()) return 1;
-		if(a.getIdPost() > b.getIdPost()) return -1;
+		i = b.getIdPost() - a.getIdPost();
+		if(i != 0) return i;
 		
 		return 0;
 	}

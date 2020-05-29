@@ -18,13 +18,18 @@ public class ComparatorPopularPost implements Comparator<Post> {
 	 * 1 if post is more recent than the popularPost.
 	 */
 	public int compare(Post post, Post popularPost) {
-		if(popularPost == null || post.getNumComments() > popularPost.getNumComments()) return 1;
-		if(post.getNumComments() == popularPost.getNumComments()) { 
-			if(post.getAuthorId().compareTo(popularPost.getAuthorId()) < 0) return 1;
-			if(post.getAuthorId().compareTo(popularPost.getAuthorId()) == 0)
-				if(post.getIdPost() > popularPost.getIdPost()) return 1;	
-		}
-		return -1;
+		if(popularPost == null) return 1;
+		
+		int i = post.getNumComments() - popularPost.getNumComments();
+		if(i != 0) return i;
+		
+		i = post.getAuthorId().compareTo(popularPost.getAuthorId());
+		if(i != 0) return i;
+		
+		i = post.getIdPost() - popularPost.getIdPost();
+		if(i != 0) return i;
+
+		return 0;
 	}
 	
 }
