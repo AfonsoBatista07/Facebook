@@ -16,7 +16,7 @@ import user.exceptions.InvalidCommentStanceException;
 * @author Afonso Batista 57796
 * @author Joao Jorge 57994
 */
-public class FanaticClass extends UserClass implements Fanatic{
+public class FanaticClass extends UserClass implements Fanatic {
 	
 	private List<String> fanaticisms;
 	private Map<String, String> tags;
