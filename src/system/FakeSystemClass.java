@@ -24,7 +24,7 @@ public class FakeSystemClass implements FakeSystem {
 	 * Constructor of FakeSystemClass, initializes variables.
 	 */
 	public FakeSystemClass() {
-		topLiars = new ArrayList<User>();
+		topLiars = new LinkedList<User>();
 		users = new TreeMap<String, User>();
 		posts = new HashMap<String, LinkedList<Post>>();
 		fanaticsBytopic = new HashMap<String, SortedSet<String>>();
@@ -91,20 +91,6 @@ public class FakeSystemClass implements FakeSystem {
 		updateShameless(user);
 	}
 	
-	/**
-	 * Verifies if user have more lies than the top liar, and then updates the topLiar list.
-	 * @param user - User
-	 */
-	private void updateShameless(User user) {
-		if(user.getNumberOfLies() > topLies) {
-			topLiars.clear();
-			topLiars.add(user);
-			topLies = user.getNumberOfLies();
-		}
-		
-		if(user.getNumberOfLies() == topLies) topLiars.add(user);
-	}
-	
 	public boolean isFanatic(String kind) {
 		return kind.equals(User.FANATIC);
 	}
@@ -143,8 +129,8 @@ public class FakeSystemClass implements FakeSystem {
 	}
 	
 	public User getShameless() {
-		Collections.sort(topLiars, new ComparatorShameless());
 		if(topLiars.isEmpty() || topLies == 0) throw new NoKingOfLiarsException();
+		Collections.sort(topLiars, new ComparatorShameless());
 		return topLiars.get(0);                                                                                   
 	}
 
@@ -234,6 +220,19 @@ public class FakeSystemClass implements FakeSystem {
 			}
 			list.add(post);
 		}
+	}
+	
+	/**
+	 * Verifies if user have more lies than the top liar, and then updates the topLiar list.
+	 * @param user - User
+	 */
+	private void updateShameless(User user) {
+		if(user.getNumberOfLies() > topLies) {
+			topLiars.clear();
+			topLiars.add(user);
+			topLies = user.getNumberOfLies();
+		}
+		if(user.getNumberOfLies() == topLies) topLiars.add(user);
 	}
 	
 	/**

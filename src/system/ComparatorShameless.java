@@ -14,8 +14,7 @@ public class ComparatorShameless implements Comparator<User>{
 	/** 
 	 * @param user - User.
 	 * @param shameless - Shameless.
-	 * @return value>0 if user has more lies than the shameless or, if they have the same, 
-	 * if user has lower sum of posts and comments, if the ties still remain, 
+	 * @return value>0 if user has lower sum of posts and comments, if the ties still remain, 
 	 * if user has a user id alphabetically bigger than shameless 
 	 */
 	public int compare(User user, User shameless) {
