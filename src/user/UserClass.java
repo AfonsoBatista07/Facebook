@@ -144,7 +144,7 @@ public abstract class UserClass implements User {
 	}
 	
 	/**Adds the Comment to the designated linkedList inside the commentsByTag Map, 
-	 * if there is no list with the posts tag creates a new one and puts it into the map.
+	 * if there is no list with the Post's tag creates a new one and puts it into the map.
 	 * @param post - Post
 	 * @param comment - Comment
 	 */

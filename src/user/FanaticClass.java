@@ -67,7 +67,7 @@ public class FanaticClass extends UserClass implements Fanatic {
 	
 	/**
 	 * @param post - Post
-	 * @return The first HashTag the User is fanatic about that is also present on the Posts HashTags
+	 * @return The first HashTag the User is fanatic about that is also present on the Post's HashTags
 	 */
 	private String getCommonHashTag(Post post) {
 		Iterator<String> fan = fanaticisms.iterator();
@@ -83,7 +83,7 @@ public class FanaticClass extends UserClass implements Fanatic {
 	}
 	
 	/**
-	 * Copies only the HashTags from the given List to another list.
+	 * Copies only the HashTags from the given List to the fanaticisms List.
 	 * @param hashTags - List of HashTags with Loves and Hates
 	 */
 	private void listOnlyTags(List<String> hashTags) {
@@ -94,8 +94,7 @@ public class FanaticClass extends UserClass implements Fanatic {
 	}
 	
 	/**
-	 * Copies the HashTags from the given list into a Map,
-	 * with the HashTag as the key and Loves/Hates as the value.
+	 * Copies the HashTags from the given list into a Map, with the HashTag as the key and Loves/Hates as the value.
 	 * @param hashTags - List of HashTags with Loves and Hates
 	 */
 	private void separateTags(List<String> hashTags) {

@@ -10,7 +10,7 @@ import java.util.Iterator;
 public interface Post {
 	
 	/**
-	 * @return The Posts Message.
+	 * @return The Post's Message.
 	 */
 	String getMessage();
 	
@@ -52,12 +52,12 @@ public interface Post {
 	void newComment(Comment comment);
 	
 	/**
-	 * @return Iterator with the Posts HashTags.
+	 * @return Iterator with the Post's HashTags.
 	 */
 	Iterator<String> getHashTags();
 	
 	/**
-	 * @return Iterator with the Posts Comments.
+	 * @return Iterator with the Post's Comments.
 	 */
 	Iterator<Comment> readPost();
 	

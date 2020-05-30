@@ -25,7 +25,7 @@ public interface User {
 	String getId();
 	
 	/**
-	 * @return Users type of User ( Fanatic, Liar, Naive, SelfCentered ).
+	 * @return User's type of User ( Fanatic, Liar, Naive, SelfCentered ).
 	 */
 	String getKind();
 	
@@ -38,9 +38,9 @@ public interface User {
 	
 	/**
 	 * Adds Comment to the commentsByTag Map.
-	 * Increments numPostsCommented (number of posts with at least one comment) if the User hasnt commented the Post yet.
+	 * Increments numPostsCommented (number of posts with at least one comment) if the User hasn't commented the Post yet.
 	 * Increments numComment (total number of comments by the User).
-	 * Increments numOfLies if the comment contradicts the posts stance.
+	 * Increments numOfLies if the comment contradicts the Post's stance.
  	 * @param comment - Comment
 	 */
 	void newComment(Comment comment);
@@ -52,14 +52,13 @@ public interface User {
 	void addFeed(Post post);
 	
 	/**
-	 * Adds the Post to the feed of all the Users friends.
+	 * Adds the Post to the feed of all the User's friends.
 	 * @param post - Post
 	 */
 	void sharePost(Post post);
 	
 	/**
-	 * Adds the friend to the Users friends SortedMap.
-	 * If not the friend is added to the friends SortedMap.
+	 * Adds the friend to the User's SortedMap of friends.
 	 * @param user - User (friend)
 	 * @throws UsersAlreadyFriendsException if the Users are already friends.
 	 */
@@ -73,12 +72,12 @@ public interface User {
 	boolean hasAccess(Post post);
 	
 	/**
-	 * @return Users number of Lies.
+	 * @return User's number of Lies.
 	 */
 	int getNumberOfLies();
 	
 	/**
-	 * @return Users number of friends.
+	 * @return User's number of friends.
 	 */
 	int getNumberFriends();
 	
@@ -104,30 +103,30 @@ public interface User {
 	
 	/**
 	 * @param postId - Id of the Post
-	 * @return The Post with the given id if the id is correct.
+	 * @return The Post with the given id.
 	 * @throws UserHasNoPostsException if there is no post with the given id.
 	 */
 	Post getPost(int postId);
 	
 	/**
-	 * @return Iterator of the Users friends.
+	 * @return Iterator of the User's friends.
 	 */
 	Iterator<User> getFriendIterator();
 	
 	/**
-	 * @return Iterator of the Users Posts.
+	 * @return Iterator of the User's Posts.
 	 */
 	Iterator<Post> getMyPostsIterator();
 	
 	/**
 	 * @param post - Post
-	 * @return Iterator of the given Posts Comments.
+	 * @return Iterator of the given Post's Comments.
 	 */
 	Iterator<Comment> readPost(Post post);
 	
 	/**
 	 * @param hashtag - HashTag
-	 * @return Iterator of the Users Comments with the given HashTag.
+	 * @return Iterator of the User's Comments with the given HashTag.
 	 * @throws NoCommentsException if there is no Comments with the given HashTag.
 	 */
 	Iterator<Comment> getListCommentByUser(String hashtag) throws NoCommentsException;

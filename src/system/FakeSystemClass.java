@@ -223,7 +223,7 @@ public class FakeSystemClass implements FakeSystem {
 	}
 	
 	/**
-	 * Verifies if user have more lies than the top liar, and then updates the topLiar list.
+	 * Verifies if user has more lies than the top liar, and then updates the topLiar list.
 	 * @param user - User
 	 */
 	private void updateShameless(User user) {
@@ -237,8 +237,8 @@ public class FakeSystemClass implements FakeSystem {
 	
 	/**
 	 * @param post - Post.
-	 * @return true if post post have more comments than the popularPost, if there is a tie,
-	 * true if post is more recent than the popularPost.
+	 * @return true if the post has more comments than the popularPost, if there is a tie,
+	 * true if the post is more recent than the popularPost.
 	 */
 	private boolean morePopular(Post post) {
 		ComparatorPopularPost comparator = new ComparatorPopularPost();
@@ -247,9 +247,9 @@ public class FakeSystemClass implements FakeSystem {
 	
 	/**
 	 * @param user - User
-	 * @return true if user have more posts than the topPoster, if there is a tie,
-	 * true if user have wrote more comments than the topPoster, if there is still a tie,
-	 * true if user a user id alphabetically bigger than topPoster.
+	 * @return true if the user has more posts than the topPoster, if there is a tie,
+	 * true if the user has written more comments than the topPoster, if there is still a tie,
+	 * true if the user's id is alphabetically first than the topPoster's id.
 	 */
 	private boolean topPoster(User user) {
 		ComparatorTopPoster comparator = new ComparatorTopPoster();
@@ -258,8 +258,8 @@ public class FakeSystemClass implements FakeSystem {
 	
 	/**
 	 * @param user - User.
-	 * @return true if user have a higher percentage of commented posts than the responsive,
-	 * if there is a draw, true user have a user id alphabetically bigger than responsive.
+	 * @return true if user has a higher percentage of commented posts than the responsive,if there is a draw, 
+	 * true if the user's id is alphabetically first than the responsive's id.
 	 */
 	private boolean responsive(User user) {
 		ComparatorResponsive comparator = new ComparatorResponsive();
