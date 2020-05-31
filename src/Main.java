@@ -16,25 +16,6 @@ import user.User;
  */
 public class Main {
 
-	/* Commands Constants */
-	private static final String ADD_USER = "REGISTER";
-	private static final String ADD_FRIEND = "ADDFRIEND";
-	private static final String NEW_POST = "POST";
-	private static final String LIST_POSTS = "USERPOSTS";
-	private static final String NEW_COMMENT = "COMMENT";
-	private static final String LIST_FRIENDS = "FRIENDS";
-	private static final String LIST_USERS = "USERS";
-	private static final String READ = "READPOST";
-	private static final String LIST_COMMENTS = "COMMENTSBYUSER";
-	private static final String LIST_TOPIC_FANATICS = "TOPICFANATICS";
-	private static final String LIST_TOPIC_POSTS = "TOPICPOSTS";
-	private static final String POPULAR_POSTS = "POPULARPOST";
-	private static final String TOP_POSTER = "TOPPOSTER";
-	private static final String RESPONSIVE = "RESPONSIVE";
-	private static final String SHAMELESS = "SHAMELESS";
-	private static final String EXIT = "EXIT";
-	private static final String HELP = "HELP";
-	
 	/* Success Constants */
 	private static final String DOT = ".";
 	private static final String COMA = ", ";
@@ -51,23 +32,6 @@ public class Main {
  	private static final String SUCCESS_LIST_TOPIC_POSTS = "%s %d %d: %s\n";
  	private static final String SUCCESS_SHAMELESS = "%s %d.\n";
  	private static final String SUCCESS_TOP_POSTER = "%s %d %d.\n";
- 	private static final String SUCCESS_HELP = "register - registers a new user\n" + 
- 			"users - lists all users\n" + 
- 			"addfriend - adds a new friend\n" + 
- 			"friends - lists the user friends\n" + 
- 			"post - posts a new message\n" + 
- 			"userposts - lists all posts by a user\n" + 
- 			"comment - user comments on a post\n" + 
- 			"readpost - prints detailed info on a post\n" + 
- 			"commentsbyuser - shows all the comments by a user on a given post\n" + 
- 			"topicfanatics - shows a list of fanatic users on a topic\n" + 
- 			"topicposts - shows a list of posts on a given topic\n" + 
- 			"popularpost - shows the most commented post\n"+
- 			"topposter - shows the user with more posts\n" + 
- 			"responsive - shows the user with a higher percentage of commented posts\n" + 
- 			"shameless - shows the top liars\n" + 
- 			"help - shows the available commands\n" + 
- 			"exit - terminates the execution of the program\n";
  	
  	/* Error Constants */
 	private static final String UNKNNOWN_COMMAND = "Unknown command. Type help to see available commands.\n";
@@ -98,22 +62,48 @@ public class Main {
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
 		FakeSystem fsys = new FakeSystemClass();
-		String cm;
+		Command cm;
 		do{
-			cm = readOption(in);
+			cm = getCommand(in);
 			exeOption(in, fsys, cm);
-		} while(!cm.equals(EXIT));
+		} while(!cm.equals(Command.EXIT));
 		in.close();
 		
 	}
 	
+	private enum Command {
+		REGISTER("registers a new user"), USERS("lists all users"),
+		ADDFRIEND("adds a new friend"), FRIENDS("lists the user friends"),
+		POST("posts a new message"), USERPOSTS("lists all posts by a user"),
+		COMMENT("user comments on a post"), READPOST("prints detailed info on a post"),
+		COMMENTSBYUSER("shows all the comments by a user on a given post"),
+		TOPICFANATICS("shows a list of fanatic users on a topic"),
+		TOPICPOSTS("shows a list of posts on a given topic"),
+		POPULARPOST("shows the most commented post"), TOPPOSTER("shows the user with more posts"),
+		RESPONSIVE("shows the user with a higher percentage of commented posts"),
+		SHAMELESS("shows the top liars"), HELP("shows the available commands"),
+		EXIT("terminates the execution of the program"), UNKNOWN("");
+		
+		private String description;
+
+		Command (String description) { this.description = description; }
+		/**
+		 * @return The description of ther command.
+		 */
+		public String getDescription() { return this.description; }
+		
+	};
+	
 	/**
-	 * Read the user inputs.
-	 * @param in - Scanner.
-	 * @return the user input.
+	 * @param in - Scanner
+	 * @return The user input command.
 	 */
-	private static String readOption(Scanner in) {
-		return in.next().toUpperCase();
+	private static Command getCommand(Scanner in) {
+		try {
+			return Command.valueOf(in.next().toUpperCase());
+		} catch(IllegalArgumentException e) {
+			return Command.UNKNOWN;
+		}
 	}
 	
 	/**
@@ -122,45 +112,45 @@ public class Main {
 	 * @param sec - SecuritySystem
 	 * @param option - the user input.
 	 */
-	private static void exeOption(Scanner in, FakeSystem fsys, String option) {
-		switch(option) {
-			case ADD_USER:
+	private static void exeOption(Scanner in, FakeSystem fsys, Command cm) {
+		switch(cm) {
+			case REGISTER:
 				addUser(in, fsys);
 				break;
-			case ADD_FRIEND:
+			case ADDFRIEND:
 				addFriend(in, fsys);
 				break;
-			case NEW_POST:
+			case POST:
 				newPost(in, fsys);
 				break;
-			case NEW_COMMENT:
+			case COMMENT:
 				newComment(in, fsys);
 				break;
-			case READ:
+			case READPOST:
 				readPost(in, fsys);
 				break;
-			case LIST_POSTS:
+			case USERPOSTS:
 				listPosts(in, fsys);
 				break;
-			case LIST_FRIENDS:
+			case FRIENDS:
 				listFriends(in, fsys);
 				break;
-			case LIST_USERS:
+			case USERS:
 				listUsers(in, fsys);
 				break;
-			case LIST_COMMENTS:
+			case COMMENTSBYUSER:
 				listComments(in, fsys);
 				break;
-			case LIST_TOPIC_FANATICS:
+			case TOPICFANATICS:
 				listTopicFanatics(in, fsys);
 				break;
-			case LIST_TOPIC_POSTS:
+			case TOPICPOSTS:
 				listTopicPosts(in, fsys);
 				break;
-			case POPULAR_POSTS:
+			case POPULARPOST:
 				popularPosts(fsys);
 				break;
-			case TOP_POSTER:
+			case TOPPOSTER:
 				topPoster(fsys);
 				break;
 			case RESPONSIVE:
@@ -517,7 +507,9 @@ public class Main {
 	 * Shows the available commands. 
 	 */
 	private static void help() {
-		System.out.print(SUCCESS_HELP);
+		for(Command cm : Command.values())
+			if(!cm.equals(Command.UNKNOWN))
+				System.out.printf("%s - %s\n", cm.toString().toLowerCase(), cm.getDescription());
 	}
 	
 }
