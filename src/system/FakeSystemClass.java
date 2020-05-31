@@ -67,7 +67,7 @@ public class FakeSystemClass implements FakeSystem {
 		
 		if(morePopular(post)) popularPost = post;
 		if(responsive(userComment)) responsive = userComment;
-		updateShameless(userComment);
+		updateTopLiars(userComment);
 		
 	}
 	
@@ -89,7 +89,7 @@ public class FakeSystemClass implements FakeSystem {
 		
 		if(topPoster(user)) topPoster = user;
 		if(responsive(user)) responsive = user;
-		updateShameless(user);
+		updateTopLiars(user);
 	}
 	
 	public boolean isFanatic(String kind) {
@@ -227,7 +227,7 @@ public class FakeSystemClass implements FakeSystem {
 	 * Verifies if user has more lies than the top liar, and then updates the topLiar list.
 	 * @param user - User
 	 */
-	private void updateShameless(User user) {
+	private void updateTopLiars(User user) {
 		if(user.getNumberOfLies() > topLies) {
 			topLiars.clear();
 			topLiars.add(user);
