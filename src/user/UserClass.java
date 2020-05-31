@@ -1,14 +1,5 @@
 package user;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.SortedMap;
-import java.util.TreeMap;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 import post.Comment;
 import post.Post;
@@ -140,7 +131,7 @@ public abstract class UserClass implements User {
 	public Iterator<Comment> getListCommentByUser(String hashtag) {
 		List<Comment> comment = commentsByTag.get(hashtag);
 		if(comment==null) throw new NoCommentsException();
-		return commentsByTag.get(hashtag).iterator();
+		return comment.iterator();
 	}
 	
 	/**Adds the Comment to the designated linkedList inside the commentsByTag Map, 

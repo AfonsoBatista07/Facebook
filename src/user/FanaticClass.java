@@ -1,10 +1,6 @@
 package user;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import post.Comment;
 import post.Post;
@@ -126,7 +122,7 @@ public class FanaticClass extends UserClass implements Fanatic {
 	
 	/**
 	 * Verifies if the User has a given fanaticism.
-	 * @param fanaticism - fanaticism
+	 * @param fanaticism - Fanaticism
 	 * @return True if the User is fanatic about it. False if not.
 	 */
 	private boolean hasFanaticism(String fanaticism) {

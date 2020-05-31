@@ -198,7 +198,7 @@ public class Main {
 	private static void addUser(Scanner in, FakeSystem fsys) {
 		String kind = in.next();
 		String userId = in.nextLine().trim();
-		List<String> sequence = null;							//NULL?
+		List<String> sequence = null;							
 		
 		int numberFanaticisms = 0;
 		if(fsys.isFanatic(kind)) {
@@ -424,7 +424,7 @@ public class Main {
 			while(it.hasNext()) {
 				System.out.printf(it.next());
 				if(it.hasNext()) System.out.printf(COMA);
-				else System.out.printf(DOT);						//Fazer Constantes
+				else System.out.printf(DOT);						
 			}
 			System.out.println();
 		} catch(UnknownFanaticismException e) {

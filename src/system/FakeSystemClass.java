@@ -81,6 +81,7 @@ public class FakeSystemClass implements FakeSystem {
 	public void newPost(String userId, int hashtagsNumber, List<String> hashtags, String truthfulness, String message) {
 		User user = getUser(userId);
 		if(hashtagsNumber < 0 || repeatedTags(hashtagsNumber, hashtags)) throw new InvalidHashtagsListException();
+		
 		Post post = new PostClass(userId, getNumPosts(userId)+1, hashtagsNumber, hashtags, truthfulness, message);
 		user.newPost(post);
 		user.sharePost(post);
