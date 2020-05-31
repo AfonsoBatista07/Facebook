@@ -88,7 +88,7 @@ public class Main {
 
 		Command (String description) { this.description = description; }
 		/**
-		 * @return The description of ther command.
+		 * @return The description of the command.
 		 */
 		public String getDescription() { return this.description; }
 		
