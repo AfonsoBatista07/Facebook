@@ -3,7 +3,6 @@ import java.util.*;
 
 import post.Comment;
 import post.Post;
-import system.exceptions.NoCommentsException;
 import user.exceptions.*;
 
 /**
@@ -125,6 +124,7 @@ public abstract class UserClass implements User {
 	}
 	
 	public Iterator<Comment> readPost(Post post) {
+		if(post.getNumComments() == 0) throw new NoCommentsException();
 		return post.readPost();
 	}
 	

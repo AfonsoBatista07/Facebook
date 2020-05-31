@@ -4,8 +4,7 @@ import java.util.Iterator;
 
 import post.Comment;
 import post.Post;
-import system.exceptions.NoCommentsException;
-import user.exceptions.UsersAlreadyFriendsException;
+import user.exceptions.*;
 
 /**
  * Interface of the UserClass.
@@ -121,8 +120,9 @@ public interface User {
 	/**
 	 * @param post - Post
 	 * @return Iterator of the given Post's Comments.
+	 * @throws NoCommentsException if the Post has no Comments.
 	 */
-	Iterator<Comment> readPost(Post post);
+	Iterator<Comment> readPost(Post post) throws NoCommentsException;
 	
 	/**
 	 * @param hashtag - HashTag

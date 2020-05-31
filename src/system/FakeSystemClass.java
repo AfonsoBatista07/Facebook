@@ -166,8 +166,6 @@ public class FakeSystemClass implements FakeSystem {
 		
 		Iterator<Comment> it = user.readPost(post);
 		
-		if(!it.hasNext()) throw new NoCommentsException();
-		
 		return it;
 	}
 	

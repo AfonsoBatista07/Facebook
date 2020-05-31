@@ -1,4 +1,4 @@
-package system.exceptions;
+package user.exceptions;
 
 /**
  * Exception Class for no comments.
